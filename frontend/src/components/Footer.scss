@@ -1,0 +1,16 @@
+.Footer {
+    padding: 5px;
+    
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    border-top: 1px solid black;
+    background-color: white;
+
+    /* Application name. */
+    .biblio {
+        margin-left: 10px;
+        font-size: smaller;
+    }
+}

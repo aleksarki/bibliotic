@@ -1,6 +1,4 @@
 .Header {
-    position: sticky;
-    top: 0;
     padding: 15px;
 
     display: flex;
@@ -18,13 +16,13 @@
         align-items: center;
         gap: 15px;
 
-        /* Project logo. */
+        /* Application logo. */
         .logo {
             height: 40px;
             pointer-events: none;
         }
 
-        /* Project name. */
+        /* Application name. */
         .biblio {
             font-weight: 700;
         }
