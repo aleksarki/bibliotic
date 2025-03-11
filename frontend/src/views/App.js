@@ -1,9 +1,11 @@
 import './App.css';
+import Header from '../components/Header';
 
 function App() {
     return (
         <div className="App">
-            тут будет приложение.
+            <Header pageTitle="Каталог" pageIndex="0" />
+            <span>тут будет приложение.</span>
         </div>
     );
 }

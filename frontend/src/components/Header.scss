@@ -1,0 +1,49 @@
+.Header {
+    position: sticky;
+    top: 0;
+    padding: 15px;
+
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+
+    border-bottom: 1px solid black;
+    background-color: white;
+
+    /* Block for titles. */
+    .title-block {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+
+        /* Project logo. */
+        .logo {
+            height: 40px;
+            pointer-events: none;
+        }
+
+        /* Project name. */
+        .biblio {
+            font-weight: 700;
+        }
+
+        /* Title of currently opened page. */
+        .title {
+            margin-left: 15px;
+            font-style: italic;
+        }
+    }
+
+    /* Block of links to other pages. */
+    .nav-block {
+        display: flex;
+        gap: 15px;
+
+        /* Link to currently opened page. */
+        .current {
+            font-weight: 500;
+        }
+    }
+}
