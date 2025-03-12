@@ -3,8 +3,10 @@ import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import CatalogueView from "./views/CatalogueView";
-import SearchView from "./views/SearchView";
+import ErrorView from "./views/ErrorView";
 import OptionsView from "./views/OptionsView";
+import SearchView from "./views/SearchView";
+
 import reportWebVitals from "./reportWebVitals";
 
 import "./index.css";
@@ -12,7 +14,8 @@ import "./index.css";
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <CatalogueView />
+    element: <CatalogueView />,
+    errorElement: <ErrorView />
   },
   {
     path: '/catalogue',

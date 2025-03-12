@@ -1,0 +1,10 @@
+@import './View.scss';
+
+.ErrorView {
+    @extend .View;
+    
+    /* Block of displayed waring message. */
+    .message-block {
+        margin: 15px;
+    }
+}
