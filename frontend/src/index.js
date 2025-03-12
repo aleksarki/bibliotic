@@ -1,13 +1,38 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import "./index.css";
-import App from "./App";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+
+import CatalogueView from "./views/CatalogueView";
+import SearchView from "./views/SearchView";
+import OptionsView from "./views/OptionsView";
 import reportWebVitals from "./reportWebVitals";
+
+import "./index.css";
+
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <CatalogueView />
+  },
+  {
+    path: '/catalogue',
+    element: <CatalogueView />
+  },
+  {
+    path: '/search',
+    element: <SearchView />
+  },
+  {
+    path: '/options',
+    element: <OptionsView />
+  }
+]);
+
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <App />
+    <RouterProvider router={ router } />
   </React.StrictMode>
 );
 

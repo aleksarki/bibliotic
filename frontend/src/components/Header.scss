@@ -39,7 +39,13 @@
         display: flex;
         gap: 15px;
 
-        /* Link to currently opened page. */
+        /* Link to a page. */
+        .link {
+            text-decoration: none;
+            color: black;
+        }
+
+        /* Link to the currently opened page. */
         .current {
             font-weight: 500;
         }
