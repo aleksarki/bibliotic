@@ -1,9 +1,10 @@
 import HierarchyItem from "./HierarchyItem";
+
 import { useState } from "react";
 
 import "./FileHierarchy.scss";
 
-function FileHierarchy({ hierarchy }) {
+function FileHierarchy({ hierarchy, selectionCb }) {
     const [selected, setSelected] = useState(null);
 
     let level = 0;
@@ -19,7 +20,10 @@ function FileHierarchy({ hierarchy }) {
             level={ level }
             isFile={ node.isFile }
             isSelected={ index == selected }
-            clickCb={ (idx) => setSelected(idx) }
+            clickCb={ (idx) => {
+                setSelected(idx);
+                selectionCb(idx, node);
+            } }
         />);
         items.push(<div className="h-sep" />);
 

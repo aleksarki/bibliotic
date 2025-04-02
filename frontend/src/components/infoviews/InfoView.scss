@@ -1,0 +1,13 @@
+.InfoView {
+    padding: 10px;
+
+    .view-title {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 5px;
+        margin: 10px;
+        font-size: larger;
+        font-weight: 500;
+    }
+}

@@ -1,0 +1,5 @@
+@import './InfoView.scss';
+
+.FolderInfoView {
+    @extend .InfoView;
+}
