@@ -1,0 +1,11 @@
+.FileHierarchy {
+    padding-top: 10px;
+            
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    .h-sep {
+        border-bottom: 1px solid black;
+    }
+}

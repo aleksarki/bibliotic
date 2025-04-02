@@ -29,6 +29,7 @@ function Header({ pageTitle, pageIndex }) {
             <div className="nav-block">{
                 links.map((link, index) => (
                     <NavLink
+                        key={ index }
                         to={ link.path }
                         className={ ({ isActive }) => isActive ? "link current" : "link" }
                     >
