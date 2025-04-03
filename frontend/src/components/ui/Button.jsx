@@ -1,8 +1,13 @@
 import "./Button.scss";
 
-function Button({ text, fgcolor, bgcolor }) {
+export const buttonColors = {
+    blue: "btn-blue",
+    green: "btn-green"
+}
+
+function Button({ text, color, onClick }) {
     return (
-        <div className="Button" style={ {color: fgcolor, backgroundColor: bgcolor} }>{ text }</div>
+        <div className={ "Button " + color } onClick={ onClick }>{ text }</div>
     );
 }
 

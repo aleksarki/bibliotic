@@ -1,0 +1,9 @@
+:root[data-theme="light"] {
+    --primary-fg-color: black;
+    --primary-bg-color: white;
+}
+
+:root[data-theme="dark"] {
+    --primary-fg-color: white;
+    --primary-bg-color: black;
+}

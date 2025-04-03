@@ -1,9 +1,11 @@
+@import '../../themes.scss';
+
 .FileHierarchy {            
     display: flex;
     flex-direction: column;
     gap: 10px;
 
     .h-sep {
-        border-bottom: 1px solid black;
+        border-bottom: 1px solid var(--primary-fg-color);
     }
 }

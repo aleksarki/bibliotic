@@ -1,4 +1,4 @@
-import Button from "../components/ui/Button";
+import Button, { buttonColors } from "../components/ui/Button";
 import DocumentInfoView from "../components/infoviews/DocumentInfoView";
 import FileHierarchy from "../components/hierarchy/FileHierarchy";
 import FolderInfoView from "../components/infoviews/FolderInfoView";
@@ -10,6 +10,7 @@ import TwoPanels from "../components/TwoPanels";
 import { useState } from "react";
 
 import "./CatalogueView.scss";
+import { ThemeContext, themes } from "../contexts/ThemeContext";
 
 function CatalogueView() {
     const hierarchy = {title: "root", isfile: false, children: [
@@ -22,16 +23,18 @@ function CatalogueView() {
 
     const [selected, setSelected] = useState(null);
 
+    const a = <ThemeContext.Consumer>{ ({ theme, setTheme}) => <>{setTheme(themes.light)}{theme}</> }</ThemeContext.Consumer>
+
     return (
         <div className="CatalogueView">
             <Header pageTitle="Каталог" pageIndex="0" />
             <TwoPanels
                 left={ <div className="doc-list">
                     <div className="list-head">
-                        <Button text="Сортировка" fgcolor="white" bgcolor="blue"></Button>
+                        <Button text="Сортировка" color={ buttonColors.blue }></Button>
                         <div className="list-header-right-side">
-                            <Button text="Создать папку" fgcolor="white" bgcolor="green" />
-                            <Button text="Добавить файл" fgcolor="white" bgcolor="green" />
+                            <Button text="Создать папку" color={ buttonColors.green } />
+                            <Button text="Добавить файл" color={ buttonColors.green } />
                         </div>
                     </div>
                     <div className="list-body">

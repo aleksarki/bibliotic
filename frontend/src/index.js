@@ -1,15 +1,15 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
+import reportWebVitals from "./reportWebVitals";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import CatalogueView from "./views/CatalogueView";
 import ErrorView from "./views/ErrorView";
 import OptionsView from "./views/OptionsView";
 import SearchView from "./views/SearchView";
+import { ThemeProvider } from "./contexts/ThemeContext";
 
-import reportWebVitals from "./reportWebVitals";
-
-import "./index.css";
+import "./index.scss";
 
 const router = createBrowserRouter([
   {
@@ -35,7 +35,9 @@ const router = createBrowserRouter([
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <RouterProvider router={ router } />
+    <ThemeProvider>
+      <RouterProvider router={ router } />
+    </ThemeProvider>
   </React.StrictMode>
 );
 

@@ -1,3 +1,5 @@
+@import '../../themes.scss';
+
 .HierarchyItem {
     display: flex;
     flex-direction: row;
@@ -10,6 +12,10 @@
         gap: 5px;
     }
 
+    .selected-title {
+        color: black;
+    }
+
     .label-selected {
         font-style: italic;
         color: gray;
@@ -18,5 +24,5 @@
 
 .HierarchyItem:hover {
     margin: -1px;
-    border: 1px solid black;
+    border: 1px solid var(--primary-fg-color);
 }

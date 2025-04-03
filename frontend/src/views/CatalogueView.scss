@@ -1,3 +1,4 @@
+@import '../themes.scss';
 @import './View.scss';
 
 .CatalogueView {
@@ -9,7 +10,7 @@
         
         .list-head {
             padding-bottom: 10px;
-            border-bottom: 1px solid black;
+            border-bottom: 1px solid var(--primary-fg-color);
             
             display: flex;
             flex-direction: row;

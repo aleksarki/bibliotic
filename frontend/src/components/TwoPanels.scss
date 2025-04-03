@@ -1,3 +1,5 @@
+@import '../themes.scss';
+
 .TwoPanels {
     flex: 1;
     display: flex;
@@ -6,12 +8,12 @@
     margin-right: 30px;
 
     .panel-left {
-        border-left: 1px solid black;
-        border-right: 1px solid black;
+        border-left: 1px solid var(--primary-fg-color);
+        border-right: 1px solid var(--primary-fg-color);
     }
 
     .panel-right {
-        border-right: 1px solid black;
+        border-right: 1px solid var(--primary-fg-color);
     }
 
     .panel {
