@@ -1,3 +1,10 @@
+/*
+ * View for displaying the catalogue of user documents.
+ * User adds, manages and views their documents here.
+ */
+
+import { useState } from "react";
+
 import Button, { buttonColors } from "../components/ui/Button";
 import DocumentInfoView from "../components/infoviews/DocumentInfoView";
 import FileHierarchy from "../components/hierarchy/FileHierarchy";
@@ -7,46 +14,43 @@ import Header from "../components/Header";
 import StubInfoView from "../components/infoviews/StubInfoView";
 import TwoPanels from "../components/TwoPanels";
 
-import { useState } from "react";
-
 import "./CatalogueView.scss";
-import { ThemeContext, themes } from "../contexts/ThemeContext";
 
 function CatalogueView() {
+    // dummy hierarchy
     const hierarchy = {title: "root", isfile: false, children: [
         {title: "папка", isFile: false, children: [
-            {title: "файл1", isFile: true, children: []}
+            {title: "файл1", isFile: true}
         ]},
-        {title: "файл2", isFile: true, children: []},
-        {title: "файл3", isFile: true, children: []}
+        {title: "файл2", isFile: true},
+        {title: "файл3", isFile: true}
     ]};
 
-    const [selected, setSelected] = useState(null);
-
-    const a = <ThemeContext.Consumer>{ ({ theme, setTheme}) => <>{setTheme(themes.light)}{theme}</> }</ThemeContext.Consumer>
+    // item (folder or document) that is selected by user
+    const [selectedItem, setSelectedItem] = useState(null);
 
     return (
         <div className="CatalogueView">
             <Header pageTitle="Каталог" pageIndex="0" />
             <TwoPanels
-                left={ <div className="doc-list">
-                    <div className="list-head">
-                        <Button text="Сортировка" color={ buttonColors.blue }></Button>
-                        <div className="list-header-right-side">
-                            <Button text="Создать папку" color={ buttonColors.green } />
-                            <Button text="Добавить файл" color={ buttonColors.green } />
+                left={
+                    <div className="left-panel-content">
+                        <div className="hierarchy-head">
+                            <Button text="Сортировка" color={ buttonColors.blue } />
+                            <div className="hierarchy-head-right-box">
+                                <Button text="Создать папку" color={ buttonColors.green } />
+                                <Button text="Добавить файл" color={ buttonColors.green } />
+                            </div>
+                        </div>
+                        <div className="hierarchy-body">
+                            <FileHierarchy
+                                hierarchy={ hierarchy }
+                                onItemSelectionCb={ (node) => setSelectedItem(node) }
+                            />
                         </div>
                     </div>
-                    <div className="list-body">
-                        <FileHierarchy
-                            hierarchy={ hierarchy }
-                            selectionCb={ (idx, node) => {
-                                setSelected(node);
-                            } }
-                        />
-                    </div>
-                </div> }
-                right={ selected == null ? <StubInfoView /> : selected.isFile ? <DocumentInfoView /> : <FolderInfoView /> }
+                }
+                right={ selectedItem == null ? <StubInfoView /> : selectedItem.isFile ? <DocumentInfoView /> : <FolderInfoView /> }
             />
             <Footer />
         </div>

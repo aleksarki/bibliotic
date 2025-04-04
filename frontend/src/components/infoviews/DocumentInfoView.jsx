@@ -1,3 +1,7 @@
+/*
+ * View displaying information about the document selected.
+ */
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFilePdf } from '@fortawesome/free-solid-svg-icons'
 

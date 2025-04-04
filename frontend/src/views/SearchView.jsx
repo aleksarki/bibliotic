@@ -1,3 +1,7 @@
+/*
+ * View for search of user documents.
+ */
+
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import TwoPanels from "../components/TwoPanels";

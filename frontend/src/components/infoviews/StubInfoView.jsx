@@ -1,3 +1,7 @@
+/*
+ * Infoview that is shown when no item is selected.
+ */
+
 import "./InfoView.scss";
 
 function StubInfoView() {

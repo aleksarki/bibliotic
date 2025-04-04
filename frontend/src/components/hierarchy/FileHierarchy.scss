@@ -5,7 +5,8 @@
     flex-direction: column;
     gap: 10px;
 
-    .h-sep {
+    // Separation line between list items.
+    .item-separator {
         border-bottom: 1px solid var(--primary-fg-color);
     }
 }

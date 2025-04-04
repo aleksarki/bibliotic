@@ -1,3 +1,7 @@
+/*
+ * View for managing the apllication options.
+ */
+
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import TwoPanels from "../components/TwoPanels";

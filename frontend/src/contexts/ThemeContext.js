@@ -1,3 +1,7 @@
+/*
+ * Context providing information of currently used theme.
+ */
+
 import { createContext, useContext, useEffect, useState } from "react";
 
 export const themes = {

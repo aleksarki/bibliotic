@@ -1,7 +1,11 @@
+/*
+ * Header with navigation links.
+ */
+
 import { NavLink } from 'react-router-dom';
 
-import './Header.scss';
 import biblio from '../images/biblio.png';
+import './Header.scss';
 
 function Header({ pageTitle, pageIndex }) {
     const links = [
@@ -22,9 +26,9 @@ function Header({ pageTitle, pageIndex }) {
     return (
         <div className="Header">
             <div className="title-block">
-                <img src={ biblio } className="logo" alt="logo" />
-                <span className="biblio">Библиотик</span>
-                <span className="title">{ pageTitle }</span>
+                <img src={ biblio } className="app-logo" alt="logo" />
+                <span className="app-title">Библиотик</span>
+                <span className="view-title">{ pageTitle }</span>
             </div>
             <div className="nav-block">{
                 links.map((link, index) => (

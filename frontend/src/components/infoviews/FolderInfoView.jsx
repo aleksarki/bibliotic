@@ -1,3 +1,7 @@
+/*
+ * View displaying information about the folder selected.
+ */
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFolder } from '@fortawesome/free-solid-svg-icons'
 

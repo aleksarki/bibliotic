@@ -1,3 +1,7 @@
+/*
+ * A button.
+ */
+
 import "./Button.scss";
 
 export const buttonColors = {
@@ -6,9 +10,7 @@ export const buttonColors = {
 }
 
 function Button({ text, color, onClick }) {
-    return (
-        <div className={ "Button " + color } onClick={ onClick }>{ text }</div>
-    );
+    return <div className={ "Button " + color } onClick={ onClick }>{ text }</div>;
 }
 
 export default Button;

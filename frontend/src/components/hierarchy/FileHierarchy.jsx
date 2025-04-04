@@ -1,12 +1,14 @@
-import HierarchyItem from "./HierarchyItem";
+/*
+ * Component for displaying folder-document hierarchy.
+ */
 
 import { useState } from "react";
 
+import HierarchyItem from "./HierarchyItem";
+
 import "./FileHierarchy.scss";
 
-function FileHierarchy({ hierarchy, selectionCb }) {
-    const [selected, setSelected] = useState(null);
-
+function treeVisitor(selectedIndex, setSelectedIndex, onItemSelectionCb) {
     let level = 0;
     let index = 0;
 
@@ -14,40 +16,43 @@ function FileHierarchy({ hierarchy, selectionCb }) {
         ++level;
         const items = [];
 
-        items.push(<HierarchyItem
-            index={ index }
-            text={ node.title }
-            level={ level }
-            isFile={ node.isFile }
-            isSelected={ index == selected }
-            clickCb={ (idx) => {
-                setSelected(idx);
-                selectionCb(idx, node);
-            } }
-        />);
-        items.push(<div className="h-sep" />);
-
+        items.push(
+            <HierarchyItem
+                index={ index }
+                text={ node.title }
+                level={ level }
+                isFile={ node.isFile }
+                isSelected={ index == selectedIndex }
+                onClickCb={ (idx) => {
+                    setSelectedIndex(idx);
+                    onItemSelectionCb(node);
+                } }
+            />
+        );
+        items.push(<div className="item-separator" />);
         ++index;
 
-        if (node.children) {
-            node.children.forEach(child => {
-                items.push(...visit(child));
-            });
-        }
+        node.children?.forEach(child => {
+            items.push(...visit(child));
+        });
 
         --level;
         return items;
     }
 
-    const tree = visit(hierarchy);
-    tree.pop();
+    return function(node) {
+        const list = visit(node);
+        list.pop();
+        return list;
+    };
+}
 
+function FileHierarchy({ hierarchy, onItemSelectionCb }) {
+    const [selectedIndex, setSelectedIndex] = useState(null);
 
-    return (
-        <div className="FileHierarchy">
-            { tree }
-        </div>
-    );
+    const toItemsAndSeparators = treeVisitor(selectedIndex, setSelectedIndex, onItemSelectionCb);
+
+    return <div className="FileHierarchy">{ toItemsAndSeparators(hierarchy) }</div>;
 }
 
 export default FileHierarchy;

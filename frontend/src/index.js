@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import reportWebVitals from "./reportWebVitals";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import reportWebVitals from "./reportWebVitals";
 
 import CatalogueView from "./views/CatalogueView";
 import ErrorView from "./views/ErrorView";
@@ -30,7 +30,6 @@ const router = createBrowserRouter([
     element: <OptionsView />
   }
 ]);
-
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(

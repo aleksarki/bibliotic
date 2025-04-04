@@ -5,18 +5,16 @@
     flex-direction: row;
     justify-content: space-between;
 
-    .title {
+    // Name of the item.
+    .item-title {
         display: flex;
         flex-direction: row;
         align-items: center;
         gap: 5px;
     }
 
-    .selected-title {
-        color: black;
-    }
-
-    .label-selected {
+    // Label indicating that item was selected.
+    .item-selection-label {
         font-style: italic;
         color: gray;
     }
@@ -25,4 +23,9 @@
 .HierarchyItem:hover {
     margin: -1px;
     border: 1px solid var(--primary-fg-color);
+}
+
+// When item was selected.
+.selected-item {
+    background-color: lemonchiffon;
 }

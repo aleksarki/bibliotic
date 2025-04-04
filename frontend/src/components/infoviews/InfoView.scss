@@ -1,6 +1,11 @@
+/*
+ * Style common to different infoviews.
+ */
+
 .InfoView {
     padding: 10px;
 
+    // Name of the infoview.
     .view-title {
         display: flex;
         flex-direction: row;

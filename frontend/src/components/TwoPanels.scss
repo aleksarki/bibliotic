@@ -7,16 +7,23 @@
     margin-left: 30px;
     margin-right: 30px;
 
+    // Common style for both panels.
+    .panel {
+        flex-grow: 1;
+    }
+
+    // Left panel.
     .panel-left {
+        @extend .panel;
+
         border-left: 1px solid var(--primary-fg-color);
         border-right: 1px solid var(--primary-fg-color);
     }
 
+    // Right panel.
     .panel-right {
-        border-right: 1px solid var(--primary-fg-color);
-    }
+        @extend .panel;
 
-    .panel {
-        flex-grow: 1;
+        border-right: 1px solid var(--primary-fg-color);
     }
 }

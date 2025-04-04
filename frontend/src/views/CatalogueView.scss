@@ -4,11 +4,12 @@
 .CatalogueView {
     @extend .View;
 
-    /* Widget for displaying document hierarchy. */
-    .doc-list {
+    // Content of the left panel.
+    .left-panel-content {
         padding: 10px;
         
-        .list-head {
+        // Header above the hierarchy component.
+        .hierarchy-head {
             padding-bottom: 10px;
             border-bottom: 1px solid var(--primary-fg-color);
             
@@ -17,7 +18,8 @@
             flex-wrap: wrap;
             justify-content: space-between;
 
-            .list-header-right-side {
+            // Box of buttons on the right.
+            .hierarchy-head-right-box {
                 display: flex;
                 flex-direction: row;
                 flex-wrap: wrap;
@@ -26,7 +28,8 @@
             }
         }
 
-        .list-body {
+        // Document hierarchy.
+        .hierarchy-body {
             padding-top: 10px;
         }
     }
