@@ -3,10 +3,14 @@
 .FileHierarchy {            
     display: flex;
     flex-direction: column;
-    gap: 10px;
+
+    height: 100%;
+    overflow: hidden;
+    padding: var(--hierarchy-padding-gap);
+    gap: var(--hierarchy-padding-gap);
 
     // Separation line between list items.
     .item-separator {
-        border-bottom: 1px solid var(--primary-fg-color);
+        border-bottom: var(--general-sep-border);
     }
 }

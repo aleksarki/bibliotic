@@ -6,6 +6,7 @@
 import { useState } from "react";
 
 import Button, { buttonColors } from "../components/ui/Button";
+import ButtonBox from "../components/ui/ButtonBox";
 import DocumentInfoView from "../components/infoviews/DocumentInfoView";
 import FileHierarchy from "../components/hierarchy/FileHierarchy";
 import FolderInfoView from "../components/infoviews/FolderInfoView";
@@ -36,10 +37,12 @@ function CatalogueView() {
                 left={
                     <div className="left-panel-content">
                         <div className="hierarchy-head">
-                            <Button text="Сортировка" color={ buttonColors.blue } />
+                            <Button text="Сортировка" style={ buttonColors.BLUE } />
                             <div className="hierarchy-head-right-box">
-                                <Button text="Создать папку" color={ buttonColors.green } />
-                                <Button text="Добавить файл" color={ buttonColors.green } />
+                                <ButtonBox gap={ 10 } buttons={ [
+                                    <Button text="Создать папку" style={ buttonColors.GREEN } />,
+                                    <Button text="Добавить файл" style={ buttonColors.GREEN } />
+                                ] } />
                             </div>
                         </div>
                         <div className="hierarchy-body">

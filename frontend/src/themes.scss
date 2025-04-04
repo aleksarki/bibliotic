@@ -3,11 +3,83 @@
  */
 
 :root[data-theme="light"] {
+    /* General */
     --primary-fg-color: black;
     --primary-bg-color: white;
+    --general-sep-border: 1px solid black;
+
+    /* Bars */
+    --bar-bg-color: white;
+
+    /* Buttons */
+    --btn-blue-fg-color: white;
+    --btn-blue-bg-color: hsl(240, 100%, 50%);
+    --btn-blue-bg-color-hover: hsl(240, 100%, 70%);
+    --btn-blue-bg-color-active: hsl(240, 100%, 25%);
+
+    --btn-green-fg-color: white;
+    --btn-green-bg-color: hsl(120, 100%, 25%);
+    --btn-green-bg-color-hover: hsl(120, 100%, 35%);
+    --btn-green-bg-color-active: hsl(120, 100%, 15%);
+
+    --btn-skeuo-fg-color: black;
+
+    /* Hierarchy */
+    --hierarchy-padding-gap: 5px;
 }
 
 :root[data-theme="dark"] {
+    /* General */
     --primary-fg-color: white;
     --primary-bg-color: black;
+    --general-sep-border: 1px solid white;
+
+    /* Bars */
+    --bar-bg-color: black;
+
+    /* Buttons */
+    --btn-blue-fg-color: white;
+    --btn-blue-bg-color: hsl(240, 100%, 50%);
+    --btn-blue-bg-color-hover: hsl(240, 100%, 70%);
+    --btn-blue-bg-color-active: hsl(240, 100%, 25%);
+
+    --btn-green-fg-color: white;
+    --btn-green-bg-color: hsl(120, 100%, 25%);
+    --btn-green-bg-color-hover: hsl(120, 100%, 35%);
+    --btn-green-bg-color-active: hsl(120, 100%, 15%);
+    
+    --btn-skeuo-fg-color: white;
+
+    /* Hierarchy */
+    --hierarchy-padding-gap: 5px;
+}
+
+:root[data-theme="skeuo"] {
+    /* General */
+    --primary-fg-color: black;
+    --primary-bg-color:  linear-gradient(0deg, hsl(0, 0%, 60%) 0%, hsl(0, 0%, 91%) 100%);
+    --general-sep-border: 1px solid gray;
+
+    /* Bars */
+    --bar-bg-color: rgb(167,167,167);
+    --bar-bg-gradient: linear-gradient(0deg, rgba(167,167,167,1) 0%, rgba(187,187,187,1) 10%, rgba(242,242,242,1) 90%, rgba(232,232,232,1) 100%);
+
+    /* Buttons */
+    --btn-blue-fg-color: white;
+    --btn-blue-bg-color: linear-gradient(0deg, hsl(220, 100%, 30%) 0%, hsl(220, 100%, 60%) 100%);
+    --btn-blue-bg-color-hover: linear-gradient(0deg, hsl(220, 100%, 40%) 0%, hsl(220, 100%, 70%) 100%);
+    --btn-blue-bg-color-active: linear-gradient(0deg, hsl(220, 100%, 50%) 0%, hsl(220, 100%, 30%) 100%);
+    --btn-blue-border: 1px solid hsl(240, 100%, 25%);
+    
+    --btn-green-fg-color: white;
+    --btn-green-bg-color: linear-gradient(0deg, hsl(120, 100%, 25%) 0%, hsl(120, 100%, 40%) 100%);
+    --btn-green-bg-color-hover: linear-gradient(0deg, hsl(120, 100%, 30%) 0%, hsl(120, 100%, 45%) 100%);
+    --btn-green-bg-color-active: linear-gradient(0deg, hsl(120, 100%, 40%) 0%, hsl(120, 100%, 25%) 100%);
+    --btn-green-border: 1px solid hsl(120, 100%, 15%);
+    
+    --btn-skeuo-fg-color: black;
+    --btn-skeuo-bg-color: linear-gradient(0deg, hsl(60, 1%, 75%) 0%, rgba(237,237,237,1) 100%);
+    --btn-skeuo-bg-color-hover: linear-gradient(0deg, hsl(60, 1%, 80%) 0%, hsl(0, 0%, 98%) 100%);
+    --btn-skeuo-bg-color-active: linear-gradient(0deg, hsl(0, 0%, 88%) 0%, hsl(60, 1%, 75%) 100%);
+    --btn-skeuo-border: 1px solid gray;
 }

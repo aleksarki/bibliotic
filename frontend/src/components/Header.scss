@@ -9,8 +9,9 @@
     align-items: center;
     justify-content: space-between;
 
-    border-bottom: 1px solid var(--primary-fg-color);
-    background-color: var(--primary-bg-color);
+    border-bottom: var(--general-sep-border);
+    background: var(--bar-bg-color);
+    background: var(--bar-bg-gradient);
 
     // Block on the left displaying title.
     .title-block {
@@ -38,9 +39,6 @@
 
     // Block on the right displaying links to other pages.
     .nav-block {
-        display: flex;
-        gap: 15px;
-
         // Link to a page.
         .link {
             text-decoration: none;

@@ -6,6 +6,8 @@ import { NavLink } from 'react-router-dom';
 
 import biblio from '../images/biblio.png';
 import './Header.scss';
+import Button, { buttonColors } from './ui/Button';
+import ButtonBox from './ui/ButtonBox';
 
 function Header({ pageTitle, pageIndex }) {
     const links = [
@@ -21,7 +23,19 @@ function Header({ pageTitle, pageIndex }) {
             title: 'Настройки',
             path: '/options'
         }
-    ]
+    ];
+
+    const buttons = links.map((link, index) => (
+        <Button style={ buttonColors.SKEUO } >
+            <NavLink
+                key={ index }
+                to={ link.path }
+                className={ ({ isActive }) => isActive ? "link current" : "link" }
+            >
+                { link.title }
+            </NavLink>
+        </Button>
+    ));
 
     return (
         <div className="Header">
@@ -30,17 +44,7 @@ function Header({ pageTitle, pageIndex }) {
                 <span className="app-title">Библиотик</span>
                 <span className="view-title">{ pageTitle }</span>
             </div>
-            <div className="nav-block">{
-                links.map((link, index) => (
-                    <NavLink
-                        key={ index }
-                        to={ link.path }
-                        className={ ({ isActive }) => isActive ? "link current" : "link" }
-                    >
-                        { link.title }
-                    </NavLink>
-                ))
-            }</div>
+            <div className="nav-block"><ButtonBox buttons={ buttons } gap={ 15 } /></div>
         </div>
     );
 }

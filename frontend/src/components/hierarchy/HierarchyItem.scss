@@ -4,6 +4,7 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    padding: 5px;
 
     // Name of the item.
     .item-title {
@@ -18,14 +19,30 @@
         font-style: italic;
         color: gray;
     }
-}
 
-.HierarchyItem:hover {
-    margin: -1px;
-    border: 1px solid var(--primary-fg-color);
+    &:hover {
+        margin: -1px;
+        color: black;
+        background: lemonchiffon;
+        border: var(--general-sep-border);
+    }
+
+    &:active {
+        margin: -1px;
+        background: wheat;
+        border: var(--general-sep-border);
+    }
 }
 
 // When item was selected.
 .selected-item {
-    background-color: lemonchiffon;
+    background: lemonchiffon;
+}
+
+.selected-item:hover {
+    background: white;
+}
+
+.selected-item:active {
+    background: lemonchiffon;
 }

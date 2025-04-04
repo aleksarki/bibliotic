@@ -5,12 +5,25 @@
 import "./Button.scss";
 
 export const buttonColors = {
-    blue: "btn-blue",
-    green: "btn-green"
+    BLUE: " btn-blue ",
+    GREEN: " btn-green ",
+    SKEUO: " btn-skeuo "
 }
 
-function Button({ text, color, onClick }) {
-    return <div className={ "Button " + color } onClick={ onClick }>{ text }</div>;
+export const buttonPositions = {
+    SOLE: " btn-sole ",
+    LEFT: " btn-left ",
+    MIDDLE: " btn-middle ",
+    RIGHT: " btn-right "
+}
+
+function Button({ text, children, style, onClick }) {
+    const positionNotProvided = Object.values(buttonPositions).every(position => !style.includes(position));
+    if (positionNotProvided) {
+        style += buttonPositions.SOLE;
+    }
+
+    return <div className={ "Button " + style } onClick={ onClick }>{ text }{ children }</div>;
 }
 
 export default Button;

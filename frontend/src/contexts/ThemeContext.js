@@ -5,11 +5,13 @@
 import { createContext, useContext, useEffect, useState } from "react";
 
 export const themes = {
-    light: "light",
-    dark: "dark",
-    skeuo: "skeuo"
+    LIGHT: "light",
+    DARK: "dark",
+    SKEUO: "skeuo"
     //skeuo_dark: "skeuo-dark"
 };
+
+export const skeuomorphThemes = [themes.SKEUO];
 
 export const ThemeContext = createContext({});
 
@@ -20,9 +22,9 @@ function getTheme() {
 
     const userMedia = window.matchMedia("(prefers-color-scheme: dark)");
     if (userMedia.matches)
-        return themes.dark;
+        return themes.DARK;
 
-    return themes.light;
+    return themes.LIGHT;
 }
 
 export function ThemeProvider({ children }) {

@@ -8,10 +8,11 @@
     align-items: center;
     gap: 10px;
 
-    border-top: 1px solid var(--primary-fg-color);
-    background-color: var(--primary-bg-color);
+    border-top: var(--general-sep-border);
+    background: var(--bar-bg-color);
+    background: var(--bar-bg-gradient);
 
-    // Nameo of the application.
+    // Name of the application.
     .app-title {
         margin-left: 10px;
         font-size: smaller;

@@ -15,8 +15,9 @@ function Footer() {
             <span className="app-title">Библиотик. 2025</span>
             <a href="https://github.com/aleksarki/bibliotic" className="app-repo">Gitbub Repo</a>
             { /* temporary solution */ }
-            <Button text="Light" color={ buttonColors.blue } onClick={ () => setTheme(themes.light) } />
-            <Button text="Dark" color={ buttonColors.blue } onClick={ () => setTheme(themes.dark) } />
+            <Button text="Light" style={ buttonColors.BLUE } onClick={ () => setTheme(themes.LIGHT) } />
+            <Button text="Dark" style={ buttonColors.BLUE } onClick={ () => setTheme(themes.DARK) } />
+            <Button text="Skeuo" style={ buttonColors.BLUE } onClick={ () => setTheme(themes.SKEUO) } />
         </div>
     );
 }

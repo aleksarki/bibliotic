@@ -1,20 +1,68 @@
+@import '../../themes.scss';
+
 .Button {
-    padding-top: 7px;
-    padding-bottom: 7px;
-    padding-left: 14px;
-    padding-right: 14px;
-    border-radius: 5px;
+    padding: 7px 14px;
     cursor: pointer;
+}
+
+.btn-sole {
+    border-radius: 8px;
+}
+
+.btn-left {
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+}
+
+.btn-middle {
+}
+
+.btn-right {
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
 }
 
 // Blue button.
 .btn-blue {
-    color: white;
-    background-color: blue;
+    color: var(--btn-blue-fg-color);
+    background: var(--btn-blue-bg-color);
+    border: var(--btn-blue-border);
+
+    &:hover {
+        background: var(--btn-blue-bg-color-hover);
+    }
+    
+    &:active {
+        background: var(--btn-blue-bg-color-active);
+    }
 }
 
 // Green button.
 .btn-green {
-    color: white;
-    background-color: green;
+    color: var(--btn-green-fg-color);
+    background: var(--btn-green-bg-color);
+    border: var(--btn-green-border);
+
+    &:hover {
+        background: var(--btn-green-bg-color-hover);
+    }
+    
+    &:active {
+        background: var(--btn-green-bg-color-active);
+    }
+}
+
+// Skeuomorph button.
+.btn-skeuo {
+    color: var(--btn-skeuo-fg-color);
+    background: var(--btn-skeuo-bg-color);
+    border: var(--btn-skeuo-border);
+
+    &:hover {
+        background: var(--btn-skeuo-bg-color-hover);
+    }
+    
+    &:active {
+        background: var(--btn-skeuo-bg-color-active);
+    }
 }
