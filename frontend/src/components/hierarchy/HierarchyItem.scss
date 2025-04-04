@@ -21,28 +21,31 @@
     }
 
     &:hover {
-        margin: -1px;
         color: black;
-        background: lemonchiffon;
+        background: var(--h-item-hover-background);
         border: var(--general-sep-border);
+        margin: -1px;
     }
 
     &:active {
-        margin: -1px;
-        background: wheat;
+        background: var(--h-item-active-background);
         border: var(--general-sep-border);
+        margin: -1px;
     }
 }
 
 // When item was selected.
 .selected-item {
-    background: lemonchiffon;
-}
+    background: var(--h-item-selected-background);
+    box-shadow: var(--h-item-selected-box-shadow);
+    border: var(--general-sep-border);
+    margin: -1px;
 
-.selected-item:hover {
-    background: white;
-}
+    &:hover {
+        background: var(--h-item-selected-hover-background);
+    }
 
-.selected-item:active {
-    background: lemonchiffon;
+    &:active {
+        background: var(--h-item-selected-active-background);
+    }
 }

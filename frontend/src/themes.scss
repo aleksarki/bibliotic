@@ -26,6 +26,14 @@
 
     /* Hierarchy */
     --hierarchy-padding-gap: 5px;
+
+    /* Hierarchy item */
+    --h-item-hover-background: lemonchiffon;
+    --h-item-active-background: wheat;
+
+    --h-item-selected-background: lemonchiffon;
+    --h-item-selected-hover-background: white;
+    --h-item-selected-active-background: lemonchiffon;
 }
 
 :root[data-theme="dark"] {
@@ -52,12 +60,20 @@
 
     /* Hierarchy */
     --hierarchy-padding-gap: 5px;
+
+    /* Hierarchy item */
+    --h-item-hover-background: lemonchiffon;
+    --h-item-active-background: wheat;
+
+    --h-item-selected-background: white;
+    --h-item-selected-hover-background: lemonchiffon;
+    --h-item-selected-active-background: wheat;
 }
 
 :root[data-theme="skeuo"] {
     /* General */
     --primary-fg-color: black;
-    --primary-bg-color:  linear-gradient(0deg, hsl(0, 0%, 60%) 0%, hsl(0, 0%, 91%) 100%);
+    --primary-bg-color:  linear-gradient(0deg, hsl(0, 0%, 80%) 0%, hsl(0, 0%, 91%) 100%);
     --general-sep-border: 1px solid gray;
 
     /* Bars */
@@ -66,20 +82,47 @@
 
     /* Buttons */
     --btn-blue-fg-color: white;
-    --btn-blue-bg-color: linear-gradient(0deg, hsl(220, 100%, 30%) 0%, hsl(220, 100%, 60%) 100%);
-    --btn-blue-bg-color-hover: linear-gradient(0deg, hsl(220, 100%, 40%) 0%, hsl(220, 100%, 70%) 100%);
-    --btn-blue-bg-color-active: linear-gradient(0deg, hsl(220, 100%, 50%) 0%, hsl(220, 100%, 30%) 100%);
-    --btn-blue-border: 1px solid hsl(240, 100%, 25%);
+    --btn-blue-bg-color: linear-gradient(0deg, hsl(220, 100%, 30%) 0%, hsl(220, 100%, 62%) 100%);
+    --btn-blue-bg-color-hover: linear-gradient(0deg, hsl(220, 100%, 40%) 0%, hsl(220, 100%, 65%) 100%);
+    --btn-blue-bg-color-active: linear-gradient(0deg, hsl(220, 100%, 24%) 0%, hsl(220, 100%, 55%) 100%);
+    --btn-blue-border: 1px solid hsl(220, 100%, 25%);
+    --btn-blue-box-shadow:
+        inset 1px 1px 3px hsl(220, 100%, 45%),
+        inset -1px -1px 3px hsl(220, 100%, 35%);
     
     --btn-green-fg-color: white;
     --btn-green-bg-color: linear-gradient(0deg, hsl(120, 100%, 25%) 0%, hsl(120, 100%, 40%) 100%);
-    --btn-green-bg-color-hover: linear-gradient(0deg, hsl(120, 100%, 30%) 0%, hsl(120, 100%, 45%) 100%);
-    --btn-green-bg-color-active: linear-gradient(0deg, hsl(120, 100%, 40%) 0%, hsl(120, 100%, 25%) 100%);
+    --btn-green-bg-color-hover: linear-gradient(0deg, hsl(120, 100%, 30%) 0%, hsl(120, 100%, 42%) 100%);
+    --btn-green-bg-color-active: linear-gradient(0deg, hsl(120, 100%, 18%) 0%, hsl(120, 100%, 35%) 100%);
     --btn-green-border: 1px solid hsl(120, 100%, 15%);
+    --btn-green-box-shadow:
+        inset 1px 1px 3px hsl(120, 100%, 30%),
+        inset -1px -1px 3px hsl(120, 100%, 20%);
     
     --btn-skeuo-fg-color: black;
-    --btn-skeuo-bg-color: linear-gradient(0deg, hsl(60, 1%, 75%) 0%, rgba(237,237,237,1) 100%);
-    --btn-skeuo-bg-color-hover: linear-gradient(0deg, hsl(60, 1%, 80%) 0%, hsl(0, 0%, 98%) 100%);
-    --btn-skeuo-bg-color-active: linear-gradient(0deg, hsl(0, 0%, 88%) 0%, hsl(60, 1%, 75%) 100%);
+    --btn-skeuo-bg-color: linear-gradient(0deg, hsl(60, 1%, 75%) 0%, hsl(0, 0%, 98%) 100%);
+    --btn-skeuo-bg-color-hover: linear-gradient(0deg, hsl(60, 1%, 80%) 0%, hsl(0, 0%, 100%) 100%);
+    --btn-skeuo-bg-color-active: linear-gradient(0deg, hsl(60, 1%, 65%) 0%, hsl(0, 0%, 95%) 100%);
     --btn-skeuo-border: 1px solid gray;
+    --btn-skeuo-box-shadow:
+        inset 1px 1px 3px hsl(0, 0%, 75%),
+        inset -1px -1px 3px hsl(0, 0%, 65%);
+
+    /* Hierarchy */
+    --hierarchy-background: hsl(0, 0%, 88%);
+    --hierarchy-box-shadow:
+        inset 7px 7px 20px hsl(0, 0%, 70%),
+        inset -7px -7px 20px hsl(0, 0%, 100%);
+    
+    /* Hierarchy item */
+    --h-item-hover-background: lemonchiffon;
+    --h-item-active-background: wheat;
+
+    --h-item-selected-background: hsl(0, 0%, 98%);
+    --h-item-selected-box-shadow:
+        inset -5px -5px 15px hsl(0, 0%, 78%),
+        inset 5px 5px 15px hsl(0, 0%, 90%);
+
+    --h-item-selected-hover-background: lemonchiffon;
+    --h-item-selected-active-background: wheat;
 }

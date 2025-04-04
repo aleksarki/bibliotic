@@ -27,6 +27,7 @@
     color: var(--btn-blue-fg-color);
     background: var(--btn-blue-bg-color);
     border: var(--btn-blue-border);
+    box-shadow: var(--btn-blue-box-shadow);
 
     &:hover {
         background: var(--btn-blue-bg-color-hover);
@@ -42,6 +43,7 @@
     color: var(--btn-green-fg-color);
     background: var(--btn-green-bg-color);
     border: var(--btn-green-border);
+    box-shadow: var(--btn-green-box-shadow);
 
     &:hover {
         background: var(--btn-green-bg-color-hover);
@@ -57,6 +59,7 @@
     color: var(--btn-skeuo-fg-color);
     background: var(--btn-skeuo-bg-color);
     border: var(--btn-skeuo-border);
+    box-shadow: var(--btn-skeuo-box-shadow);
 
     &:hover {
         background: var(--btn-skeuo-bg-color-hover);

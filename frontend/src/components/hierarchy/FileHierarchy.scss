@@ -8,7 +8,10 @@
     overflow: hidden;
     padding: var(--hierarchy-padding-gap);
     gap: var(--hierarchy-padding-gap);
-
+    
+    background: var(--hierarchy-background);
+    box-shadow: var(--hierarchy-box-shadow);
+    
     // Separation line between list items.
     .item-separator {
         border-bottom: var(--general-sep-border);
