@@ -75,10 +75,11 @@
     --primary-fg-color: black;
     --primary-bg-color:  linear-gradient(0deg, hsl(0, 0%, 80%) 0%, hsl(0, 0%, 91%) 100%);
     --general-sep-border: 1px solid gray;
+    --right-panel-background: repeating-linear-gradient(to bottom, #eee 0px, #eee 2px, #fff 2px, #fff 4px);
 
     /* Bars */
     --bar-bg-color: rgb(167,167,167);
-    --bar-bg-gradient: linear-gradient(0deg, rgba(167,167,167,1) 0%, rgba(187,187,187,1) 10%, rgba(242,242,242,1) 90%, rgba(232,232,232,1) 100%);
+    --bar-bg-gradient: linear-gradient(0deg, hsl(0, 0%, 65%) 0%, hsl(0, 0%, 73%) 10%, hsl(0, 0%, 95%) 90%, hsl(0, 0%, 91%) 100%);
 
     /* Buttons */
     --btn-blue-fg-color: white;
@@ -115,14 +116,29 @@
         inset -7px -7px 20px hsl(0, 0%, 100%);
     
     /* Hierarchy item */
-    --h-item-hover-background: lemonchiffon;
-    --h-item-active-background: wheat;
+    --h-item-common-gradient:
+        linear-gradient(hsl(0 0% 100% / 0.85), transparent 10px),
+        linear-gradient(hsl(0 0% 100% / 0.25) 10px, transparent 10px),
+        radial-gradient(circle at 10px 5px, hsl(0 0% 100% / 0.25) 5px, transparent 5px),
+        radial-gradient(circle at 0px 5px, hsl(0 0% 100% / 0.25) 5px, transparent 5px);
 
-    --h-item-selected-background: hsl(0, 0%, 98%);
-    --h-item-selected-box-shadow:
-        inset -5px -5px 15px hsl(0, 0%, 78%),
-        inset 5px 5px 15px hsl(0, 0%, 90%);
+    --h-item-hover-background: 
+        var(--h-item-common-gradient),
+        linear-gradient(hsl(67, 82%, 87%), hsl(35, 95%, 92%));
 
-    --h-item-selected-hover-background: lemonchiffon;
-    --h-item-selected-active-background: wheat;
+    --h-item-active-background:
+        var(--h-item-common-gradient),
+        linear-gradient(hsl(47, 82%, 87%), hsl(15, 95%, 92%));
+
+    --h-item-selected-background:
+        var(--h-item-common-gradient),
+        linear-gradient(hsl(213, 82%, 87%), hsl(181, 95%, 92%));
+
+    --h-item-selected-hover-background:
+        var(--h-item-common-gradient),
+        linear-gradient(hsl(67, 82%, 87%), hsl(35, 95%, 92%));
+
+    --h-item-selected-active-background:
+        var(--h-item-common-gradient),
+        linear-gradient(hsl(47, 82%, 87%), hsl(15, 95%, 92%));
 }

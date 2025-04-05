@@ -24,6 +24,8 @@
     .panel-right {
         @extend .panel;
 
+        background: var(--right-panel-background);
+
         border-right: var(--general-sep-border);
     }
 }
