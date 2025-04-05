@@ -4,6 +4,8 @@
 
 .InfoView {
     padding: 10px;
+    display: grid;
+    grid: auto auto / auto auto;
 
     // Name of the infoview.
     .view-title {
@@ -14,5 +16,12 @@
         margin: 10px;
         font-size: larger;
         font-weight: 500;
+    }
+
+    .button-area {
+        display: flex;
+        flex-flow: column;
+        gap: 10px;
+        align-items: flex-end;
     }
 }

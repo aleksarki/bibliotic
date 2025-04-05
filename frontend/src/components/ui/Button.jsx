@@ -7,7 +7,9 @@ import "./Button.scss";
 export const buttonColors = {
     BLUE: " btn-blue ",
     GREEN: " btn-green ",
-    SKEUO: " btn-skeuo "
+    RED: " btn-red ",
+    SKEUO: " btn-skeuo ",
+    YELLOW: " btn-yellow "
 }
 
 export const buttonPositions = {
@@ -23,7 +25,12 @@ function Button({ text, children, style, onClick }) {
         style += buttonPositions.SOLE;
     }
 
-    return <div className={ "Button " + style } onClick={ onClick }>{ text }{ children }</div>;
+    return (
+        <div className={ "Button " + style } onClick={ onClick }>
+            { text && <span>{ text }</span> }
+            { children }
+        </div>
+    );
 }
 
 export default Button;
