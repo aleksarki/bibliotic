@@ -30,83 +30,83 @@
 
 // Blue button.
 .btn-blue {
-    color: var(--btn-blue-color);
-    background: var(--btn-blue-background);
-    border: var(--btn-blue-border);
-    box-shadow: var(--btn-blue-box-shadow);
-    text-shadow: var(--btn-blue-text-shadow);
+    color: var(--btn-blue--color);
+    background: var(--btn-blue--background);
+    border: var(--btn-blue--border);
+    box-shadow: var(--btn-blue--box-shadow);
+    text-shadow: var(--btn-blue--text-shadow);
 
     &:hover {
-        background: var(--btn-blue-background-hover);
+        background: var(--btn-blue-hover--background);
     }
     
     &:active {
-        background: var(--btn-blue-background-active);
+        background: var(--btn-blue-active--background);
     }
 }
 
 // Green button.
 .btn-green {
-    color: var(--btn-green-color);
-    background: var(--btn-green-background);
-    border: var(--btn-green-border);
-    box-shadow: var(--btn-green-box-shadow);
-    text-shadow: var(--btn-green-text-shadow);
+    color: var(--btn-green--color);
+    background: var(--btn-green--background);
+    border: var(--btn-green--border);
+    box-shadow: var(--btn-green--box-shadow);
+    text-shadow: var(--btn-green--text-shadow);
 
     &:hover {
-        background: var(--btn-green-background-hover);
+        background: var(--btn-green-hover--background);
     }
     
     &:active {
-        background: var(--btn-green-background-active);
+        background: var(--btn-green-active--background);
     }
 }
 
 // Red button.
 .btn-red {
-    color: var(--btn-red-color);
-    background: var(--btn-red-background);
-    border: var(--btn-red-border);
-    box-shadow: var(--btn-red-box-shadow);
+    color: var(--btn-red--color);
+    background: var(--btn-red--background);
+    border: var(--btn-red--border);
+    box-shadow: var(--btn-red--box-shadow);
 
     &:hover {
-        background: var(--btn-red-background-hover);
+        background: var(--btn-red-hover--background);
     }
     
     &:active {
-        background: var(--btn-red-background-active);
+        background: var(--btn-red-active--background);
     }
 }
 
 // Skeuomorph button.
 .btn-skeuo {
-    color: var(--btn-skeuo-color);
-    background: var(--btn-skeuo-background);
-    border: var(--btn-skeuo-border);
-    box-shadow: var(--btn-skeuo-box-shadow);
+    color: var(--btn-skeuo--color);
+    background: var(--btn-skeuo--background);
+    border: var(--btn-skeuo--border);
+    box-shadow: var(--btn-skeuo--box-shadow);
     text-shadow: 1px 1px 1px hsl(0, 0%, 95%);
 
     &:hover {
-        background: var(--btn-skeuo-background-hover);
+        background: var(--btn-skeuo-hover--background);
     }
     
     &:active {
-        background: var(--btn-skeuo-background-active);
+        background: var(--btn-skeuo-active--background);
     }
 }
 
 // Yellow button.
 .btn-yellow {
-    color: var(--btn-yellow-color);
-    background: var(--btn-yellow-background);
-    border: var(--btn-yellow-border);
-    box-shadow: var(--btn-yellow-box-shadow);
+    color: var(--btn-yellow--color);
+    background: var(--btn-yellow--background);
+    border: var(--btn-yellow--border);
+    box-shadow: var(--btn-yellow--box-shadow);
 
     &:hover {
-        background: var(--btn-yellow-background-hover);
+        background: var(--btn-yellow-hover--background);
     }
     
     &:active {
-        background: var(--btn-yellow-background-active);
+        background: var(--btn-yellow-active--background);
     }
 }

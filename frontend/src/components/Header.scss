@@ -9,9 +9,8 @@
     align-items: center;
     justify-content: space-between;
 
-    border-bottom: var(--general-sep-border);
-    background: var(--bar-bg-color);
-    background: var(--bar-bg-gradient);
+    border-bottom: var(--general-sep--border);
+    background: var(--bar--background);
 
     // Block on the left displaying title.
     .title-block {
@@ -43,7 +42,7 @@
         // Link to a page.
         .link {
             text-decoration: none;
-            color: var(--primary-fg-color);
+            color: var(--general-fg--color);
         }
 
         // Link to the currently opened page.

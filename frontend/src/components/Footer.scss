@@ -8,9 +8,8 @@
     align-items: center;
     gap: 10px;
 
-    border-top: var(--general-sep-border);
-    background: var(--bar-bg-color);
-    background: var(--bar-bg-gradient);
+    border-top: var(--general-sep--border);
+    background: var(--bar--background);
 
     // Name of the application.
     .app-title {

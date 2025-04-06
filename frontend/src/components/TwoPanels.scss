@@ -16,8 +16,8 @@
     .panel-left {
         @extend .panel;
 
-        border-left: var(--general-sep-border);
-        border-right: var(--general-sep-border);
+        border-left: var(--general-sep--border);
+        border-right: var(--general-sep--border);
     }
 
     // Right panel.
@@ -26,6 +26,6 @@
 
         background: var(--right-panel-background);
 
-        border-right: var(--general-sep-border);
+        border-right: var(--general-sep--border);
     }
 }

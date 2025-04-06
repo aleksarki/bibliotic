@@ -14,14 +14,16 @@ function HierarchyItem({ index, text, level, isFile, isSelected, onClickCb }) {
             className={ "HierarchyItem" + (isSelected ? " selected-item" : "") }
             onClick={ () => onClickCb(index) }
         >
-            <div
-                className="item-title"
-                style={ {marginLeft: level*20 + 'px', color: isSelected && 'black'} }
-            >
-                <FontAwesomeIcon icon={ isFile ? faFilePdf : faFolder } />
-                <span style={ {fontStyle: isFile ? 'normal' : 'italic'} }>{ text }</span>
+            <div className="item-box">
+                <div
+                    className="item-title"
+                    style={ {marginLeft: level*20 + 'px', color: isSelected && 'black'} }
+                >
+                    <FontAwesomeIcon icon={ isFile ? faFilePdf : faFolder } />
+                    <span style={ {fontStyle: isFile ? 'normal' : 'italic'} }>{ text }</span>
+                </div>
+                <div>{ isSelected && <span className="item-selection-label">Выбрано</span> }</div>
             </div>
-            <div>{ isSelected && <span className="item-selection-label">Выбрано</span> }</div>
         </div>
     );
 }

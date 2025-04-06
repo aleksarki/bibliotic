@@ -29,30 +29,23 @@ function treeVisitor(selectedIndex, setSelectedIndex, onItemSelectionCb) {
                 } }
             />
         );
-        items.push(<div className="item-separator" />);
         ++index;
 
-        node.children?.forEach(child => {
-            items.push(...visit(child));
-        });
+        node.children?.forEach(child => items.push(...visit(child)));
 
         --level;
         return items;
     }
 
-    return function(node) {
-        const list = visit(node);
-        list.pop();
-        return list;
-    };
+    return (node) => visit(node);
 }
 
 function FileHierarchy({ hierarchy, onItemSelectionCb }) {
     const [selectedIndex, setSelectedIndex] = useState(null);
 
-    const toItemsAndSeparators = treeVisitor(selectedIndex, setSelectedIndex, onItemSelectionCb);
+    const toItems = treeVisitor(selectedIndex, setSelectedIndex, onItemSelectionCb);
 
-    return <div className="FileHierarchy">{ toItemsAndSeparators(hierarchy) }</div>;
+    return <div className="FileHierarchy">{ toItems(hierarchy) }</div>;
 }
 
 export default FileHierarchy;

@@ -1,51 +1,54 @@
 @import '../../themes.scss';
 
 .HierarchyItem {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    padding: 5px;
+    border-bottom: var(--general-sep--border);
 
-    // Name of the item.
-    .item-title {
+    // Inner wrapping box.
+    .item-box {
         display: flex;
         flex-direction: row;
-        align-items: center;
-        gap: 5px;
+        justify-content: space-between;
+        margin: var(--h-item-box--margin);
+        padding: var(--h-item-box--padding);
+
+        // Name of the item.
+        .item-title {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 5px;
+        }
+
+        // Label indicating that item was selected.
+        .item-selection-label {
+            font-style: italic;
+            color: gray;
+        }
     }
 
-    // Label indicating that item was selected.
-    .item-selection-label {
-        font-style: italic;
-        color: gray;
-    }
-
-    &:hover {
+    &:hover .item-box {
         color: black;
-        background: var(--h-item-hover-background);
-        border: var(--general-sep-border);
-        margin: -1px;
+        background: var(--h-item-hover-box--background);
+        box-shadow: var(--h-item-hover-box--box-shadow);
     }
 
-    &:active {
-        background: var(--h-item-active-background);
-        border: var(--general-sep-border);
-        margin: -1px;
+    &:active .item-box {
+        background: var(--h-item-active-box--background);
     }
 }
 
 // When item was selected.
 .selected-item {
-    background: var(--h-item-selected-background);
-    box-shadow: var(--h-item-selected-box-shadow);
-    border: var(--general-sep-border);
-    margin: -1px;
-
-    &:hover {
-        background: var(--h-item-selected-hover-background);
+    .item-box {
+        background: var(--h-selected-item-box--background);
+        box-shadow: var(--h-selected-item-box--box-shadow); 
+    }
+    
+    &:hover .item-box {
+        background: var(--h-selected-item-hover-box--background);
     }
 
-    &:active {
-        background: var(--h-item-selected-active-background);
+    &:active .item-box {
+        background: var(--h-selected-item-active-box--background);
     }
 }

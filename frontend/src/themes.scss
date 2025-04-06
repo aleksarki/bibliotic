@@ -4,181 +4,187 @@
 
 :root[data-theme="light"] {
     /* General */
-    --primary-fg-color: black;
-    --primary-bg-color: white;
-    --general-sep-border: 1px solid black;
+    --general-fg--color: black;
+    --general-bg--background: white;
+    --general-sep--border: 1px solid black;
 
     /* Bars */
-    --bar-bg-color: white;
+    --bar--background: white;
 
     /* Buttons */
-    --btn-blue-color: white;
-    --btn-blue-background: hsl(240, 100%, 50%);
-    --btn-blue-background-hover: hsl(240, 100%, 70%);
-    --btn-blue-background-active: hsl(240, 100%, 25%);
+    --btn-blue--color: white;
+    --btn-blue--background: hsl(240, 100%, 50%);
+    --btn-blue-hover--background: hsl(240, 100%, 70%);
+    --btn-blue-active--background: hsl(240, 100%, 25%);
 
-    --btn-green-color: white;
-    --btn-green-background: hsl(120, 100%, 25%);
-    --btn-green-background-hover: hsl(120, 100%, 35%);
-    --btn-green-background-active: hsl(120, 100%, 15%);
+    --btn-green--color: white;
+    --btn-green--background: hsl(120, 100%, 25%);
+    --btn-green-hover--background: hsl(120, 100%, 35%);
+    --btn-green-active--background: hsl(120, 100%, 15%);
     
-    --btn-red-color: white;
-    --btn-red-background: hsl(0, 100%, 45%);
-    --btn-red-background-hover: hsl(0, 100%, 65%);
-    --btn-red-background-active: hsl(0, 100%, 40%);
+    --btn-red--color: white;
+    --btn-red--background: hsl(0, 100%, 45%);
+    --btn-red-hover--background: hsl(0, 100%, 65%);
+    --btn-red-active--background: hsl(0, 100%, 40%);
 
-    --btn-skeuo-color: black;
+    --btn-skeuo--color: black;
 
-    --btn-yellow-color: white;
-    --btn-yellow-background: hsl(43, 100%, 50%);
-    --btn-yellow-background-hover: hsl(43, 100%, 65%);
-    --btn-yellow-background-active: hsl(43, 100%, 47%);
+    --btn-yellow--color: white;
+    --btn-yellow--background: hsl(43, 100%, 50%);
+    --btn-yellow-hover--background: hsl(43, 100%, 65%);
+    --btn-yellow-active--background: hsl(43, 100%, 47%);
 
     /* Hierarchy */
-    --hierarchy-padding-gap: 5px;
+    --hierarchy--padding: 0px 5px 5px 5px;
 
     /* Hierarchy item */
-    --h-item-hover-background: lemonchiffon;
-    --h-item-active-background: wheat;
+    --h-item-box--margin: 5px 0px;
+    --h-item-box--padding: 0 5px 0 0;
+    
+    --h-item-hover-box--background: lemonchiffon;
+    --h-item-hover-box--box-shadow: 0 0 0 1px black;
 
-    --h-item-selected-background: lemonchiffon;
-    --h-item-selected-hover-background: white;
-    --h-item-selected-active-background: lemonchiffon;
+    --h-item-active-box--background: wheat;
+
+    --h-selected-item-box--background: lemonchiffon;
+    --h-selected-item-box--box-shadow: 0 0 0 1px black;
+
+    --h-selected-item-hover-box--background: white;
+    --h-selected-item-active-box--background: lemonchiffon;
 }
 
 :root[data-theme="dark"] {
     /* General */
-    --primary-fg-color: white;
-    --primary-bg-color: black;
-    --general-sep-border: 1px solid white;
+    --general-fg--color: white;
+    --general-bg--background: black;
+    --general-sep--border: 1px solid white;
 
     /* Bars */
-    --bar-bg-color: black;
+    --bar--background: black;
 
     /* Buttons */
-    --btn-blue-color: white;
-    --btn-blue-background: hsl(240, 100%, 50%);
-    --btn-blue-background-hover: hsl(240, 100%, 70%);
-    --btn-blue-background-active: hsl(240, 100%, 25%);
+    --btn-blue--color: white;
+    --btn-blue--background: hsl(240, 100%, 50%);
+    --btn-blue-hover--background: hsl(240, 100%, 70%);
+    --btn-blue-active--background: hsl(240, 100%, 25%);
 
-    --btn-green-color: white;
-    --btn-green-background: hsl(120, 100%, 25%);
-    --btn-green-background-hover: hsl(120, 100%, 35%);
-    --btn-green-background-active: hsl(120, 100%, 15%);
+    --btn-green--color: white;
+    --btn-green--background: hsl(120, 100%, 25%);
+    --btn-green-hover--background: hsl(120, 100%, 35%);
+    --btn-green-active--background: hsl(120, 100%, 15%);
     
-    --btn-red-color: white;
-    --btn-red-background: hsl(0, 100%, 45%);
-    --btn-red-background-hover: hsl(0, 100%, 65%);
-    --btn-red-background-active: hsl(0, 100%, 40%);
+    --btn-red--color: white;
+    --btn-red--background: hsl(0, 100%, 45%);
+    --btn-red-hover--background: hsl(0, 100%, 65%);
+    --btn-red-active--background: hsl(0, 100%, 40%);
     
-    --btn-skeuo-color: white;
+    --btn-skeuo--color: white;
 
-    --btn-yellow-color: white;
-    --btn-yellow-background: hsl(43, 100%, 50%);
-    --btn-yellow-background-hover: hsl(43, 100%, 65%);
-    --btn-yellow-background-active: hsl(43, 100%, 47%);
+    --btn-yellow--color: white;
+    --btn-yellow--background: hsl(43, 100%, 50%);
+    --btn-yellow-hover--background: hsl(43, 100%, 65%);
+    --btn-yellow-active--background: hsl(43, 100%, 47%);
 
     /* Hierarchy */
-    --hierarchy-padding-gap: 5px;
+    --hierarchy--padding: 0px 5px 5px 5px;
 
     /* Hierarchy item */
-    --h-item-hover-background: lemonchiffon;
-    --h-item-active-background: wheat;
+    --h-item-box--margin: 5px 0px;
+    --h-item-box--padding: 0 5px 0 0;
 
-    --h-item-selected-background: white;
-    --h-item-selected-hover-background: lemonchiffon;
-    --h-item-selected-active-background: wheat;
+    --h-item-hover-box--background: lemonchiffon;
+    --h-item-active-box--background: wheat;
+
+    --h-selected-item-box--background: white;
+    --h-selected-item-hover-box--background: lemonchiffon;
+    --h-selected-item-active-box--background: wheat;
 }
 
 :root[data-theme="skeuo"] {
     /* General */
-    --primary-fg-color: black;
-    --primary-bg-color:  linear-gradient(0deg, hsl(0, 0%, 80%) 0%, hsl(0, 0%, 91%) 100%);
-    --general-sep-border: 1px solid gray;
+    --general-fg--color: black;
+    --general-bg--background:  linear-gradient(0deg, hsl(0, 0%, 80%) 0%, hsl(0, 0%, 91%) 100%);
+    --general-sep--border: 1px solid gray;
     --right-panel-background: repeating-linear-gradient(to bottom, #eee 0px, #eee 2px, #fff 2px, #fff 4px);
 
     /* Bars */
-    --bar-bg-color: rgb(167,167,167);
-    --bar-bg-gradient: linear-gradient(0deg, hsl(0, 0%, 65%) 0%, hsl(0, 0%, 73%) 10%, hsl(0, 0%, 95%) 90%, hsl(0, 0%, 91%) 100%);
+    --bar--background: linear-gradient(0deg, hsl(0, 0%, 65%) 0%, hsl(0, 0%, 73%) 10%, hsl(0, 0%, 95%) 90%, hsl(0, 0%, 91%) 100%);
 
     /* Buttons */
-    --btn-blue-color: white;
-    --btn-blue-background: linear-gradient(0deg, hsl(220, 100%, 30%) 0%, hsl(220, 100%, 62%) 100%);
-    --btn-blue-background-hover: linear-gradient(0deg, hsl(220, 100%, 43%) 0%, hsl(220, 100%, 68%) 100%);
-    --btn-blue-background-active: linear-gradient(0deg, hsl(220, 100%, 24%) 0%, hsl(220, 100%, 55%) 100%);
-    --btn-blue-border: 1px solid hsl(220, 100%, 25%);
-    --btn-blue-text-shadow: -1px -1px 1px hsl(220, 100%, 25%);
-    --btn-blue-box-shadow:
+    --btn-blue--color: white;
+    --btn-blue--background: linear-gradient(0deg, hsl(220, 100%, 30%) 0%, hsl(220, 100%, 62%) 100%);
+    --btn-blue-hover--background: linear-gradient(0deg, hsl(220, 100%, 43%) 0%, hsl(220, 100%, 68%) 100%);
+    --btn-blue-active--background: linear-gradient(0deg, hsl(220, 100%, 24%) 0%, hsl(220, 100%, 55%) 100%);
+    --btn-blue--border: 1px solid hsl(220, 100%, 25%);
+    --btn-blue--text-shadow: -1px -1px 1px hsl(220, 100%, 25%);
+    --btn-blue--box-shadow:
         inset 1px 1px 3px hsl(220, 100%, 45%),
         inset -1px -1px 3px hsl(220, 100%, 35%);
     
-    --btn-green-color: white;
-    --btn-green-background: linear-gradient(0deg, hsl(120, 100%, 25%) 0%, hsl(120, 100%, 40%) 100%);
-    --btn-green-background-hover: linear-gradient(0deg, hsl(120, 100%, 30%) 0%, hsl(120, 100%, 42%) 100%);
-    --btn-green-background-active: linear-gradient(0deg, hsl(120, 100%, 18%) 0%, hsl(120, 100%, 35%) 100%);
-    --btn-green-border: 1px solid hsl(120, 100%, 15%);
-    --btn-green-text-shadow: -1px -1px 1px hsl(120, 100%, 25%);
-    --btn-green-box-shadow:
+    --btn-green--color: white;
+    --btn-green--background: linear-gradient(0deg, hsl(120, 100%, 25%) 0%, hsl(120, 100%, 40%) 100%);
+    --btn-green-hover--background: linear-gradient(0deg, hsl(120, 100%, 30%) 0%, hsl(120, 100%, 42%) 100%);
+    --btn-green-active--background: linear-gradient(0deg, hsl(120, 100%, 18%) 0%, hsl(120, 100%, 35%) 100%);
+    --btn-green--border: 1px solid hsl(120, 100%, 15%);
+    --btn-green--text-shadow: -1px -1px 1px hsl(120, 100%, 25%);
+    --btn-green--box-shadow:
         inset 1px 1px 3px hsl(120, 100%, 30%),
         inset -1px -1px 3px hsl(120, 100%, 20%);
     
-    --btn-red-color: white;
-    --btn-red-background: linear-gradient(0deg, hsl(0, 100%, 45%) 0%, hsl(0, 100%, 73%) 100%);
-    --btn-red-background-hover: linear-gradient(0deg, hsl(0, 100%, 55%) 0%, hsl(0, 100%, 80%) 100%);
-    --btn-red-background-active: linear-gradient(0deg, hsl(0, 100%, 40%) 0%, hsl(0, 100%, 68%) 100%);
-    --btn-red-border: 1px solid hsl(0, 100%, 20%);
-    --btn-red-box-shadow:
+    --btn-red--color: white;
+    --btn-red--background: linear-gradient(0deg, hsl(0, 100%, 45%) 0%, hsl(0, 100%, 73%) 100%);
+    --btn-red-hover--background: linear-gradient(0deg, hsl(0, 100%, 55%) 0%, hsl(0, 100%, 80%) 100%);
+    --btn-red-active--background: linear-gradient(0deg, hsl(0, 100%, 40%) 0%, hsl(0, 100%, 68%) 100%);
+    --btn-red--border: 1px solid hsl(0, 100%, 20%);
+    --btn-red--box-shadow:
         inset 1px 1px 3px hsl(0, 100%, 35%),
         inset -1px -1px 3px hsl(0, 100%, 45%);
     
-    --btn-skeuo-color: black;
-    --btn-skeuo-background: linear-gradient(0deg, hsl(60, 1%, 75%) 0%, hsl(0, 0%, 98%) 100%);
-    --btn-skeuo-background-hover: linear-gradient(0deg, hsl(60, 1%, 80%) 0%, hsl(0, 0%, 100%) 100%);
-    --btn-skeuo-background-active: linear-gradient(0deg, hsl(60, 1%, 65%) 0%, hsl(0, 0%, 95%) 100%);
-    --btn-skeuo-border: 1px solid gray;
-    --btn-skeuo-box-shadow:
+    --btn-skeuo--color: black;
+    --btn-skeuo--background: linear-gradient(0deg, hsl(60, 1%, 75%) 0%, hsl(0, 0%, 98%) 100%);
+    --btn-skeuo-hover--background: linear-gradient(0deg, hsl(60, 1%, 80%) 0%, hsl(0, 0%, 100%) 100%);
+    --btn-skeuo-active--background: linear-gradient(0deg, hsl(60, 1%, 65%) 0%, hsl(0, 0%, 95%) 100%);
+    --btn-skeuo--border: 1px solid gray;
+    --btn-skeuo--box-shadow:
         inset 1px 1px 3px hsl(0, 0%, 75%),
         inset -1px -1px 3px hsl(0, 0%, 65%);
     
-    --btn-yellow-color: white;
-    --btn-yellow-background: linear-gradient(0deg, hsl(43, 100%, 50%) 0%, hsl(43, 100%, 78%) 100%);
-    --btn-yellow-background-hover: linear-gradient(0deg, hsl(43, 100%, 58%) 0%, hsl(43, 100%, 85%) 100%);
-    --btn-yellow-background-active: linear-gradient(0deg, hsl(43, 100%, 47%) 0%, hsl(43, 100%, 70%) 100%);
-    --btn-yellow-border: 1px solid hsl(43, 100%, 35%);
-    --btn-yellow-box-shadow:
+    --btn-yellow--color: white;
+    --btn-yellow--background: linear-gradient(0deg, hsl(43, 100%, 50%) 0%, hsl(43, 100%, 78%) 100%);
+    --btn-yellow-hover--background: linear-gradient(0deg, hsl(43, 100%, 58%) 0%, hsl(43, 100%, 85%) 100%);
+    --btn-yellow-active--background: linear-gradient(0deg, hsl(43, 100%, 47%) 0%, hsl(43, 100%, 70%) 100%);
+    --btn-yellow--border: 1px solid hsl(43, 100%, 35%);
+    --btn-yellow--box-shadow:
         inset 1px 1px 5px hsl(43, 100%, 48%),
         inset -1px -1px 3px hsl(43, 100%, 40%);
 
     /* Hierarchy */
-    --hierarchy-background: hsl(0, 0%, 88%);
-    --hierarchy-box-shadow:
+    --hierarchy--background: hsl(0, 0%, 88%);
+    --hierarchy--box-shadow:
         inset 7px 7px 20px hsl(0, 0%, 70%),
         inset -7px -7px 20px hsl(0, 0%, 100%);
     
     /* Hierarchy item */
-    --h-item-common-gradient:
+    --h-item-box--padding: 5px;
+
+    ---h-item-common-gradient:
         linear-gradient(hsl(0 0% 100% / 0.85), transparent 10px),
         linear-gradient(hsl(0 0% 100% / 0.25) 10px, transparent 10px),
         radial-gradient(circle at 10px 5px, hsl(0 0% 100% / 0.25) 5px, transparent 5px),
         radial-gradient(circle at 0px 5px, hsl(0 0% 100% / 0.25) 5px, transparent 5px);
-
-    --h-item-hover-background: 
-        var(--h-item-common-gradient),
-        linear-gradient(hsl(67, 82%, 87%), hsl(35, 95%, 92%));
-
-    --h-item-active-background:
-        var(--h-item-common-gradient),
-        linear-gradient(hsl(47, 82%, 87%), hsl(15, 95%, 92%));
-
-    --h-item-selected-background:
-        var(--h-item-common-gradient),
+    ---h-item-blue-gradient:
+        var(---h-item-common-gradient),
         linear-gradient(hsl(213, 82%, 87%), hsl(181, 95%, 92%));
-
-    --h-item-selected-hover-background:
-        var(--h-item-common-gradient),
+    ---h-item-red-gradient:
+        var(---h-item-common-gradient),
+        linear-gradient(hsl(47, 82%, 87%), hsl(15, 95%, 92%));
+    ---h-item-yellow-gradient:
+        var(---h-item-common-gradient),
         linear-gradient(hsl(67, 82%, 87%), hsl(35, 95%, 92%));
 
-    --h-item-selected-active-background:
-        var(--h-item-common-gradient),
-        linear-gradient(hsl(47, 82%, 87%), hsl(15, 95%, 92%));
+    --h-item-hover-box--background: var(---h-item-yellow-gradient);
+    --h-item-active-box--background: var(---h-item-red-gradient);
+    --h-selected-item-box--background: var(---h-item-blue-gradient);
+    --h-selected-item-hover-box--background: var(---h-item-yellow-gradient);
+    --h-selected-item-active-box--background: var(---h-item-red-gradient);
 }
