@@ -2,4 +2,23 @@
 
 .OptionsView {
     @extend .View;
+    
+    .left-panel {
+        height: 100%;
+        background: var(--opt-left-panel--background);
+        box-shadow: var(--opt-left-panel--box-shadow);
+
+        .option-row {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            border-bottom: var(--general-sep--border);
+    
+            &:hover {
+                background: var(--opt-row-hover--background);
+            }
+        }
+    }
 }

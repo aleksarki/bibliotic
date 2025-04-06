@@ -158,9 +158,9 @@
         inset 1px 1px 5px hsl(43, 100%, 48%),
         inset -1px -1px 3px hsl(43, 100%, 40%);
 
-    /* Hierarchy */
-    --hierarchy--background: hsl(0, 0%, 88%);
-    --hierarchy--box-shadow:
+    /* Catalogue */
+    --cat-hierarchy--background: hsl(0, 0%, 88%);
+    --cat-hierarchy--box-shadow:
         inset 7px 7px 20px hsl(0, 0%, 70%),
         inset -7px -7px 20px hsl(0, 0%, 100%);
     
@@ -187,4 +187,10 @@
     --h-selected-item-box--background: var(---h-item-blue-gradient);
     --h-selected-item-hover-box--background: var(---h-item-yellow-gradient);
     --h-selected-item-active-box--background: var(---h-item-red-gradient);
+
+    /* Options */
+    --opt-left-panel--background: var(--cat-hierarchy--background);
+    --opt-left-panel--box-shadow: var(--cat-hierarchy--box-shadow);
+
+    --opt-row-hover--background: linear-gradient(hsl(0, 0%, 100%), hsl(0, 0%, 92%));
 }

@@ -29,10 +29,12 @@
             }
         }
 
-        // Document hierarchy.
+        // Document hierarchy. todo: fix the visual bug
         .hierarchy-body {
             height: 100%;
             overflow: hidden;
+            background: var(--cat-hierarchy--background);
+            box-shadow: var(--cat-hierarchy--box-shadow);
         }
     }
 }
