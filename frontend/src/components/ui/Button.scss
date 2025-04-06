@@ -68,6 +68,7 @@
     background: var(--btn-red--background);
     border: var(--btn-red--border);
     box-shadow: var(--btn-red--box-shadow);
+    text-shadow: var(--btn-red--text-shadow);
 
     &:hover {
         background: var(--btn-red-hover--background);
@@ -101,6 +102,7 @@
     background: var(--btn-yellow--background);
     border: var(--btn-yellow--border);
     box-shadow: var(--btn-yellow--box-shadow);
+    text-shadow: var(--btn-yellow--text-shadow);
 
     &:hover {
         background: var(--btn-yellow-hover--background);
