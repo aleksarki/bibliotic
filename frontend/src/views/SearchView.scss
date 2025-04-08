@@ -2,4 +2,37 @@
 
 .SearchView {
     @extend .View;
+
+    // Content of the left panel.
+    .left-panel-content {
+        height: 100%;
+        overflow: hidden;
+        
+        // Header above the hierarchy component.
+        .hierarchy-head {
+            padding: 10px;
+            border-bottom: var(--general-sep--border);
+            
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            justify-content: space-between;
+
+            // Box for search bar
+            .hierarchy-head-right-box {
+                display: flex;
+                flex-direction: row;
+                flex-wrap: wrap;
+                justify-content: flex-end;
+                gap: 15px;
+            }
+        }
+
+        .hierarchy-body {
+            height: 100%;
+            overflow: hidden;
+            background: var(--cat-hierarchy--background);
+            box-shadow: var(--cat-hierarchy--box-shadow);
+        }
+    }
 }
