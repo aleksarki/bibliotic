@@ -1,0 +1,26 @@
+@import '../themes.scss';
+
+.CentralPanel {
+    flex: 1;
+    display: flex;
+
+    .panel {
+        background: var(--right-panel--background);
+        margin: auto;
+        padding: 10px;
+        border-radius: 10px;
+        border: var(--general-sep--border);
+        box-shadow: 2px 2px 3px gray;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+
+        .panel-title {
+            font-size: large;
+            font-weight: var(--central-pan-title--font-weight);
+            font-style: italic;
+            text-align: center;
+            text-shadow: var(--central-pan-title--text-shadow);
+        }
+    }
+}
