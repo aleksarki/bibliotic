@@ -2,11 +2,10 @@
  * View for search of user documents.
  */
 
-
 import { useState } from "react";
 
 import Button, { buttonColors } from "../components/ui/Button";
-import SearchBar from "../components/ui/SearchBar"
+import TextInput from "../components/ui/TextInput"
 import DocumentInfoView from "../components/infoviews/DocumentInfoView";
 import FileHierarchy from "../components/hierarchy/FileHierarchy";
 import FolderInfoView from "../components/infoviews/FolderInfoView";
@@ -33,7 +32,6 @@ function SearchView() {
     // item (folder or document) that is selected by user
     const [selectedItem, setSelectedItem] = useState(null);
 
-
     return (
         <div className="SearchView">
             <Header pageTitle="Поиск" pageIndex="1" />
@@ -43,7 +41,7 @@ function SearchView() {
                         <div className="hierarchy-head">
                             <Button text="Сортировка" style={ buttonColors.BLUE } />
                             <div className="hierarchy-head-right-box">
-                                <SearchBar onChange={searchChange}/>
+                                <TextInput placeholder="Запрос" onChange={searchChange}/>
                             </div>
                         </div>
                         <div className="hierarchy-body">

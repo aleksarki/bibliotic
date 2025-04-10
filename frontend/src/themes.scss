@@ -11,6 +11,11 @@
     /* Bars */
     --bar--background: white;
 
+    /* Text input */
+    --text-inp--background: white;
+    --text-inp-focus--box-shadow: 0 0 2px 1px hsl(0, 0%, 80%);
+    --text-inp-placeholder--color: hsl(0, 0%, 50%);
+
     /* Buttons */
     --btn-blue--color: white;
     --btn-blue--background: hsl(240, 100%, 50%);
@@ -62,6 +67,12 @@
     /* Bars */
     --bar--background: black;
 
+    /* Text input */
+    --text-inp--background: black;
+    --text-inp--caret-color: white;
+    --text-inp-focus--box-shadow: 0 0 1px 1px white;
+    --text-inp-placeholder--color: hsl(0, 0%, 75%);
+
     /* Buttons */
     --btn-blue--color: white;
     --btn-blue--background: hsl(240, 100%, 50%);
@@ -105,10 +116,18 @@
     --general-fg--color: black;
     --general-bg--background:  linear-gradient(0deg, hsl(0, 0%, 80%) 0%, hsl(0, 0%, 91%) 100%);
     --general-sep--border: 1px solid gray;
+
+    /* Panels */
     --right-panel-background: repeating-linear-gradient(to bottom, #eee 0px, #eee 2px, #fff 2px, #fff 4px);
 
     /* Bars */
     --bar--background: linear-gradient(0deg, hsl(0, 0%, 65%) 0%, hsl(0, 0%, 73%) 10%, hsl(0, 0%, 95%) 90%, hsl(0, 0%, 91%) 100%);
+
+    /* Text input */
+    --text-inp--background: white;
+    --text-inp--box-shadow: inset 1px 1px 3px hsl(0, 0%, 50%);
+    --text-inp-focus--box-shadow: inset 1px 1px 3px hsl(0, 0%, 75%);
+    --text-inp-placeholder--color: hsl(0, 0%, 50%);
 
     /* Buttons */
     --btn-blue--color: white;

@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 
-import "./SearchBar.scss";
+import "./TextInput.scss";
 
-
-function SearchBar({ onChange }) {
+function TextInput({ placeholder, onChange }) {
 
     const [searchItem, setSearchItem] = useState("");
 
@@ -14,13 +13,13 @@ function SearchBar({ onChange }) {
     };
 
     return (
-        <input className="search-input"
+        <input className="TextInput"
             type="text"
-            placeholder="запрос"
+            placeholder={ placeholder }
             value={searchItem}
             onChange={handleChange}
         />
     );
 }
 
-export default SearchBar;
+export default TextInput;

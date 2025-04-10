@@ -1,0 +1,20 @@
+@import '../../themes.scss';
+
+.TextInput {
+    border: var(--general-sep--border);
+    border-radius: 8px;
+    padding: 8px;
+    outline: none;
+    background: var(--text-inp--background);
+    box-shadow: var(--text-inp--box-shadow);
+    caret-color: var(--text-inp--caret-color);
+
+    &::placeholder {
+        font-style: italic;
+        color: var(--text-inp-placeholder--color);
+    }
+
+    &:focus {
+        box-shadow: var(--text-inp-focus--box-shadow);
+    }
+}
