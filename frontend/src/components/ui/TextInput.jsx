@@ -9,7 +9,7 @@ function TextInput({ placeholder, onChange }) {
     const handleChange = (e) => {
         const value = e.target.value;
         setSearchItem(value);
-        onChange(value);
+        onChange && onChange(value);
     };
 
     return (

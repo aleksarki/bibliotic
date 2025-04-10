@@ -1,0 +1,37 @@
+@import '../themes.scss';
+@import './View.scss';
+
+.LoginView {
+    @extend .View;
+
+    .main {
+        flex: 1;
+        display: flex;
+
+        .central-form {
+            background: var(--right-panel-background);
+            margin: auto;
+            padding: 10px;
+            border-radius: 10px;
+            border: var(--general-sep--border);
+            box-shadow: 2px 2px 3px gray;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+
+            .form-title {
+                font-size: large;
+                font-weight: 300;
+                font-style: italic;
+                text-align: center;
+                text-shadow: 1px 1px 1px hsla(0, 0%, 50%, 0.5);
+            }
+
+            .form-row {
+                display: flex;
+                flex-direction: column;
+                gap: 5px;
+            }
+        }
+    }
+}

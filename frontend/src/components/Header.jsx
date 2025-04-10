@@ -9,7 +9,7 @@ import './Header.scss';
 import Button, { buttonColors } from './ui/Button';
 import ButtonBox from './ui/ButtonBox';
 
-function Header({ pageTitle, pageIndex }) {
+function Header({ pageTitle, pageIndex, hideNav }) {
     const links = [
         {
             title: 'Каталог',
@@ -44,7 +44,7 @@ function Header({ pageTitle, pageIndex }) {
                 <span className="app-title">Библиотик</span>
                 <span className="view-title">{ pageTitle }</span>
             </div>
-            <div className="nav-block"><ButtonBox buttons={ buttons } gap={ 15 } /></div>
+            { hideNav ? null : <div className="nav-block"><ButtonBox buttons={ buttons } gap={ 15 } /></div> }
         </div>
     );
 }

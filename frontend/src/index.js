@@ -5,6 +5,7 @@ import reportWebVitals from "./reportWebVitals";
 
 import CatalogueView from "./views/CatalogueView";
 import ErrorView from "./views/ErrorView";
+import LoginView from "./views/LoginView";
 import OptionsView from "./views/OptionsView";
 import SearchView from "./views/SearchView";
 import { ThemeProvider } from "./contexts/ThemeContext";
@@ -16,6 +17,10 @@ const router = createBrowserRouter([
     path: '/',
     element: <CatalogueView />,
     errorElement: <ErrorView />
+  },
+  {
+    path: '/login',
+    element: <LoginView />
   },
   {
     path: '/catalogue',
