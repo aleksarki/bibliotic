@@ -2,21 +2,29 @@ import React, { useState } from "react";
 
 import "./TextInput.scss";
 
-function TextInput({ placeholder, onChange }) {
+export const textInputTypes = {
+    EMAIL: "email",
+    PASSWORD: "password",
+    TEXT: "text"
+}
 
-    const [searchItem, setSearchItem] = useState("");
+function TextInput({ id, type, placeholder, onChange }) {
+    type ??= textInputTypes.TEXT; 
+
+    const [value, setValue] = useState("");
 
     const handleChange = (e) => {
         const value = e.target.value;
-        setSearchItem(value);
+        setValue(value);
         onChange && onChange(value);
     };
 
     return (
         <input className="TextInput"
-            type="text"
+            id={ id }
+            type={ type }
             placeholder={ placeholder }
-            value={searchItem}
+            value={value}
             onChange={handleChange}
         />
     );

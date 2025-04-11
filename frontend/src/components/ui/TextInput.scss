@@ -8,6 +8,7 @@
     background: var(--text-inp--background);
     box-shadow: var(--text-inp--box-shadow);
     caret-color: var(--text-inp--caret-color);
+    color: var(--text-inp--color);
 
     &::placeholder {
         font-style: italic;
