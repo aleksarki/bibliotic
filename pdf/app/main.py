@@ -33,7 +33,7 @@ async def extractText(file: UploadFile = File(...)):
     # Считываем каждую страницу и добавляем текст
     for i, image in enumerate(images):
         text = pytesseract.image_to_string(image, lang='rus+eng')
-        full_text += f'Page {i + 1}:\n{text}\n'
+        full_text += f'{text}\n'
 
     # Удаляем временный файл после обработки
     os.remove(temp_file_path)
