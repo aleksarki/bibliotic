@@ -3,9 +3,9 @@ DROP PROCEDURE IF EXISTS folder_tree_delete;
 DROP FUNCTION IF EXISTS folder_chain_select;
 DROP FUNCTION IF EXISTS folder_get_owner;
 DROP FUNCTION IF EXISTS folder_is_child;
-DROP FUNCTION IF EXISTS folder_add;
+DROP PROCEDURE IF EXISTS folder_add;
 DROP PROCEDURE IF EXISTS folder_move;
-DROP FUNCTION IF EXISTS account_create;
+DROP PROCEDURE IF EXISTS account_create;
 DROP PROCEDURE IF EXISTS account_delete;
 
 DROP TABLE IF EXISTS Keywords;
@@ -170,7 +170,8 @@ END;
 $$ LANGUAGE plpgsql;
 
 -- Add a folder to another one
-CREATE FUNCTION folder_add(
+-- Out: id of created folder
+CREATE PROCEDURE folder_add(
     fldr_parent INT, fldr_name VARCHAR(32),
     OUT fldr_id INT
 ) AS $$
@@ -247,7 +248,8 @@ END;
 $$ LANGUAGE plpgsql;
 
 -- Create new user and their associated root folder
-CREATE FUNCTION account_create(
+-- Out: id of created user, id of created root folder
+CREATE PROCEDURE account_create(
 	acc_email TEXT, acc_hash TEXT,
 	OUT usr_id INT, OUT fldr_id INT
 ) AS $$
