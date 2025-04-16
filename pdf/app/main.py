@@ -2,9 +2,8 @@
 from pdf2image import convert_from_path
 import pytesseract
 import os
-from fastapi import FastAPI, File, HTTPException, UploadFile
+from fastapi import FastAPI, HTTPException, Query
 from fastapi.responses import JSONResponse
-from tempfile import NamedTemporaryFile
 
 app = FastAPI()
 
@@ -15,33 +14,36 @@ def hello():
     return {"message": "hello there"}
 
 @app.post('/pdf/extract-text')
-async def extractText(file: UploadFile = File(...)):
-    if not file.filename.endswith(".pdf"):
+async def extractText(path: str = Query(...)):
+    """ Request for recognition of text in a pdf file.
+    """
+    if not os.path.exists(path):
+        print("[Got non-existent file]")
+        raise HTTPException(status_code=400, detail="File does not exist.")
+    
+    if not path.endswith(".pdf"):
+        print("[Got file of wrong format]")
         raise HTTPException(status_code=400, detail="Not a pdf file.")
     
-    # Сохраняем загруженный файл во временной директории
-    with NamedTemporaryFile(delete=False, suffix=".pdf") as temp_file:
-        temp_file.write(await file.read())
-        temp_file_path = temp_file.name
+    print(f"[Received file '{path}']")
 
-    # Преобразовываем страницы документа в изображения
-    images = convert_from_path(temp_file_path)
+    images = convert_from_path(path)
 
-    # Инициализируем переменную для хранения текста
+    print(f"[Converted file to images]")
+
     full_text = ""
 
-    # Считываем каждую страницу и добавляем текст
     for i, image in enumerate(images):
         text = pytesseract.image_to_string(image, lang='rus+eng')
         full_text += f'{text}\n'
+        print(f"[Recognized image №{i}]")
 
-    # Удаляем временный файл после обработки
-    os.remove(temp_file_path)
+    print(f"[Recognition done, text of {len(full_text)} characters]")
 
     return JSONResponse(
         status_code=200,
         content={
-            "file": file.filename,
+            "file": path,
             "text": full_text
         }
     )

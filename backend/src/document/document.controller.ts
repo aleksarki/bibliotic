@@ -17,7 +17,8 @@ export class DocumentController {
                 cb(null, true);
             }
             else {
-                cb(new BadRequestException("unsupported file type"), false);
+                console.log("[Got file of wrong format]")
+                cb(new BadRequestException("Unsupported file type"), false);
             }
         },
         storage: diskStorage({
@@ -25,16 +26,22 @@ export class DocumentController {
                 const path = './upload';
                 if (!existsSync(path)) {
                     mkdirSync(path);
+                    console.log("[Created /upload directory]");
                 }
-                cb (null, path);
+                cb(null, path);
             },
-            filename: (req, file, cb) => { cb(null, `${uuid()}${extname(file.originalname)}`); }
+            filename: (req, file, cb) => {
+                console.log(`[Received file '${file.originalname}']`)
+                cb(null, `${uuid()}${extname(file.originalname)}`);
+            }
         })
     }))
     upload(@UploadedFile() file: Express.Multer.File): object {
         if (!file) {
-            throw new BadRequestException("no file provided");
+            console.log("[Got no file]");
+            throw new BadRequestException("No file provided");
         }
+        console.log(`[Saved file '${file.filename}']`);
         return this.documentService.upload(file);
     }
 }
