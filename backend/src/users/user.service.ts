@@ -10,7 +10,7 @@ export class UserService {
         return this.userRepository.find();
     }
 
-    async findOne(usr_email: string): Promise<User | undefined> {
+    async findOneByEmail(usr_email: string): Promise<User | undefined> {
         return (await this.userRepository.find()).find(user => user.usr_email === usr_email);
     }
 }
