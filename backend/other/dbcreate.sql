@@ -1,3 +1,7 @@
+DROP FUNCTION IF EXISTS document_get_owner;
+DROP PROCEDURE IF EXISTS document_add;
+DROP PROCEDURE IF EXISTS document_delete;
+DROP PROCEDURE IF EXISTS document_move;
 DROP FUNCTION IF EXISTS folder_tree_select;
 DROP PROCEDURE IF EXISTS folder_tree_delete;
 DROP FUNCTION IF EXISTS folder_chain_select;
@@ -7,6 +11,7 @@ DROP PROCEDURE IF EXISTS folder_add;
 DROP PROCEDURE IF EXISTS folder_move;
 DROP PROCEDURE IF EXISTS account_create;
 DROP PROCEDURE IF EXISTS account_delete;
+
 
 DROP TABLE IF EXISTS Keywords;
 DROP TABLE IF EXISTS Annotations;
@@ -282,5 +287,102 @@ BEGIN
     CALL folder_tree_delete(usr_root);
 
     RAISE NOTICE 'Successfully deleted account';
+END;
+$$ LANGUAGE plpgsql;
+
+
+-- Get owner of a document (that is, user owning the root folder)
+-- If no owner found, get -1
+CREATE FUNCTION document_get_owner(doc_id INT)
+RETURNS INT AS $$
+DECLARE
+    folder_id INT;
+	owner_id INT;
+BEGIN
+    IF NOT EXISTS (SELECT 1 FROM Documents WHERE Documents.doc_id = document_get_owner.doc_id) THEN
+        RAISE EXCEPTION 'Document with id "%" does not exist', doc_id;
+    END IF;
+	
+	SELECT Documents.doc_folder INTO folder_id FROM Documents WHERE Documents.doc_id = document_get_owner.doc_id;
+	
+	SELECT folder_get_owner(folder_id) INTO owner_id;
+    RETURN COALESCE(owner_id, -1);
+END;
+$$ LANGUAGE plpgsql;
+
+-- Add a new document in folder
+-- Out: id of created document
+CREATE PROCEDURE document_add(
+	doc_folder INT, 
+	doc_filename TEXT,
+    doc_added TIMESTAMP,
+    doc_name VARCHAR(32), 
+    doc_text TEXT,
+    OUT doc_id INT) AS $$
+DECLARE
+    folder_id INT;
+	owner_id INT;
+BEGIN
+    IF doc_folder IS NULL THEN
+        RAISE EXCEPTION 'Document folder cannot be NULL';
+    END IF;
+
+    IF NOT EXISTS (SELECT 1 FROM Folders WHERE Folders.fldr_id = document_add.doc_folder) THEN
+        RAISE EXCEPTION 'Folder with id "%" does not exist', doc_folder;
+    END IF;
+
+    IF EXISTS (
+        SELECT 1 FROM Documents 
+        WHERE Documents.doc_folder = document_add.doc_folder AND Documents.doc_filename = document_add.doc_filename
+    ) THEN
+        RAISE EXCEPTION 'Document with name "%" already exists in this folder', doc_filename;
+    END IF;
+
+    INSERT INTO Documents (doc_folder, doc_filename, doc_added, doc_name, doc_text) VALUES (doc_folder, doc_filename, doc_added, doc_name, doc_text)
+    RETURNING Documents.doc_id INTO doc_id;
+
+    RAISE NOTICE 'Successfully created folder with id "%"', doc_id;
+END;
+$$ LANGUAGE plpgsql;
+
+
+-- Delete document
+CREATE PROCEDURE document_delete(doc_id INT) AS $$
+BEGIN
+    IF NOT EXISTS (SELECT 1 FROM Documents WHERE Documents.doc_id = document_delete.doc_id) THEN
+        RAISE EXCEPTION 'Document with id "%" does not exist', document_delete.doc_id;
+    END IF;
+
+    DELETE FROM Documents WHERE Documents.doc_id = document_delete.doc_id;
+
+    RAISE NOTICE 'Successfully deleted document';
+END;
+$$ LANGUAGE plpgsql;
+
+
+-- Move document to its new destination
+-- Prohibited moves:
+--  - move without destination
+--  - move to destination owned by different user
+CREATE PROCEDURE document_move(doc_id INT, dest_id INT) AS $$
+BEGIN
+    -- destination check
+    IF dest_id IS NULL THEN
+        RAISE EXCEPTION 'Destination folder not provided';
+    END IF;
+    
+    IF NOT EXISTS (SELECT 1 FROM Folders WHERE Folders.fldr_id = document_move.dest_id) THEN
+        RAISE EXCEPTION 'Destination folder with id "%" does not exist', dest_id;
+    END IF;
+
+    -- ownership check
+    IF document_get_owner(doc_id) != folder_get_owner(dest_id) THEN
+        RAISE EXCEPTION 'Document and destination folder do not belong to the same owner';
+    END IF;
+
+    UPDATE Documents SET doc_folder = dest_id 
+    WHERE Documents.doc_id = document_move.doc_id;
+    
+    RAISE NOTICE 'Successfully moved Document "%" into folder "%"', doc_id, dest_id;
 END;
 $$ LANGUAGE plpgsql;
