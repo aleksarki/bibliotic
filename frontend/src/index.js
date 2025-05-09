@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { createBrowserRouter, Navigate, RouterProvider } from "react-router-dom";
 import reportWebVitals from "./reportWebVitals";
 
 import CatalogueView from "./views/CatalogueView";
@@ -8,14 +8,20 @@ import ErrorView from "./views/ErrorView";
 import LoginView from "./views/LoginView";
 import OptionsView from "./views/OptionsView";
 import SearchView from "./views/SearchView";
+import { AuthProvider, useAuth } from "./contexts/AuthContext";
 import { ThemeProvider } from "./contexts/ThemeContext";
 
 import "./index.scss";
 
+function PrivateRoute({ children }) {
+  const {currentUser} = useAuth();
+  return currentUser ? children : <Navigate to='/login' />;
+}
+
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <CatalogueView />,
+    element: <PrivateRoute><CatalogueView /></PrivateRoute>,
     errorElement: <ErrorView />
   },
   {
@@ -24,15 +30,15 @@ const router = createBrowserRouter([
   },
   {
     path: '/catalogue',
-    element: <CatalogueView />
+    element: <PrivateRoute><CatalogueView /></PrivateRoute>
   },
   {
     path: '/search',
-    element: <SearchView />
+    element: <PrivateRoute><SearchView /></PrivateRoute>
   },
   {
     path: '/options',
-    element: <OptionsView />
+    element: <PrivateRoute><OptionsView /></PrivateRoute>
   }
 ]);
 
@@ -40,7 +46,9 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <ThemeProvider>
-      <RouterProvider router={ router } />
+      <AuthProvider>
+        <RouterProvider router={ router } />
+      </AuthProvider>
     </ThemeProvider>
   </React.StrictMode>
 );
