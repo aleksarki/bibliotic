@@ -7,8 +7,8 @@ import ButtonBox from "../components/ui/ButtonBox";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import TwoPanels from "../components/TwoPanels";
-import { themes, useTheme } from "../contexts/ThemeContext";
 import { useAuth } from "../contexts/AuthContext";
+import { themes, useTheme } from "../contexts/ThemeContext";
 
 import "./OptionsView.scss";
 

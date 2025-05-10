@@ -11,19 +11,6 @@ export function AuthProvider({ children }) {
     const [currentUser, setCurrentUser] = useState(null);
     const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
-        const token = localStorage.getItem("token");
-        if (token) {
-            axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-            const usr_id = localStorage.getItem("usr_id");
-            const usr_email = localStorage.getItem("usr_email");
-            if (usr_id && usr_email) {
-                setCurrentUser({ usr_id, usr_email});
-            }
-        }
-        setLoading(false);
-    }, []);
-
     async function login(email, password) {
         try {
             const {access_token} = (
@@ -51,6 +38,7 @@ export function AuthProvider({ children }) {
     }
 
     async function register(email, password) {
+        // TODO: implement
         return {
             success: false,
             message: "Registration failed"
@@ -65,11 +53,41 @@ export function AuthProvider({ children }) {
         setCurrentUser(null);
     }
 
+    const checkAuth = async () => {
+        const token = localStorage.getItem("token");
+        if (token) {
+            try {
+                // make sure token is not expired
+                await axios.get("http://localhost:3000/auth/user", {
+                    headers: {"Authorization": `Bearer ${token}`}
+                });
+                axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+                const usr_id = localStorage.getItem("usr_id");
+                const usr_email = localStorage.getItem("usr_email");
+                if (usr_id && usr_email) {
+                    setCurrentUser({ usr_id, usr_email});
+                }
+            }
+            catch (error) {
+                logout();
+            }            
+        }
+        else {
+            logout();
+        }
+        setLoading(false);
+    };
+
+    useEffect(() => {
+        checkAuth();
+    }, []);
+
     const value = {
         "currentUser": currentUser,
         "login": login,
         "register": register,
-        "logout": logout
+        "logout": logout,
+        "loading": loading
     };
 
     return (
