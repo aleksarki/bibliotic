@@ -7,12 +7,14 @@ import ButtonBox from "../components/ui/ButtonBox";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import TwoPanels from "../components/TwoPanels";
+import { useAuth } from "../contexts/AuthContext";
 import { themes, useTheme } from "../contexts/ThemeContext";
 
 import "./OptionsView.scss";
 
 function OptionsView() {
     const {theme, setTheme} = useTheme();
+    const {logout} = useAuth();
 
     return (
         <div className="OptionsView">
@@ -31,7 +33,7 @@ function OptionsView() {
                         <span>Аккаунт</span>
                         <ButtonBox gap={ 10 } buttons={ [
                             <Button text="Сменить пароль" style={ buttonColors.YELLOW } />,
-                            <Button text="Выйти" style={ buttonColors.RED } />
+                            <Button text="Выйти" style={ buttonColors.RED } onClick={ logout } />
                         ] } />
                     </div>
                 </div>
