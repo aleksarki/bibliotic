@@ -1,5 +1,6 @@
-import React, { createContext, useContext, useEffect, useState} from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import axios from "axios";
+import { getAuthUser, postAuthLogin } from "../util/api";
 
 export const AuthContext = createContext();
 
@@ -13,16 +14,11 @@ export function AuthProvider({ children }) {
 
     async function login(email, password) {
         try {
-            const {access_token} = (
-                await axios.post("http://localhost:3000/auth/login", {
-                    "email": email,
-                    "password": password
-                })
-            ).data;
+            const {access_token} = await postAuthLogin(email, password);
             localStorage.setItem("token", access_token);
             axios.defaults.headers.common["Authorization"] = `Bearer ${access_token}`;
 
-            const {usr_id, usr_email} = (await axios.get("http://localhost:3000/auth/user")).data;
+            const {usr_id, usr_email} = await getAuthUser();
             localStorage.setItem("usr_id", usr_id);
             localStorage.setItem("usr_email", usr_email);
 
@@ -58,7 +54,7 @@ export function AuthProvider({ children }) {
         if (token) {
             try {
                 // make sure token is not expired
-                await axios.get("http://localhost:3000/auth/user", {
+                await getAuthUser({
                     headers: {"Authorization": `Bearer ${token}`}
                 });
                 axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;

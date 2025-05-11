@@ -3,7 +3,6 @@
  * User adds, manages and views their documents here.
  */
 
-import axios from "axios";
 import { useEffect, useState } from "react";
 
 import Button, { buttonColors } from "../components/ui/Button";
@@ -15,6 +14,8 @@ import Footer from "../components/Footer";
 import Header from "../components/Header";
 import StubInfoView from "../components/infoviews/StubInfoView";
 import TwoPanels from "../components/TwoPanels";
+import { getDocumentCatalogue } from "../util/api";
+
 
 import "./CatalogueView.scss";
 
@@ -52,18 +53,6 @@ function buildItemTree(itemArray) {
     return rootNodes[0];
 }
 
-/*function getDocumentCatalogue() {
-    try {
-        let data;
-        axios.get("http://localhost:3000/document/catalogue").then(response => data = response.data);
-        return data;
-    }
-    catch (error) {
-        console.error(error);
-        throw error;
-    }
-}*/
-
 function CatalogueView() {
     const [isLoading, setIsLoading] = useState(true);
     const [itemArray, setItemArray] = useState(null);
@@ -71,9 +60,7 @@ function CatalogueView() {
     const [selectedItem, setSelectedItem] = useState(null);
 
     useEffect(() => {
-        axios.get("http://localhost:3000/document/catalogue").then(response => {
-            setItemArray(response.data);
-        });
+        getDocumentCatalogue(setItemArray);
     }, []);
 
     useEffect(() => {
