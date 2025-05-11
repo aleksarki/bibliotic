@@ -3,12 +3,15 @@
  */
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFilePdf, faFolder } from "@fortawesome/free-solid-svg-icons";
+import { faFilePdf, faFolderClosed, faFolderOpen } from "@fortawesome/free-solid-svg-icons";
 
 import "./HierarchyItem.scss";
 
-function HierarchyItem({ index, text, level, isFile, isSelected, onClickCb }) {
-    // todo: redo this, currently looks like s
+function HierarchyItem({
+    index, text, level, isFile, isSelected, onClickCb,
+    isExpanded, onToggleExpand
+}) {
+    // todo: redo this?
     return (
         <div
             className={ `HierarchyItem ${isSelected ? " selected-item" : ""}`}
@@ -19,7 +22,18 @@ function HierarchyItem({ index, text, level, isFile, isSelected, onClickCb }) {
                     className="item-title"
                     style={ {marginLeft: level*20 + 'px', color: isSelected ? "black" : "inherit"} }
                 >
-                    <FontAwesomeIcon icon={ isFile ? faFilePdf : faFolder } />
+                    { !isFile && (
+                        <button
+                            className="expand-button"
+                            onClick={ e => {
+                                e.stopPropagation();
+                                onToggleExpand();
+                            } }
+                        >
+                            <FontAwesomeIcon icon={ isExpanded ? faFolderOpen : faFolderClosed } />
+                        </button>
+                    ) }
+                    { isFile && <FontAwesomeIcon icon={ faFilePdf } /> }
                     <span style={ {fontStyle: isFile ? 'normal' : 'italic'} }>{ text }</span>
                 </div>
                 <div>{ isSelected && <span className="item-selection-label">Выбрано</span> }</div>
