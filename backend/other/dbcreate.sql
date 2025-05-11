@@ -1,7 +1,3 @@
-DROP FUNCTION IF EXISTS document_get_owner;
-DROP PROCEDURE IF EXISTS document_add;
-DROP PROCEDURE IF EXISTS document_delete;
-DROP PROCEDURE IF EXISTS document_move;
 DROP FUNCTION IF EXISTS folder_tree_select;
 DROP PROCEDURE IF EXISTS folder_tree_delete;
 DROP FUNCTION IF EXISTS folder_chain_select;
@@ -11,7 +7,11 @@ DROP PROCEDURE IF EXISTS folder_add;
 DROP PROCEDURE IF EXISTS folder_move;
 DROP PROCEDURE IF EXISTS account_create;
 DROP PROCEDURE IF EXISTS account_delete;
-
+DROP FUNCTION IF EXISTS document_get_owner;
+DROP PROCEDURE IF EXISTS document_add;
+DROP PROCEDURE IF EXISTS document_delete;
+DROP PROCEDURE IF EXISTS document_move;
+DROP FUNCTION IF EXISTS item_tree_select;
 
 DROP TABLE IF EXISTS Keywords;
 DROP TABLE IF EXISTS Annotations;
@@ -290,7 +290,6 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
-
 -- Get owner of a document (that is, user owning the root folder)
 -- If no owner found, get -1
 CREATE FUNCTION document_get_owner(doc_id INT)
@@ -345,7 +344,6 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
-
 -- Delete document
 CREATE PROCEDURE document_delete(doc_id INT) AS $$
 BEGIN
@@ -358,7 +356,6 @@ BEGIN
     RAISE NOTICE 'Successfully deleted document';
 END;
 $$ LANGUAGE plpgsql;
-
 
 -- Move document to its new destination
 -- Prohibited moves:
@@ -380,9 +377,39 @@ BEGIN
         RAISE EXCEPTION 'Document and destination folder do not belong to the same owner';
     END IF;
 
+    -- TODO: Check if document named the same way already exists in destination
+
     UPDATE Documents SET doc_folder = dest_id 
     WHERE Documents.doc_id = document_move.doc_id;
     
     RAISE NOTICE 'Successfully moved Document "%" into folder "%"', doc_id, dest_id;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Select folders and documents inside root folder hierarchically
+CREATE FUNCTION item_tree_select(root_id INT)
+RETURNS TABLE
+(
+	item_type TEXT,
+	item_id INT,
+	item_parent INT,
+	item_name VARCHAR(32),
+	item_added TIMESTAMP
+) AS $$
+BEGIN
+    RETURN QUERY
+	WITH FolderTree AS (
+		SELECT
+			'folder' AS item_type, fldr_id AS item_id, fldr_parent AS item_parent,
+			fldr_name AS item_name, NULL::TIMESTAMP AS item_added
+		FROM folder_tree_select(root_id)
+	)
+	SELECT * FROM FolderTree
+	UNION ALL
+	SELECT
+		'document' AS item_type, doc_id AS item_id, doc_folder AS item_parent, doc_name AS item_name,
+		doc_added AS item_added
+	FROM Documents d
+	JOIN FolderTree ft ON d.doc_folder = ft.item_id;
 END;
 $$ LANGUAGE plpgsql;
