@@ -3,7 +3,8 @@
  * User adds, manages and views their documents here.
  */
 
-import { useState } from "react";
+import axios from "axios";
+import { useEffect, useState } from "react";
 
 import Button, { buttonColors } from "../components/ui/Button";
 import ButtonBox from "../components/ui/ButtonBox";
@@ -17,18 +18,71 @@ import TwoPanels from "../components/TwoPanels";
 
 import "./CatalogueView.scss";
 
-function CatalogueView() {
-    // dummy hierarchy
-    const hierarchy = {title: "root", isfile: false, children: [
-        {title: "папка", isFile: false, children: [
-            {title: "файл1", isFile: true}
-        ]},
-        {title: "файл2", isFile: true},
-        {title: "файл3", isFile: true}
-    ]};
+function buildItemTree(itemArray) {
+    const folderMap = {};
+    const documentMap = {};
+    
+    itemArray.forEach(item => {
+        if (item.item_type == "folder") {
+            folderMap[item.item_id] = {
+                ...item,
+                item_children: []
+            };
+        }
+        else {
+            documentMap[item.item_id] = {
+                ...item,
+                item_children: null
+            };
+        }
+    });
 
-    // item (folder or document) that is selected by user
+    const rootNodes = [];
+    itemArray.forEach(item => {
+        const map = item.item_type == "folder" ? folderMap : documentMap;
+        const node = map[item.item_id];
+        if (item.item_parent == null || !folderMap[item.item_parent]) {
+            rootNodes.push(node);
+        }
+        else {
+            folderMap[item.item_parent].item_children.push(node);
+        }
+    });
+
+    return rootNodes[0];
+}
+
+/*function getDocumentCatalogue() {
+    try {
+        let data;
+        axios.get("http://localhost:3000/document/catalogue").then(response => data = response.data);
+        return data;
+    }
+    catch (error) {
+        console.error(error);
+        throw error;
+    }
+}*/
+
+function CatalogueView() {
+    const [isLoading, setIsLoading] = useState(true);
+    const [itemArray, setItemArray] = useState(null);
+    const [itemTree, setItemTree] = useState(null);
     const [selectedItem, setSelectedItem] = useState(null);
+
+    useEffect(() => {
+        axios.get("http://localhost:3000/document/catalogue").then(response => {
+            setItemArray(response.data);
+        });
+    }, []);
+
+    useEffect(() => {
+        if (itemArray) {
+            setItemTree(buildItemTree(itemArray));
+        }
+    }, [itemArray]);
+    
+    // item (folder or document) that is selected by user
 
     return (
         <div className="CatalogueView">
@@ -47,7 +101,7 @@ function CatalogueView() {
                         </div>
                         <div className="hierarchy-body">
                             <FileHierarchy
-                                hierarchy={ hierarchy }
+                                hierarchy={ itemTree }
                                 onItemSelectionCb={ (node) => setSelectedItem(node) }
                             />
                         </div>

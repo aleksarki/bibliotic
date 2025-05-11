@@ -8,44 +8,36 @@ import HierarchyItem from "./HierarchyItem";
 
 import "./FileHierarchy.scss";
 
-function treeVisitor(selectedIndex, setSelectedIndex, onItemSelectionCb) {
-    let level = 0;
-    let index = 0;
+function FileHierarchy({ hierarchy, onItemSelectionCb }) {
+    const [selectedIndex, setSelectedIndex] = useState(null);
 
-    function visit(node) {
-        ++level;
+    function toItems(node, level = 0, indexRef = {current: 0}) {
+        const currentIndex = indexRef.current++;
         const items = [];
 
         items.push(
             <HierarchyItem
-                index={ index }
-                text={ node.title }
+                key={ node.item_type + node.item_id }
+                index={ currentIndex }
+                text={ node.item_name }
                 level={ level }
-                isFile={ node.isFile }
-                isSelected={ index == selectedIndex }
+                isFile={ node.item_type == "document" }
+                isSelected={ currentIndex == selectedIndex }
                 onClickCb={ (idx) => {
                     setSelectedIndex(idx);
-                    onItemSelectionCb(node);
+                    onItemSelectionCb(idx);
                 } }
             />
         );
-        ++index;
 
-        node.children?.forEach(child => items.push(...visit(child)));
+        node.item_children?.forEach(child => {
+            items.push(...toItems(child, level + 1, indexRef));
+        });
 
-        --level;
         return items;
     }
 
-    return (node) => visit(node);
-}
-
-function FileHierarchy({ hierarchy, onItemSelectionCb }) {
-    const [selectedIndex, setSelectedIndex] = useState(null);
-
-    const toItems = treeVisitor(selectedIndex, setSelectedIndex, onItemSelectionCb);
-
-    return <div className="FileHierarchy">{ toItems(hierarchy) }</div>;
+    return <div className="FileHierarchy">{ hierarchy ? toItems(hierarchy) : null }</div>;
 }
 
 export default FileHierarchy;
