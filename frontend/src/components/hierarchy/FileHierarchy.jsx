@@ -43,7 +43,7 @@ function FileHierarchy({ hierarchy, onItemSelectionCb }) {
                 isSelected={ currentIndex == selectedIndex }
                 onClickCb={ (idx) => {
                     setSelectedIndex(idx);
-                    onItemSelectionCb(idx);
+                    onItemSelectionCb(node);
                 } }
                 isExpanded={ isExpanded }
                 onToggleExpand={ () => toggleFolder(node.item_id) }

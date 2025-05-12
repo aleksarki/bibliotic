@@ -69,7 +69,16 @@ function CatalogueView() {
         }
     }, [itemArray]);
     
-    // item (folder or document) that is selected by user
+    let infoView;
+    if (!selectedItem) {
+        infoView = <StubInfoView />;
+    }
+    else if (selectedItem.item_type == "document") {
+         infoView = <DocumentInfoView document={ selectedItem } />;
+    }
+    else {
+        infoView = <FolderInfoView folder={ selectedItem } />;
+    }
 
     return (
         <div className="CatalogueView">
@@ -94,7 +103,7 @@ function CatalogueView() {
                         </div>
                     </div>
                 }
-                right={ selectedItem == null ? <StubInfoView /> : selectedItem.isFile ? <DocumentInfoView /> : <FolderInfoView /> }
+                right={ infoView }
             />
             <Footer />
         </div>

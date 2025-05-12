@@ -10,12 +10,12 @@ import ButtonBox from "../ui/ButtonBox";
 
 import "./FolderInfoView.scss";
 
-function FolderInfoView() {
+function FolderInfoView({ folder }) {
     return (
         <div className="FolderInfoView">
             <div className="view-title">
                 <FontAwesomeIcon icon={ faFolder } />
-                <span>Папка</span>
+                <span>{ folder?.item_name ?? "Папка" }</span>
             </div>
             <div className="button-area">
                 <ButtonBox gap={ 10 } buttons={ [

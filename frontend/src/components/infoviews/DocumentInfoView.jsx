@@ -10,12 +10,12 @@ import ButtonBox from "../ui/ButtonBox";
 
 import "./DocumentInfoView.scss";
 
-function DocumentInfoView() {
+function DocumentInfoView({ document }) {
     return (
         <div className="DocumentInfoView">
             <div className="view-title">
                 <FontAwesomeIcon icon={ faFilePdf } />
-                <span>Документ</span>
+                <span>{ document?.item_name ?? "Документ" }</span>
             </div>
             <div className="button-area">
                 <ButtonBox gap={ 10 } buttons={ [
@@ -28,6 +28,7 @@ function DocumentInfoView() {
                     <Button style={ buttonColors.RED }><FontAwesomeIcon icon={ faTrashAlt } /></Button>
                 ] } />
             </div>
+            <div>Добавлено: { document?.item_added }</div>
         </div>
     );
 }
