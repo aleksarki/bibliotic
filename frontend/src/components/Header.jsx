@@ -44,7 +44,7 @@ function Header({ pageTitle, pageIndex, hideNav }) {
                 <span className="app-title">Библиотик</span>
                 <span className="view-title">{ pageTitle }</span>
             </div>
-            { hideNav ? null : <div className="nav-block"><ButtonBox buttons={ buttons } gap={ 15 } /></div> }
+            { hideNav ? null : <div className="nav-block"><ButtonBox children={ buttons } gap={ 15 } /></div> }
         </div>
     );
 }

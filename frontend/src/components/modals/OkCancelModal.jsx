@@ -12,7 +12,7 @@ function OkCancelModal({ isOpen, title, text, onClose, onOk, onCancel }) {
             onClose={ onClose }
         >
             <div>{ text }</div>
-            <ButtonBox gap={ 10 } buttons={ [
+            <ButtonBox gap={ 10 }>
                 <Button
                     text="ОК"
                     style={ buttonColors.GREEN }
@@ -20,7 +20,7 @@ function OkCancelModal({ isOpen, title, text, onClose, onOk, onCancel }) {
                         onOk?.();
                         onClose?.();
                     } }
-                />,
+                />
                 <Button
                     text="Отмена"
                     style={ buttonColors.RED }
@@ -29,7 +29,7 @@ function OkCancelModal({ isOpen, title, text, onClose, onOk, onCancel }) {
                         onClose?.();
                     } }
                 />
-            ] } />
+            </ButtonBox>
         </Modal>
     );
 }

@@ -26,15 +26,15 @@ function DocumentInfoView({ document }) {
                 <span>{ document.item_name ?? "Документ" }</span>
             </div>
             <div className="button-area">
-                <ButtonBox gap={ 10 } buttons={ [
-                    <Button text="Просмотр" style={ buttonColors.GREEN } ><FontAwesomeIcon icon={ faBook } /></Button>,
-                    <Button style={ buttonColors.GREEN }><FontAwesomeIcon icon={ faDownload } /></Button>
-                ] } />
-                <ButtonBox gap={ 10 } buttons={ [
-                    <Button style={ buttonColors.BLUE }><FontAwesomeIcon icon={ faPencil } /></Button>,
-                    <Button style={ buttonColors.YELLOW }><FontAwesomeIcon icon={ faArrows } /></Button>,
-                    <Button style={ buttonColors.RED } onClick={ openDeleteModal }><FontAwesomeIcon icon={ faTrashAlt } /></Button>
-                ] } />
+                <ButtonBox gap={ 10 }>
+                    <Button text="Просмотр" icon={ faBook } style={ buttonColors.GREEN } />
+                    <Button icon={ faDownload } style={ buttonColors.GREEN } />
+                </ButtonBox>
+                <ButtonBox gap={ 10 }>
+                    <Button icon={ faPencil } style={ buttonColors.BLUE } />
+                    <Button icon={ faArrows } style={ buttonColors.YELLOW } />
+                    <Button icon={ faTrashAlt } onClick={ openDeleteModal } style={ buttonColors.RED } />
+                </ButtonBox>
             </div>
             <div>Добавлено: { document?.item_added }</div>
         </div>

@@ -5,21 +5,21 @@ import { skeuomorphThemes, useTheme } from "../../contexts/ThemeContext";
 
 import "./ButtonBox.scss";
 
-function ButtonBox({ buttons, gap }) {
-    const {theme, setTheme} = useTheme();
+function ButtonBox({ children, gap }) {
+    const {theme} = useTheme();
 
     if (skeuomorphThemes.includes(theme)) {  // is skeuomorph
         return (
             <div className="ButtonBox">{
-                buttons.map((button, index) => {
+                children?.map((button, index) => {
                     let props;
-                    if (buttons.length == 1) {
+                    if (children.length == 1) {
                         props = {style: button.props.style + buttonPositions.SOLE};
                     }
                     else if (index == 0) {
                         props = {style: button.props.style + buttonPositions.LEFT};
                     }
-                    else if (index == buttons.length - 1) {
+                    else if (index == children.length - 1) {
                         props = {style: button.props.style + buttonPositions.RIGHT};
                     }
                     else {
@@ -32,9 +32,9 @@ function ButtonBox({ buttons, gap }) {
     }
 
     return (
-        <div className="ButtonBox" style={ {gap: gap} }>{
-            buttons.map((button, index) => button)
-        }</div>
+        <div className="ButtonBox" style={ {gap: gap} }>
+            { children?.map((button, index) => button) }
+        </div>
     );
 }
 

@@ -26,12 +26,12 @@ function FolderInfoView({ folder }) {
                 <span>{ folder?.item_name ?? "Папка" }</span>
             </div>
             <div className="button-area">
-                <ButtonBox gap={ 10 } buttons={ [
-                    <Button text="Скачать" style={ buttonColors.GREEN } ><FontAwesomeIcon icon={ faArchive } /></Button>,
-                    <Button style={ buttonColors.BLUE }><FontAwesomeIcon icon={ faPencil } /></Button>,
-                    <Button style={ buttonColors.YELLOW }><FontAwesomeIcon icon={ faArrows } /></Button>,
-                    <Button onClick={ openDeleteModal } style={ buttonColors.RED }><FontAwesomeIcon icon={ faTrashAlt } /></Button>
-                ] } />
+                <ButtonBox gap={ 10 } >
+                    <Button text="Скачать" icon={ faArchive } style={ buttonColors.GREEN } />
+                    <Button icon={ faPencil } style={ buttonColors.BLUE } />
+                    <Button icon={ faArrows } style={ buttonColors.YELLOW } />
+                    <Button icon={ faTrashAlt } onClick={ openDeleteModal } style={ buttonColors.RED } />
+                </ButtonBox>
             </div>
         </div>
         <DeleteModal

@@ -1,5 +1,4 @@
 import Modal_ from "react-modal";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faX } from "@fortawesome/free-solid-svg-icons";
 
 import Button, { buttonColors } from "../ui/Button";
@@ -16,7 +15,7 @@ function Modal({ isOpen, title, onClose, children }) {
         >
             <div className="modal-bar">
                 <span className="modal-title">{ title }</span>
-                <Button onClick={ onClose } style={ buttonColors.RED }><FontAwesomeIcon icon={ faX } /></Button>
+                <Button onClick={ onClose } icon={ faX } style={ buttonColors.RED } />
             </div>
             <div className="modal-body">
                 { children }

@@ -2,6 +2,7 @@
  * A button.
  */
 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./Button.scss";
 
 export const buttonColors = {
@@ -19,7 +20,7 @@ export const buttonPositions = {
     RIGHT: " btn-right "
 }
 
-function Button({ text, children, style, onClick }) {
+function Button({ text, icon, children, style, onClick }) {
     const positionNotProvided = Object.values(buttonPositions).every(position => !style.includes(position));
     if (positionNotProvided) {
         style += buttonPositions.SOLE;
@@ -28,6 +29,7 @@ function Button({ text, children, style, onClick }) {
     return (
         <div className={ "Button " + style } onClick={ onClick }>
             { text && <span>{ text }</span> }
+            { icon && <FontAwesomeIcon icon={ icon } /> }
             { children }
         </div>
     );

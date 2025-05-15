@@ -89,10 +89,10 @@ function CatalogueView() {
                         <div className="hierarchy-head">
                             <Button text="Сортировка" style={ buttonColors.BLUE } />
                             <div className="hierarchy-head-right-box">
-                                <ButtonBox gap={ 10 } buttons={ [
-                                    <Button text="Создать папку" style={ buttonColors.GREEN } />,
+                                <ButtonBox gap={ 10 }>
+                                    <Button text="Создать папку" style={ buttonColors.GREEN } />
                                     <Button text="Добавить файл" style={ buttonColors.GREEN } />
-                                ] } />
+                                </ButtonBox>
                             </div>
                         </div>
                         <div className="hierarchy-body">
