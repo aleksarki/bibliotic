@@ -1,0 +1,47 @@
+@import '../../themes.scss';
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .modal-content {
+        background: var(--modal-content--background);
+        margin: auto;
+        padding: 10px;
+        border: var(--modal-content--border);
+        border-radius: 10px;
+        box-shadow: 2px 2px 3px black;
+
+        .modal-bar {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+
+            .modal-title {
+                font-size: large;
+                font-weight: var(--central-pan-title--font-weight);
+                font-style: italic;
+                text-align: center;
+                text-shadow: var(--central-pan-title--text-shadow);
+            }
+        }
+
+        .modal-body {
+            padding: 5px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+    }
+}
+
+
