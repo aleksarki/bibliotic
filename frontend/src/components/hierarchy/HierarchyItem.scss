@@ -2,6 +2,7 @@
 
 .HierarchyItem {
     border-bottom: var(--general-sep--border);
+    cursor: pointer;
 
     // Inner wrapping box.
     .item-box {
@@ -26,6 +27,7 @@
                 background: none;
                 border: none;
                 color: inherit;
+                cursor: inherit;
             }
         }
 
