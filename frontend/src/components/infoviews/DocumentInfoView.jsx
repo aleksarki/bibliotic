@@ -8,15 +8,20 @@ import { faArrows, faBook, faDownload, faFilePdf, faPencil, faTrashAlt } from "@
 import Button, { buttonColors } from "../ui/Button";
 import ButtonBox from "../ui/ButtonBox";
 import { useOkCancelModal } from "../modals/OkCancelModal";
+import { deleteDocumentDelete } from "../../util/api";
 
 import "./DocumentInfoView.scss";
 
-function DocumentInfoView({ document }) {
-    const [DeleteModal, openDeleteModal, closeDeleteModal] = useOkCancelModal();
+function DocumentInfoView({ document, updateCatalogue }) {
+    const [DeleteModal, openDeleteModal, closeDeleteModal, fulfilDeleteModal] = useOkCancelModal();
 
     function deleteDocument() {
-        // FIX: api call
-        console.log(`Deleted ${document.item_id}`);
+        fulfilDeleteModal(false);
+        deleteDocumentDelete(document.item_id, () => {
+            console.log("deletd");
+            fulfilDeleteModal(true);
+            updateCatalogue?.();
+        });
     }
 
     return <>
@@ -26,15 +31,15 @@ function DocumentInfoView({ document }) {
                 <span>{ document.item_name ?? "Документ" }</span>
             </div>
             <div className="button-area">
-                <ButtonBox gap={ 10 } buttons={ [
-                    <Button text="Просмотр" style={ buttonColors.GREEN } ><FontAwesomeIcon icon={ faBook } /></Button>,
-                    <Button style={ buttonColors.GREEN }><FontAwesomeIcon icon={ faDownload } /></Button>
-                ] } />
-                <ButtonBox gap={ 10 } buttons={ [
-                    <Button style={ buttonColors.BLUE }><FontAwesomeIcon icon={ faPencil } /></Button>,
-                    <Button style={ buttonColors.YELLOW }><FontAwesomeIcon icon={ faArrows } /></Button>,
-                    <Button style={ buttonColors.RED } onClick={ openDeleteModal }><FontAwesomeIcon icon={ faTrashAlt } /></Button>
-                ] } />
+                <ButtonBox gap={ 10 }>
+                    <Button text="Просмотр" icon={ faBook } style={ buttonColors.GREEN } />
+                    <Button icon={ faDownload } style={ buttonColors.GREEN } />
+                </ButtonBox>
+                <ButtonBox gap={ 10 }>
+                    <Button icon={ faPencil } style={ buttonColors.BLUE } />
+                    <Button icon={ faArrows } style={ buttonColors.YELLOW } />
+                    <Button icon={ faTrashAlt } onClick={ openDeleteModal } style={ buttonColors.RED } />
+                </ButtonBox>
             </div>
             <div>Добавлено: { document?.item_added }</div>
         </div>

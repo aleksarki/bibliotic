@@ -23,18 +23,18 @@ function OptionsView() {
                 <div className="left-panel">
                     <div className="option-row">
                         <span>Тема оформления</span>
-                        <ButtonBox gap={ 10 } buttons={ [
-                            <Button text="Светлая" style={ buttonColors.GREEN } onClick={ () => setTheme(themes.LIGHT) } />,
-                            <Button text="Тёмная" style={ buttonColors.BLUE } onClick={ () => setTheme(themes.DARK) } />,
+                        <ButtonBox gap={ 10 }>
+                            <Button text="Светлая" style={ buttonColors.GREEN } onClick={ () => setTheme(themes.LIGHT) } />
+                            <Button text="Тёмная" style={ buttonColors.BLUE } onClick={ () => setTheme(themes.DARK) } />
                             <Button text="Скевоморф" style={ buttonColors.SKEUO } onClick={ () => setTheme(themes.SKEUO) } />
-                        ] } />
+                        </ButtonBox>
                     </div>
                     <div className="option-row">
                         <span>Аккаунт</span>
-                        <ButtonBox gap={ 10 } buttons={ [
-                            <Button text="Сменить пароль" style={ buttonColors.YELLOW } />,
+                        <ButtonBox gap={ 10 }>
+                            <Button text="Сменить пароль" style={ buttonColors.YELLOW } />
                             <Button text="Выйти" style={ buttonColors.RED } onClick={ logout } />
-                        ] } />
+                        </ButtonBox>
                     </div>
                 </div>
             } />

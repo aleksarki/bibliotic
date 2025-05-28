@@ -25,3 +25,32 @@ export function getDocumentCatalogue(dataSetter) {
     }
 }
 
+export function postDocumentUpload(file, folder, name, onFulfil) {
+    const data = new FormData();
+    data.append("file", file);
+    data.append("folder", folder);
+    data.append("name", name);
+
+    try {
+        axios.post("http://localhost:3000/document/upload", data, {
+            headers: {
+                "Content-Type": "multipart/form-data"
+            }
+        }).then(response => onFulfil?.(response));
+    }
+    catch (error) {
+        console.error(error);
+        throw error;
+    }
+}
+
+export function deleteDocumentDelete(doc_id, onFulfil) {
+    try {
+        axios.delete(`http://localhost:3000/document/delete?doc_id=${doc_id}`)
+            .then(request => onFulfil?.());
+    }
+    catch (error) {
+        console.error(error);
+        throw error;
+    }
+}
