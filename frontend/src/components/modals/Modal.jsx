@@ -5,20 +5,20 @@ import Button, { buttonColors } from "../ui/Button";
 
 import "./Modal.scss";
 
-function Modal({ isOpen, title, onClose, children }) {
+function Modal({ isOpen, isFulfilled = true, title, onClose, children }) {
     return (
         <Modal_
             overlayClassName="modal-overlay"
             className="modal-content"
-            isOpen={ isOpen }
+            isOpen={ isOpen || !isFulfilled }
             onRequestClose={ onClose }
         >
             <div className="modal-bar">
                 <span className="modal-title">{ title }</span>
-                <Button onClick={ onClose } icon={ faX } style={ buttonColors.RED } />
+                { isFulfilled ? <Button onClick={ onClose } icon={ faX } style={ buttonColors.RED } /> : null }
             </div>
             <div className="modal-body">
-                { children }
+                { isFulfilled ? children : <span>Обработка...</span> }
             </div>
         </Modal_>
     );

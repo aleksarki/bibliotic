@@ -4,10 +4,11 @@ import Button, { buttonColors } from "../ui/Button";
 import ButtonBox from "../ui/ButtonBox";
 import Modal from "./Modal";
 
-function OkCancelModal({ isOpen, title, text, onClose, onOk, onCancel }) {
+function OkCancelModal({ isOpen, isFulfilled = true, title, text, onClose, onOk, onCancel }) {
     return (
         <Modal
             isOpen={ isOpen }
+            isFulfilled={ isFulfilled }
             title={ title }
             onClose={ onClose }
         >
@@ -38,13 +39,16 @@ export default OkCancelModal;
 
 export function useOkCancelModal() {
     const [isOpen, setIsOpen] = useState(false);
+    const [isFulfilled, setIsFulfilled] = useState(true);
 
     const open = () => setIsOpen(true);
     const close = () => setIsOpen(false);
+    const fulfil = (state) => setIsFulfilled(state);
 
     const ModalComponent = ({ title, text, onOk, onCancel }) => (
         <OkCancelModal
             isOpen={ isOpen }
+            isFulfilled={ isFulfilled }
             title={ title }
             text={ text }
             onClose={ close }
@@ -53,5 +57,5 @@ export function useOkCancelModal() {
         />
     );
 
-    return [ModalComponent, open, close];
+    return [ModalComponent, open, close, fulfil];
 }

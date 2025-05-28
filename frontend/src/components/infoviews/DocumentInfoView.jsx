@@ -8,15 +8,20 @@ import { faArrows, faBook, faDownload, faFilePdf, faPencil, faTrashAlt } from "@
 import Button, { buttonColors } from "../ui/Button";
 import ButtonBox from "../ui/ButtonBox";
 import { useOkCancelModal } from "../modals/OkCancelModal";
+import { deleteDocumentDelete } from "../../util/api";
 
 import "./DocumentInfoView.scss";
 
-function DocumentInfoView({ document }) {
-    const [DeleteModal, openDeleteModal, closeDeleteModal] = useOkCancelModal();
+function DocumentInfoView({ document, updateCatalogue }) {
+    const [DeleteModal, openDeleteModal, closeDeleteModal, fulfilDeleteModal] = useOkCancelModal();
 
     function deleteDocument() {
-        // FIX: api call
-        console.log(`Deleted ${document.item_id}`);
+        fulfilDeleteModal(false);
+        deleteDocumentDelete(document.item_id, () => {
+            console.log("deletd");
+            fulfilDeleteModal(true);
+            updateCatalogue?.();
+        });
     }
 
     return <>

@@ -14,6 +14,7 @@ import Footer from "../components/Footer";
 import Header from "../components/Header";
 import StubInfoView from "../components/infoviews/StubInfoView";
 import TwoPanels from "../components/TwoPanels";
+import { useFileUploadModal } from "../components/modals/FileUploadModal";
 import { getDocumentCatalogue } from "../util/api";
 
 
@@ -58,6 +59,7 @@ function CatalogueView() {
     const [itemArray, setItemArray] = useState(null);
     const [itemTree, setItemTree] = useState(null);
     const [selectedItem, setSelectedItem] = useState(null);
+    //const [FileUploadModal, openFileUploModal, closeFileUploadModal] = useFileUploadModal();
 
     useEffect(() => {
         getDocumentCatalogue(setItemArray);
@@ -69,18 +71,22 @@ function CatalogueView() {
         }
     }, [itemArray]);
     
+    const updateCatalogue = () => {
+        getDocumentCatalogue(setItemArray);
+    };
+
     let infoView;
     if (!selectedItem) {
         infoView = <StubInfoView />;
     }
     else if (selectedItem.item_type == "document") {
-         infoView = <DocumentInfoView document={ selectedItem } />;
+         infoView = <DocumentInfoView document={ selectedItem } updateCatalogue={ updateCatalogue } />;
     }
     else {
-        infoView = <FolderInfoView folder={ selectedItem } />;
+        infoView = <FolderInfoView folder={ selectedItem } updateCatalogue={ updateCatalogue } />;
     }
 
-    return (
+    return <>
         <div className="CatalogueView">
             <Header pageTitle="Каталог" pageIndex="0" />
             <TwoPanels
@@ -89,10 +95,10 @@ function CatalogueView() {
                         <div className="hierarchy-head">
                             <Button text="Сортировка" style={ buttonColors.BLUE } />
                             <div className="hierarchy-head-right-box">
-                                <ButtonBox gap={ 10 }>
+                                { /*<ButtonBox gap={ 10 }>
                                     <Button text="Создать папку" style={ buttonColors.GREEN } />
-                                    <Button text="Добавить файл" style={ buttonColors.GREEN } />
-                                </ButtonBox>
+                                    <Button text="Загрузить файл" style={ buttonColors.GREEN } />
+                                </ButtonBox>*/ }
                             </div>
                         </div>
                         <div className="hierarchy-body">
@@ -107,7 +113,8 @@ function CatalogueView() {
             />
             <Footer />
         </div>
-    );
+        { /*<FileUploadModal />*/ }
+    </>;
 }
 
 export default CatalogueView;
