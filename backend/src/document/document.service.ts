@@ -25,7 +25,7 @@ export class DocumentService {
 
         const document = await this.dataSource.query(
             "CALL document_add($1, $2, $3, $4, $5, $6)",
-            [folder, file.filename, new Date(), name, null, null]
+            [folder, file.filename, new Date(), name.substring(0, 32), null, null]
         );
 
         return {
@@ -40,5 +40,32 @@ export class DocumentService {
             "SELECT * FROM item_tree_select($1)", [root]
         );
         return items;
+    }
+
+    async getOwner(doc_id: number) {
+        try {
+            const owner = await this.dataSource.query(
+                "SELECT document_get_owner($1)", [doc_id]
+            );
+            return owner?.[0]?.document_get_owner;
+        }
+        catch (error) {
+            return null;
+        }
+    }
+
+    async delete(doc_id: number) {
+        try {
+            await this.dataSource.query(
+                "CALL document_delete($1)", [doc_id]
+            );
+            return {
+                "statusCode": 200,
+                "message": `document deleted: ${doc_id}`,
+            };
+        }
+        catch (error) {
+            return { "status": "error" }
+        }
     }
 }
