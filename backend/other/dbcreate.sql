@@ -12,6 +12,9 @@ DROP PROCEDURE IF EXISTS document_add;
 DROP PROCEDURE IF EXISTS document_delete;
 DROP PROCEDURE IF EXISTS document_move;
 DROP FUNCTION IF EXISTS item_tree_select;
+DROP PROCEDURE IF EXISTS annotation_add;
+DROP PROCEDURE IF EXISTS annotation_delete;
+DROP FUNCTION IF EXISTS document_get_annotations;
 
 DROP TABLE IF EXISTS Keywords;
 DROP TABLE IF EXISTS Annotations;
@@ -411,5 +414,59 @@ BEGIN
 		doc_added AS item_added
 	FROM Documents d
 	JOIN FolderTree ft ON d.doc_folder = ft.item_id;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Add a new annotation to a document
+-- Out: id of created annotation
+CREATE PROCEDURE annotation_add(
+	annot_document INT,
+    annot_page INT,
+    annot_text TEXT,
+  	OUT annot_id INT) AS $$
+BEGIN
+    IF annot_document IS NULL THEN
+        RAISE EXCEPTION 'Document cannot be NULL';
+    END IF;
+
+    IF NOT EXISTS (SELECT 1 FROM Documents WHERE Documents.doc_id = annotation_add.annot_document) THEN
+        RAISE EXCEPTION 'Document with id "%" does not exist', annot_document;
+    END IF;
+
+    INSERT INTO Annotations (annot_document, annot_page, annot_text) VALUES (annot_document, annot_page, annot_text)
+    RETURNING Annotations.annot_id INTO annot_id;
+
+    RAISE NOTICE 'Successfully created annotation with id "%"', annot_id;
+END;
+$$ LANGUAGE plpgsql;
+
+
+-- Delete annotation
+CREATE PROCEDURE annotation_delete(annot_id INT) AS $$
+BEGIN
+    IF NOT EXISTS (SELECT 1 FROM Annotations WHERE Annotations.annot_id = annotation_delete.annot_id) THEN
+        RAISE EXCEPTION 'Annotation with id "%" does not exist', annotation_delete.annot_id;
+    END IF;
+
+    DELETE FROM Annotations WHERE Annotations.annot_id = annotation_delete.annot_id;
+
+    RAISE NOTICE 'Successfully deleted annotation';
+END;
+$$ LANGUAGE plpgsql;
+
+
+-- Get annotations of document
+CREATE FUNCTION document_get_annotations(doc_id INT)
+RETURNS SETOF Annotations AS $$
+BEGIN
+    IF doc_id IS NULL THEN
+        RAISE EXCEPTION 'Document cannot be NULL';
+    END IF;
+
+    IF NOT EXISTS (SELECT 1 FROM Documents WHERE Documents.doc_id = document_get_annotations.doc_id) THEN
+        RAISE EXCEPTION 'Document with id "%" does not exist', doc_id;
+    END IF;
+
+    RETURN QUERY SELECT * FROM Annotations WHERE annot_document = doc_id;
 END;
 $$ LANGUAGE plpgsql;
