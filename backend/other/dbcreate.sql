@@ -472,3 +472,58 @@ BEGIN
     RETURN QUERY SELECT * FROM Annotations WHERE annot_document = doc_id;
 END;
 $$ LANGUAGE plpgsql;
+
+
+-- Keyword creation
+CREATE PROCEDURE keyword_add(
+    kwrd_document INT,
+    kwrd_keyword TEXT,
+    OUT kwrd_id INT
+) AS $$
+BEGIN
+    -- Checking the existence of a document
+    IF NOT EXISTS (SELECT 1 FROM Documents WHERE doc_id = keyword_add.kwrd_document) THEN
+        RAISE EXCEPTION 'Document with id "%" does not exist', kwrd_document;
+    END IF;
+
+    -- Check for empty keyword
+    IF kwrd_keyword IS NULL OR kwrd_keyword = '' THEN
+        RAISE EXCEPTION 'Keyword cannot be empty';
+    END IF;
+
+    -- Checking for the existence of the same keyword for this document
+    IF EXISTS (
+        SELECT 1 FROM Keywords 
+        WHERE Keywords.kwrd_document = keyword_add.kwrd_document 
+        AND Keywords.kwrd_keyword = keyword_add.kwrd_keyword
+    ) THEN
+        RAISE EXCEPTION 'Keyword "%" already exists for document %', kwrd_keyword, kwrd_document;
+    END IF;
+
+    -- Adding a keyword
+    INSERT INTO Keywords (kwrd_document, kwrd_keyword)
+    VALUES (keyword_add.kwrd_document, keyword_add.kwrd_keyword)
+    RETURNING Keywords.kwrd_id INTO kwrd_id;
+
+    RAISE NOTICE 'Successfully added keyword with id "%" to document %', keyword_add.kwrd_id, keyword_add.kwrd_document;
+END;
+$$ LANGUAGE plpgsql;
+
+
+-- Getting keywords for a document
+CREATE FUNCTION document_get_keywords(
+    doc_id INT
+) RETURNS SETOF Keywords AS $$
+BEGIN
+    -- Checking the existence of a document
+    IF NOT EXISTS (SELECT 1 FROM Documents WHERE Documents.doc_id = document_get_keywords.doc_id) THEN
+        RAISE EXCEPTION 'Document with id "%" does not exist', doc_id;
+    END IF;
+
+    -- Return all keywords for the document
+    RETURN QUERY 
+    SELECT * FROM Keywords 
+    WHERE Keywords.kwrd_document = document_get_keywords.doc_id
+    ORDER BY Keywords.kwrd_keyword;
+END;
+$$ LANGUAGE plpgsql;
