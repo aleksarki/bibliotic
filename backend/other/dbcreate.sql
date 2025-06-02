@@ -15,6 +15,8 @@ DROP FUNCTION IF EXISTS item_tree_select;
 DROP PROCEDURE IF EXISTS annotation_add;
 DROP PROCEDURE IF EXISTS annotation_delete;
 DROP FUNCTION IF EXISTS document_get_annotations;
+DROP PROCEDURE IF EXISTS keyword_add;
+DROP FUNCTION IF EXISTS document_get_keywords;
 
 DROP TABLE IF EXISTS Keywords;
 DROP TABLE IF EXISTS Annotations;
