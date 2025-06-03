@@ -46,7 +46,8 @@ CREATE TABLE Documents
     doc_filename  TEXT         UNIQUE NOT NULL,
     doc_added     TIMESTAMP    NOT NULL,
     doc_name      VARCHAR(32)  NOT NULL,
-    doc_text      TEXT
+    doc_text      TEXT,
+    doc_preview   TEXT
 );
 
 CREATE TABLE Annotations

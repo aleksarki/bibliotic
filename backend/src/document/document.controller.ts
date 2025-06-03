@@ -1,4 +1,4 @@
-import { BadRequestException, Body, Controller, Delete, Get, Post, Query, Request, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
+import { BadRequestException, Body, Controller, Delete, Get, Param, Post, Query, Request, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import { v4 as uuid } from 'uuid'
@@ -60,12 +60,14 @@ export class DocumentController {
         return this.documentService.upload(file, folder, name, request.user.usr_id);
     }
 
+    // Return user their documents
     @UseGuards(JwtAuthGuard)
     @Get("catalogue")
     catalogue(@Request() request) {
         return this.documentService.catalogue(request.user.usr_root);
     }
 
+    // Delete a document
     @UseGuards(JwtAuthGuard)
     @Delete("delete")
     async delete(@Request() request, @Query("doc_id") doc_id: number) {
@@ -75,12 +77,20 @@ export class DocumentController {
         return this.documentService.delete(doc_id);
     }
 
+    // Save preview for a pdf file
+    @UseGuards(JwtAuthGuard)
+    @Post("preview")
+    async postPreview(@Query("doc_filename") doc_filename: string) {
+        return this.documentService.postPreview(doc_filename);
+    }
+
+    // Return preview for a document
     @UseGuards(JwtAuthGuard)
     @Get("preview")
-    async preview(@Request() request, @Query("doc_id") doc_id: number) {
+    async getPreview(@Request() request, @Query("doc_id") doc_id: number) {
         if (request.user.usr_id != await this.documentService.getOwner(doc_id)) {
             return {"error": "Unaccessible document"};
         }
-        return this.documentService.preview(doc_id);
+        return this.documentService.getPreview(doc_id);
     }
 }

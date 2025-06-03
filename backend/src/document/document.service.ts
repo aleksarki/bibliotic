@@ -13,6 +13,7 @@ export class DocumentService {
         @Inject("DATA_SOURCE") private dataSource: DataSource
     ) {}
     
+    // Save document
     async upload(file: Express.Multer.File, folder: number, name: string, usr_id: number): Promise<any> {
         const folderOwner = (await this.dataSource.query("SELECT folder_get_owner($1)", [folder]))[0].folder_get_owner;
         if (folderOwner != usr_id) {
@@ -38,6 +39,7 @@ export class DocumentService {
         };
     }
 
+    // Get documents inside a folder
     async catalogue(root: number) {
         const items = await this.dataSource.query(
             "SELECT * FROM item_tree_select($1)", [root]
@@ -45,6 +47,8 @@ export class DocumentService {
         return items;
     }
 
+    // Get owner (user) of the document
+    // If no such document exist, return null
     async getOwner(doc_id: number) {
         try {
             const owner = await this.dataSource.query(
@@ -57,6 +61,7 @@ export class DocumentService {
         }
     }
 
+    // Delete document
     async delete(doc_id: number) {
         try {
             await this.dataSource.query(
@@ -72,7 +77,8 @@ export class DocumentService {
         }
     }
 
-    async getFilePath(doc_id: number) {
+    // Return name of the document's pdf file
+    async getFilename(doc_id: number) {
         try {
             const filePath = await this.dataSource.query(
                 "SELECT doc_filename FROM Documents WHERE doc_id=$1;", [doc_id]
@@ -86,14 +92,26 @@ export class DocumentService {
 
     // use libraries like: pdf-lib, pdf2pic
 
-    async preview(doc_id: number) {
-        const filePath =  await this.getFilePath(doc_id);
-        if (!filePath) {
-            throw new Error("Path not determined");
-        }
-        const fullPath = `./upload/${filePath}`;
+    // Create and save preview for a pdf file
+    async postPreview(doc_filename: string) {
+        const docFilePath = `./upload/${doc_filename}`;
+
+        // Check that such file actually exists
 
         // Implementation here
+        // Save in folder './upload/previews/'
+        // Return file name of newly created preview picture
+
+        return "Not implemented";
+    }
+
+    // Return preview picture for a document
+    async getPreview(doc_id: number) {
+        // Check that document's preview exists
+
+        // Imtpelentation here
+        // Return picture
+        // If picture for a document does not exits, return that
 
         return "Not implemented";
     }
