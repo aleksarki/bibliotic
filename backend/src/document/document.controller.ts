@@ -74,4 +74,13 @@ export class DocumentController {
         }
         return this.documentService.delete(doc_id);
     }
+
+    @UseGuards(JwtAuthGuard)
+    @Get("preview")
+    async preview(@Request() request, @Query("doc_id") doc_id: number) {
+        if (request.user.usr_id != await this.documentService.getOwner(doc_id)) {
+            return {"error": "Unaccessible document"};
+        }
+        return this.documentService.preview(doc_id);
+    }
 }
