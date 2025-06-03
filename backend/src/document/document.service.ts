@@ -1,5 +1,8 @@
 import { HttpService } from '@nestjs/axios';
 import { BadRequestException, Inject, Injectable } from '@nestjs/common';
+import { readFile } from 'fs/promises';
+import { fromPath } from 'pdf2pic';
+import { PDFDocument } from 'pdf-lib';
 import { lastValueFrom } from 'rxjs';
 import { DataSource } from 'typeorm';
 
@@ -67,5 +70,31 @@ export class DocumentService {
         catch (error) {
             return { "status": "error" }
         }
+    }
+
+    async getFilePath(doc_id: number) {
+        try {
+            const filePath = await this.dataSource.query(
+                "SELECT doc_filename FROM Documents WHERE doc_id=$1;", [doc_id]
+            );
+            return filePath?.[0]?.doc_filename;
+        }
+        catch (error) {
+            return null;
+        }
+    }
+
+    // use libraries like: pdf-lib, pdf2pic
+
+    async preview(doc_id: number) {
+        const filePath =  await this.getFilePath(doc_id);
+        if (!filePath) {
+            throw new Error("Path not determined");
+        }
+        const fullPath = `./upload/${filePath}`;
+
+        // Implementation here
+
+        return "Not implemented";
     }
 }
