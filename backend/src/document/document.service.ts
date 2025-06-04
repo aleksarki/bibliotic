@@ -95,14 +95,50 @@ export class DocumentService {
     // Create and save preview for a pdf file
     async postPreview(doc_filename: string) {
         const docFilePath = `./upload/${doc_filename}`;
-
+        const previewDir = './upload/previews';
+        const previewName = `${doc_filename.replace('.pdf', '')}-preview.png`;
         // Check that such file actually exists
 
         // Implementation here
         // Save in folder './upload/previews/'
         // Return file name of newly created preview picture
 
-        return "Not implemented";
+        //The file name matches PDF
+        if (!doc_filename.toLowerCase().endsWith('.pdf')) {
+            throw new Error('It\'s not PDF filename');
+        }
+
+        //Does PDF file exist
+        if (!existsSync(docFilePath)) {
+            throw new Error(`File ${doc_filename} not found.`);
+        }
+
+        //If the previews folder does not exist, create it
+        if (!existsSync(previewDir)) {
+            mkdirSync(previewDir, { recursive: true });
+        }
+        
+        const options = {
+            density: 200,
+            saveFilename: previewName.replace('.png', ''),
+            savePath: previewDir,
+            format: 'png',
+            width: 1240,
+            height: 1754
+        };
+
+        const result = await fromPath(docFilePath, options)(1);
+
+        if (result && result.path) {
+            const oldPath = result.path;
+            const newPath = oldPath.replace('.1', '');
+
+            await fs.rename(oldPath, newPath);
+        } else {
+            console.error('Failed to get preview path');
+        }
+
+        return previewName;
     }
 
     // Return preview picture for a document
