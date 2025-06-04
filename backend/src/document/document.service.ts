@@ -5,7 +5,7 @@ import { fromPath } from 'pdf2pic';
 import { PDFDocument } from 'pdf-lib';
 import { lastValueFrom } from 'rxjs';
 import { DataSource } from 'typeorm';
-
+import { existsSync, mkdirSync, promises as fs } from 'fs';
 @Injectable()
 export class DocumentService {
     constructor(
