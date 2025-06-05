@@ -1,10 +1,11 @@
 import { HttpService } from '@nestjs/axios';
-import { BadRequestException, Inject, Injectable } from '@nestjs/common';
+import { BadRequestException, Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { readFile } from 'fs/promises';
 import { fromPath } from 'pdf2pic';
 import { PDFDocument } from 'pdf-lib';
 import { lastValueFrom } from 'rxjs';
 import { DataSource } from 'typeorm';
+import { existsSync, mkdirSync, promises as fs} from 'fs';
 
 @Injectable()
 export class DocumentService {
@@ -92,17 +93,63 @@ export class DocumentService {
 
     // use libraries like: pdf-lib, pdf2pic
 
+    // Check that such file actually exists
+
+    // Implementation here
+    // Save in folder './upload/previews/'
+    // Return file name of newly created preview picture
+    
     // Create and save preview for a pdf file
     async postPreview(doc_filename: string) {
         const docFilePath = `./upload/${doc_filename}`;
+        const previewPath = './upload/previews';
+        const previewName = `${doc_filename.replace('.pdf', '')}-preview.png`;
+        const previewFullPath = `${previewPath}/${previewName}`;
 
-        // Check that such file actually exists
+        //The file name matches PDF
+        if (!doc_filename.toLowerCase().endsWith('.pdf')) {
+            throw new BadRequestException('It\'s not PDF filename');
+        }
 
-        // Implementation here
-        // Save in folder './upload/previews/'
-        // Return file name of newly created preview picture
+        //Does PDF file exist
+        if (!existsSync(docFilePath)) {
+            throw new NotFoundException(`File ${doc_filename} not found.`);
+        }
 
-        return "Not implemented";
+        //If the previews folder does not exist, create it
+        if (!existsSync(previewPath)) {
+            mkdirSync(previewPath, { recursive: true });
+        }
+        
+        //Delete preview, if it already exist
+        if (!existsSync(previewFullPath)) {
+            await fs.unlink(`${previewPath}/${previewName}`);
+        }
+
+        const options = {
+            density: 200,
+            saveFilename: previewName.replace('.png', ''),
+            savePath: previewPath,
+            format: 'png',
+            width: 1240,
+            height: 1754
+        };
+
+        let result;
+        try {
+            result = await fromPath(docFilePath, options)(1);
+        }
+        catch (error) {
+            throw new BadRequestException(`PDF conversion failed`);
+        }
+
+        if (result?.path) {
+            const oldPath = result.path;
+            const newPath = oldPath.replace('.1', '');
+            await fs.rename(oldPath, newPath);
+        }
+
+        return previewName;
     }
 
     // Return preview picture for a document
