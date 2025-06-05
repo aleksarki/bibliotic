@@ -1,13 +1,28 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Inject, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { UserService } from 'src/users/user.service';
+import { DataSource } from 'typeorm';
 
 @Injectable()
 export class AuthService {
     constructor(
         private jwtService: JwtService,
-        private userService: UserService
+        private userService: UserService,
+        @Inject("DATA_SOURCE") private dataSource: DataSource
     ) {}
+
+    async register(usr_email: string, usr_hash: string) {
+        try {
+            const acc = await this.dataSource.query(
+                "CALL account_create($1, $2, $3, $4)",
+                [usr_email, usr_hash, null, null]
+            )
+            return acc[0]   
+        }
+        catch (error) {
+            throw new BadRequestException("Error while creating new account")
+        }
+    }
 
     /**
      * Retrieve the user and validate the password.

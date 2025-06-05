@@ -7,6 +7,7 @@ import { LocalStrategy } from './local.strategy';
 import { JwtStrategy } from './jwt.strategy';
 import { jwtConstants } from './constants';
 import { UserModule } from 'src/users/user.module';
+import { DatabaseModule } from 'src/database/database.module';
 
 @Module({
   imports: [
@@ -15,7 +16,8 @@ import { UserModule } from 'src/users/user.module';
     JwtModule.register({
       secret: jwtConstants.secret,
       signOptions: {expiresIn: '1h'}
-    })
+    }),
+    DatabaseModule
   ],
   controllers: [AuthController],
   providers: [AuthService, LocalStrategy, JwtStrategy],
