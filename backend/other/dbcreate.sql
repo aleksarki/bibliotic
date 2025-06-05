@@ -12,9 +12,9 @@ DROP PROCEDURE IF EXISTS document_add;
 DROP PROCEDURE IF EXISTS document_delete;
 DROP PROCEDURE IF EXISTS document_move;
 DROP FUNCTION IF EXISTS item_tree_select;
-DROP PROCEDURE IF EXISTS annotation_add;
-DROP PROCEDURE IF EXISTS annotation_delete;
-DROP FUNCTION IF EXISTS document_get_annotations;
+DROP PROCEDURE IF EXISTS note_add;
+DROP PROCEDURE IF EXISTS note_delete;
+DROP FUNCTION IF EXISTS document_get_notes;
 DROP PROCEDURE IF EXISTS keyword_add;
 DROP FUNCTION IF EXISTS document_get_keywords;
 
