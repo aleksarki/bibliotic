@@ -19,7 +19,7 @@ DROP PROCEDURE IF EXISTS keyword_add;
 DROP FUNCTION IF EXISTS document_get_keywords;
 
 DROP TABLE IF EXISTS Keywords;
-DROP TABLE IF EXISTS Annotations;
+DROP TABLE IF EXISTS Notes;
 DROP TABLE IF EXISTS Documents;
 DROP TABLE IF EXISTS Users;
 DROP TABLE IF EXISTS Folders;
@@ -50,12 +50,12 @@ CREATE TABLE Documents
     doc_preview   TEXT
 );
 
-CREATE TABLE Annotations
+CREATE TABLE Notes
 (
-    annot_id        INTEGER  PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-    annot_document  INTEGER  NOT NULL REFERENCES Documents(doc_id) ON DELETE CASCADE,
-    annot_page      INTEGER  NOT NULL CHECK (annot_page >= 0),
-    annot_text      TEXT
+    note_id        INTEGER  PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+    note_document  INTEGER  NOT NULL REFERENCES Documents(doc_id) ON DELETE CASCADE,
+    note_page      INTEGER  NOT NULL CHECK (note_page >= 0),
+    note_text      TEXT
 );
 
 CREATE TABLE Keywords
@@ -420,57 +420,58 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
--- Add a new annotation to a document
--- Out: id of created annotation
-CREATE PROCEDURE annotation_add(
-	annot_document INT,
-    annot_page INT,
-    annot_text TEXT,
-  	OUT annot_id INT) AS $$
+-- Add a new note to a document
+-- Out: id of created note
+CREATE PROCEDURE note_add(
+    note_document INT,
+    note_page INT,
+    note_text TEXT,
+    OUT note_id INT) 
+AS $$
 BEGIN
-    IF annot_document IS NULL THEN
+    IF note_document IS NULL THEN
         RAISE EXCEPTION 'Document cannot be NULL';
     END IF;
 
-    IF NOT EXISTS (SELECT 1 FROM Documents WHERE Documents.doc_id = annotation_add.annot_document) THEN
-        RAISE EXCEPTION 'Document with id "%" does not exist', annot_document;
+    IF NOT EXISTS (SELECT 1 FROM Documents WHERE Documents.doc_id = note_add.note_document) THEN
+        RAISE EXCEPTION 'Document with id "%" does not exist', note_document;
     END IF;
 
-    INSERT INTO Annotations (annot_document, annot_page, annot_text) VALUES (annot_document, annot_page, annot_text)
-    RETURNING Annotations.annot_id INTO annot_id;
+    INSERT INTO Notes (note_document, note_page, note_text) VALUES (note_document, note_page, note_text)
+    RETURNING Notes.note_id INTO note_id;
 
-    RAISE NOTICE 'Successfully created annotation with id "%"', annot_id;
+    RAISE NOTICE 'Successfully created note with id "%"', note_id;
 END;
 $$ LANGUAGE plpgsql;
 
 
--- Delete annotation
-CREATE PROCEDURE annotation_delete(annot_id INT) AS $$
+-- Delete note
+CREATE PROCEDURE note_delete(note_id INT) AS $$
 BEGIN
-    IF NOT EXISTS (SELECT 1 FROM Annotations WHERE Annotations.annot_id = annotation_delete.annot_id) THEN
-        RAISE EXCEPTION 'Annotation with id "%" does not exist', annotation_delete.annot_id;
+    IF NOT EXISTS (SELECT 1 FROM Notes WHERE Notes.note_id = note_delete.note_id) THEN
+        RAISE EXCEPTION 'Note with id "%" does not exist', note_delete.note_id;
     END IF;
 
-    DELETE FROM Annotations WHERE Annotations.annot_id = annotation_delete.annot_id;
+    DELETE FROM Notes WHERE Notes.note_id = note_delete.note_id;
 
-    RAISE NOTICE 'Successfully deleted annotation';
+    RAISE NOTICE 'Successfully deleted note';
 END;
 $$ LANGUAGE plpgsql;
 
 
--- Get annotations of document
-CREATE FUNCTION document_get_annotations(doc_id INT)
-RETURNS SETOF Annotations AS $$
+-- Get notes of document
+CREATE FUNCTION document_get_notes(doc_id INT)
+RETURNS SETOF Notes AS $$
 BEGIN
     IF doc_id IS NULL THEN
         RAISE EXCEPTION 'Document cannot be NULL';
     END IF;
 
-    IF NOT EXISTS (SELECT 1 FROM Documents WHERE Documents.doc_id = document_get_annotations.doc_id) THEN
+    IF NOT EXISTS (SELECT 1 FROM Documents WHERE Documents.doc_id = document_get_notes.doc_id) THEN
         RAISE EXCEPTION 'Document with id "%" does not exist', doc_id;
     END IF;
 
-    RETURN QUERY SELECT * FROM Annotations WHERE annot_document = doc_id;
+    RETURN QUERY SELECT * FROM Notes WHERE note_document = doc_id;
 END;
 $$ LANGUAGE plpgsql;
 
