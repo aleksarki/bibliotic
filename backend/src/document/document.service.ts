@@ -154,12 +154,24 @@ export class DocumentService {
 
     // Return preview picture for a document
     async getPreview(doc_id: number) {
-        // Check that document's preview exists
+        try {
+            const fileName = await this.dataSource.query(
+                "SELECT doc_preview_get($1);", [doc_id]
+            );
+            const previewFilePath = './upload/previews/${fileName?.[0]?.doc_preview_get}';
 
-        // Imtpelentation here
-        // Return picture
-        // If picture for a document does not exits, return that
-
-        return "Not implemented";
+            await fs.access(previewFilePath);
+            
+            return {
+                image: '${baseUrl}/upload/previews/${fileName?.[0]?.doc_preview_get}'
+            }
+        }
+        catch (error) {
+            if (error.code === 'ENOENT') {
+                // if preview file does not exists
+                return "Превью для документа не найдено.";
+            }
+            return null;
+        }
     }
 }
