@@ -122,7 +122,7 @@ export class DocumentService {
         }
         
         //Delete preview, if it already exist
-        if (!existsSync(previewFullPath)) {
+        if (existsSync(previewFullPath)) {
             await fs.unlink(`${previewPath}/${previewName}`);
         }
 
