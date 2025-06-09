@@ -78,7 +78,6 @@ export class DocumentController {
     }
 
     // Save preview for a pdf file
-    @UseGuards(JwtAuthGuard)
     @Post("preview")
     async postPreview(@Query("doc_filename") doc_filename: string) {
         return this.documentService.postPreview(doc_filename);
