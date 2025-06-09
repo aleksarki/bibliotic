@@ -23,6 +23,7 @@ function DocumentInfoView({ document, updateCatalogue }) {
             updateCatalogue?.();
         });
     }
+    console.log(document);
 
     return <>
         <div className="DocumentInfoView">
@@ -42,6 +43,7 @@ function DocumentInfoView({ document, updateCatalogue }) {
                 </ButtonBox>
             </div>
             <div>Добавлено: { document?.item_added }</div>
+            <div>!add picture here ...!</div>
         </div>
         <DeleteModal
             title="Подтверждение удаления документа"

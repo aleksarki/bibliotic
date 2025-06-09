@@ -90,14 +90,6 @@ export class DocumentService {
             return null;
         }
     }
-
-    // use libraries like: pdf-lib, pdf2pic
-
-    // Check that such file actually exists
-
-    // Implementation here
-    // Save in folder './upload/previews/'
-    // Return file name of newly created preview picture
     
     // Create and save preview for a pdf file
     async postPreview(doc_filename: string) {

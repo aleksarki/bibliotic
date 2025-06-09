@@ -1,4 +1,18 @@
+/*
+ * This file provides convinient way to perform various backend requests.
+ * Notation: type of request + controller + name of request
+ */
+
 import axios from "axios";
+
+export async function postAuthRegister(email, password) {
+    return (
+        await axios.post("http://localhost:3000/auth/register", {
+            "email": email,
+            "hash": password
+        })
+    ).data;
+}
 
 export async function postAuthLogin(email, password) {
     return (
