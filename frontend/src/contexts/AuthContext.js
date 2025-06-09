@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import axios from "axios";
-import { getAuthUser, postAuthLogin } from "../util/api";
+import { getAuthUser, postAuthLogin, postAuthRegister } from "../util/api";
 
 export const AuthContext = createContext();
 
@@ -34,11 +34,22 @@ export function AuthProvider({ children }) {
     }
 
     async function register(email, password) {
-        // TODO: implement
-        return {
-            success: false,
-            message: "Registration failed"
-        };
+        try {
+            await postAuthRegister(email, password);
+            
+            const result = await login(email, password);
+            if (result.success) {
+                return { success: true };
+            }
+
+        return { success: false, message: "Registration successful but login failed" };
+        }
+        catch (error) {
+            return {
+                success: false,
+                message: error.response?.data?.message || "Registration failed"
+            };
+        }
     }
 
     function logout() {

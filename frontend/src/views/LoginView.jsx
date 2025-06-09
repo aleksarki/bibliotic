@@ -78,6 +78,8 @@ function LoginPanel({ switcher }) {
 // Panel for signing up
 function RegisterPanel({ switcher }) {
     const [errors, setErrors] = useState([]);
+    const { register } = useAuth();
+    const navigate = useNavigate();
 
     const EMAIL_INPUT = "email_input";
     const PSWRD_1_INPUT = "pswrd_1_input";
@@ -96,6 +98,27 @@ function RegisterPanel({ switcher }) {
         }
         if (!validatePswrdMatch(PSWRD_1_INPUT, PSWRD_2_INPUT)) {
             errs.push("Значения полей «Пароль» и «Повтор пароля» не совпадают.");
+        }
+
+        if (errs.length > 0) {
+            setErrors(errs);
+            return;
+        }
+
+        const email = document.getElementById(EMAIL_INPUT).value;
+        const password = document.getElementById(PSWRD_1_INPUT).value;
+
+        try {
+            const result = await register(email, password);
+
+            if (result.success) {
+                setErrors([]);
+                navigate("/catalogue");
+            } else {
+                setErrors([result.message]);
+            }
+        } catch (error) {
+            setErrors(["Ошибка регистрации. Попробуйте позже."]);
         }
     };
 
