@@ -18,12 +18,10 @@ function DocumentInfoView({ document, updateCatalogue }) {
     function deleteDocument() {
         fulfilDeleteModal(false);
         deleteDocumentDelete(document.item_id, () => {
-            console.log("deletd");
             fulfilDeleteModal(true);
             updateCatalogue?.();
         });
     }
-    console.log(document);
 
     return <>
         <div className="DocumentInfoView">
