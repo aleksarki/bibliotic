@@ -17,6 +17,8 @@ DROP PROCEDURE IF EXISTS note_delete;
 DROP FUNCTION IF EXISTS document_get_notes;
 DROP PROCEDURE IF EXISTS keyword_add;
 DROP FUNCTION IF EXISTS document_get_keywords;
+DROP PROCEDURE IF EXISTS document_preview_set;
+DROP FUNCTION IF EXISTS document_preview_get;
 
 DROP TABLE IF EXISTS Keywords;
 DROP TABLE IF EXISTS Notes;
@@ -527,5 +529,35 @@ BEGIN
     SELECT * FROM Keywords 
     WHERE Keywords.kwrd_document = document_get_keywords.doc_id
     ORDER BY Keywords.kwrd_keyword;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE PROCEDURE document_preview_set(p_doc_id INT, p_doc_preview TEXT)
+AS $$
+BEGIN
+	IF NOT EXISTS (SELECT 1 FROM Documents WHERE Documents.doc_id = p_doc_id) THEN
+        RAISE EXCEPTION 'Document with id "%" does not exist', p_doc_id;
+    END IF;
+	
+    UPDATE Documents
+    SET doc_preview = p_doc_preview
+    WHERE doc_id = p_doc_id;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE FUNCTION document_preview_get(p_doc_id INT)
+RETURNS TEXT AS $$
+DECLARE
+    preview TEXT;
+BEGIN
+	IF NOT EXISTS (SELECT 1 FROM Documents WHERE Documents.doc_id = p_doc_id) THEN
+        RAISE EXCEPTION 'Document with id "%" does not exist', p_doc_id;
+    END IF;
+	
+    SELECT doc_preview INTO preview
+    FROM Documents
+    WHERE doc_id = p_doc_id;
+
+    RETURN preview;
 END;
 $$ LANGUAGE plpgsql;
