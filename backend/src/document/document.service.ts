@@ -150,12 +150,12 @@ export class DocumentService {
             const fileName = await this.dataSource.query(
                 "SELECT doc_preview_get($1);", [doc_id]
             );
-            const previewFilePath = './upload/previews/${fileName?.[0]?.doc_preview_get}';
+            const previewFilePath = `./upload/previews/${fileName?.[0]?.doc_preview_get}`;
 
             await fs.access(previewFilePath);
             
             return {
-                image: '${baseUrl}/upload/previews/${fileName?.[0]?.doc_preview_get}'
+                image: `./upload/previews/${fileName?.[0]?.doc_preview_get}`
             }
         }
         catch (error) {
