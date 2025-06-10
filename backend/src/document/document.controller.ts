@@ -87,9 +87,6 @@ export class DocumentController {
     @UseGuards(JwtAuthGuard)
     @Get("preview")
     async getPreview(@Request() request, @Query("doc_id") doc_id: number) {
-        if (request.user.usr_id != await this.documentService.getOwner(doc_id)) {
-            return {"error": "Unaccessible document"};
-        }
         return this.documentService.getPreview(doc_id);
     }
 }
