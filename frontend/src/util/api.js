@@ -68,3 +68,14 @@ export function deleteDocumentDelete(doc_id, onFulfil) {
         throw error;
     }
 }
+
+export function patchDocumentRename(doc_id, doc_newName, onFulfil) {
+    try {
+        axios.patch(`http://localhost:3000/document/rename?doc_id=${doc_id}&doc_newName=${doc_newName}`)
+            .then(request => onFulfil?.());
+    }
+    catch (error) {
+        console.error(error);
+        throw error;
+    }
+}

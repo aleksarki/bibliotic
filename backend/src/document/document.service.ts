@@ -2,7 +2,7 @@ import { HttpService } from '@nestjs/axios';
 import { BadRequestException, Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { readFile } from 'fs/promises';
 import { fromPath } from 'pdf2pic';
-import { PDFDocument } from 'pdf-lib';
+//import { PDFDocument } from 'pdf-lib';
 import { lastValueFrom } from 'rxjs';
 import { DataSource } from 'typeorm';
 import { existsSync, mkdirSync, promises as fs} from 'fs';
@@ -78,6 +78,19 @@ export class DocumentService {
         }
     }
 
+    // Rename a document
+    async rename(doc_id: number, doc_newName: string) {
+        try {
+            await this.dataSource.query(
+                "UPDATE Documents SET doc_name=$1 WHERE doc_id=$2;", [doc_newName, doc_id]
+            );
+            return {"status": "successful rename"};
+        }
+        catch (error) {
+            return null;
+        }
+    }
+
     // Return name of the document's pdf file
     async getFilename(doc_id: number) {
         try {
@@ -150,12 +163,12 @@ export class DocumentService {
             const fileName = await this.dataSource.query(
                 "SELECT doc_preview_get($1);", [doc_id]
             );
-            const previewFilePath = './upload/previews/${fileName?.[0]?.doc_preview_get}';
+            const previewFilePath = `./upload/previews/${fileName?.[0]?.doc_preview_get}`;
 
             await fs.access(previewFilePath);
             
             return {
-                image: '${baseUrl}/upload/previews/${fileName?.[0]?.doc_preview_get}'
+                image: `./upload/previews/${fileName?.[0]?.doc_preview_get}`
             }
         }
         catch (error) {
