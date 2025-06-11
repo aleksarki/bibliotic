@@ -91,3 +91,14 @@ export function patchDocumentRename(doc_id, doc_newName, onFulfil) {
         throw error;
     }
 }
+
+export function patchFolderRename(fldr_id, fldr_newName, onFulfil) {
+    try {
+        axios.patch(`http://localhost:3000/folder/rename?fldr_id=${fldr_id}&fldr_newName=${fldr_newName}`)
+            .then(request => onFulfil?.());
+    }
+    catch (error) {
+        console.error(error);
+        throw error;
+    }
+}

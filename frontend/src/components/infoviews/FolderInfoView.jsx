@@ -12,10 +12,12 @@ import { useFileUploadModal } from "../modals/FileUploadModal";
 import { postDocumentUpload } from "../../util/api";
 
 import "./FolderInfoView.scss";
+import { useTextInputModal } from "../modals/TextInputModal";
 
 function FolderInfoView({ folder, updateCatalogue }) {
     const [DeleteModal, openDeleteModal, closeDeleteModal] = useOkCancelModal();
     const [FileUploadModal, openFileUploadModal, closeFileUploadModal, fulfilFileUploadModal] = useFileUploadModal();
+    const [RenameModal, openRenameModal, closeRenameModal, fulfilRenameModal] = useTextInputModal();
 
     function handleDeleteFolder() {
         // FIX: api call
@@ -28,6 +30,15 @@ function FolderInfoView({ folder, updateCatalogue }) {
             fulfilFileUploadModal(true);
             updateCatalogue?.();
         });        
+    }
+
+    function renameFolder(newName) {
+        fulfilRenameModal(false);
+        patchFolderRename(folder.item_id, newName, () => {
+            fulfilRenameModal(true);
+            updateCatalogue?.();
+            folder.item_name = newName;
+        })
     }
 
     return <>
@@ -43,7 +54,7 @@ function FolderInfoView({ folder, updateCatalogue }) {
                 </ButtonBox>
                 <ButtonBox gap={ 10 } >
                     <Button text="Скачать" icon={ faArchive } style={ buttonColors.GREEN } />
-                    <Button icon={ faPencil } style={ buttonColors.BLUE } />
+                    <Button icon={ faPencil } onClick={ openRenameModal } style={ buttonColors.BLUE } />
                     <Button icon={ faArrows } style={ buttonColors.YELLOW } />
                     <Button icon={ faTrashAlt } onClick={ openDeleteModal } style={ buttonColors.RED } />
                 </ButtonBox>
@@ -55,6 +66,12 @@ function FolderInfoView({ folder, updateCatalogue }) {
             onOk={ handleDeleteFolder }
         />
         <FileUploadModal onOk={ handleUploadDocument } />
+        <RenameModal
+            title="Переименование папки"
+            text={ `Введите новое имя для папки «${folder.item_name}»` }
+            initialValue={ folder.item_name }
+            onOk={ renameFolder }
+        />
     </>;
 }
 
