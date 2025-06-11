@@ -8,12 +8,14 @@ import { faArrows, faBook, faDownload, faFilePdf, faPencil, faTrashAlt } from "@
 import Button, { buttonColors } from "../ui/Button";
 import ButtonBox from "../ui/ButtonBox";
 import { useOkCancelModal } from "../modals/OkCancelModal";
-import { deleteDocumentDelete } from "../../util/api";
+import { deleteDocumentDelete, patchDocumentRename } from "../../util/api";
 
 import "./DocumentInfoView.scss";
+import { useTextInputModal } from "../modals/TextInputModal";
 
 function DocumentInfoView({ document, updateCatalogue }) {
     const [DeleteModal, openDeleteModal, closeDeleteModal, fulfilDeleteModal] = useOkCancelModal();
+    const [RenameModal, openRenameModal, closeRenameModal, fulfilRenameModal] = useTextInputModal();
 
     function deleteDocument() {
         fulfilDeleteModal(false);
@@ -21,6 +23,15 @@ function DocumentInfoView({ document, updateCatalogue }) {
             fulfilDeleteModal(true);
             updateCatalogue?.();
         });
+    }
+
+    function renameDocument(newName) {
+        fulfilRenameModal(false);
+        patchDocumentRename(document.item_id, newName, () => {
+            fulfilRenameModal(true);
+            updateCatalogue?.();
+            document.item_name = newName;
+        })
     }
 
     return <>
@@ -35,7 +46,7 @@ function DocumentInfoView({ document, updateCatalogue }) {
                     <Button icon={ faDownload } style={ buttonColors.GREEN } />
                 </ButtonBox>
                 <ButtonBox gap={ 10 }>
-                    <Button icon={ faPencil } style={ buttonColors.BLUE } />
+                    <Button icon={ faPencil } onClick={ openRenameModal } style={ buttonColors.BLUE } />
                     <Button icon={ faArrows } style={ buttonColors.YELLOW } />
                     <Button icon={ faTrashAlt } onClick={ openDeleteModal } style={ buttonColors.RED } />
                 </ButtonBox>
@@ -47,6 +58,12 @@ function DocumentInfoView({ document, updateCatalogue }) {
             title="Подтверждение удаления документа"
             text={ `Вы действительно хотите удалить документ «${document.item_name}»?` }
             onOk={ deleteDocument }
+        />
+        <RenameModal
+            title="Переименование документа"
+            text={ `Введите новое имя для документа «${document.item_name}»` }
+            initialValue={ document.item_name }
+            onOk={ renameDocument }
         />
     </>;
 }
