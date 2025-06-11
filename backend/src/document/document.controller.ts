@@ -1,4 +1,4 @@
-import { BadRequestException, Body, Controller, Delete, Get, Param, Post, Query, Request, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
+import { BadRequestException, Body, Controller, Delete, Get, Param, Patch, Post, Query, Request, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import { v4 as uuid } from 'uuid'
@@ -75,6 +75,16 @@ export class DocumentController {
             return {"error": "Unaccessible document"};
         }
         return this.documentService.delete(doc_id);
+    }
+
+    // Rename a document
+    @UseGuards(JwtAuthGuard)
+    @Patch("rename")
+    async rename(@Request() request, @Query("doc_id") doc_id: number, @Query("doc_newName") doc_newName: string) {
+        if (request.user.usr_id != await this.documentService.getOwner(doc_id)) {
+            return {"error": "Unaccessible document"};
+        }
+        return this.documentService.rename(doc_id, doc_newName);
     }
 
     // Save preview for a pdf file

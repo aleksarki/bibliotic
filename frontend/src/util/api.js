@@ -68,3 +68,26 @@ export function deleteDocumentDelete(doc_id, onFulfil) {
         throw error;
     }
 }
+
+export async function getDocumentPreview(document) {
+    try {
+        const response = await axios.get(`http://localhost:3000/document/preview?doc_id=${document.item_id}`);
+        const imagePath = response.data;
+        return imagePath;
+    }
+    catch (error) {
+        console.error(error);
+        throw error;
+    }
+}
+
+export function patchDocumentRename(doc_id, doc_newName, onFulfil) {
+    try {
+        axios.patch(`http://localhost:3000/document/rename?doc_id=${doc_id}&doc_newName=${doc_newName}`)
+            .then(request => onFulfil?.());
+    }
+    catch (error) {
+        console.error(error);
+        throw error;
+    }
+}

@@ -78,6 +78,19 @@ export class DocumentService {
         }
     }
 
+    // Rename a document
+    async rename(doc_id: number, doc_newName: string) {
+        try {
+            await this.dataSource.query(
+                "UPDATE Documents SET doc_name=$1 WHERE doc_id=$2;", [doc_newName, doc_id]
+            );
+            return {"status": "successful rename"};
+        }
+        catch (error) {
+            return null;
+        }
+    }
+
     // Return name of the document's pdf file
     async getFilename(doc_id: number) {
         try {
