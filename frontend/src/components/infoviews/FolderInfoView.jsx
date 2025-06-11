@@ -9,7 +9,7 @@ import Button, { buttonColors } from "../ui/Button";
 import ButtonBox from "../ui/ButtonBox";
 import { useOkCancelModal } from "../modals/OkCancelModal";
 import { useFileUploadModal } from "../modals/FileUploadModal";
-import { postDocumentUpload } from "../../util/api";
+import { postDocumentUpload, patchFolderRename } from "../../util/api";
 
 import "./FolderInfoView.scss";
 import { useTextInputModal } from "../modals/TextInputModal";
