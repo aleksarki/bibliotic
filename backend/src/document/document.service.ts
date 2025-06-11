@@ -2,10 +2,10 @@ import { HttpService } from '@nestjs/axios';
 import { BadRequestException, Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { readFile } from 'fs/promises';
 import { fromPath } from 'pdf2pic';
-//import { PDFDocument } from 'pdf-lib';
+import { PDFDocument } from 'pdf-lib';
 import { lastValueFrom } from 'rxjs';
 import { DataSource } from 'typeorm';
-import { existsSync, mkdirSync, promises as fs} from 'fs';
+import { existsSync, mkdirSync, promises as fs, readFileSync} from 'fs';
 
 @Injectable()
 export class DocumentService {
@@ -90,7 +90,7 @@ export class DocumentService {
             return null;
         }
     }
-    
+
     // Create and save preview for a pdf file
     async postPreview(doc_filename: string) {
         const docFilePath = `./upload/${doc_filename}`;
@@ -148,20 +148,39 @@ export class DocumentService {
     async getPreview(doc_id: number) {
         try {
             const fileName = await this.dataSource.query(
-                "SELECT doc_preview_get($1);", [doc_id]
+                "SELECT document_preview_get($1);", [doc_id]
             );
-            const previewFilePath = './upload/previews/${fileName?.[0]?.doc_preview_get}';
+            const previewFilePath = `./upload/previews/${fileName?.[0]?.document_preview_get}`;
 
             await fs.access(previewFilePath);
             
             return {
-                image: '${baseUrl}/upload/previews/${fileName?.[0]?.doc_preview_get}'
+                image: `http://localhost:3000/upload/previews/${fileName?.[0]?.document_preview_get}`
             }
         }
         catch (error) {
             if (error.code === 'ENOENT') {
                 // if preview file does not exists
                 return "Превью для документа не найдено.";
+            }
+            console.error(error);
+            return null;
+        }
+    }
+
+    async getFile(doc_id: number) {
+        try {
+            const fileName = await this.getFilename(doc_id);
+            const docFilePath = `/upload/${fileName}`;
+            await fs.access(`.${docFilePath}`);
+
+            return {
+                document: `http://localhost:3000${docFilePath}`
+            }
+        }
+        catch (error) {
+            if (error.code === 'ENOENT') {
+                return "Документ не найден";
             }
             return null;
         }
