@@ -8,7 +8,7 @@ import { faArrows, faBook, faDownload, faFilePdf, faPencil, faTrashAlt } from "@
 import Button, { buttonColors } from "../ui/Button";
 import ButtonBox from "../ui/ButtonBox";
 import { useOkCancelModal } from "../modals/OkCancelModal";
-import { deleteDocumentDelete } from "../../util/api";
+import { deleteDocumentDelete, getDocumentPreview } from "../../util/api";
 
 import "./DocumentInfoView.scss";
 
@@ -23,6 +23,17 @@ function DocumentInfoView({ document, updateCatalogue }) {
         });
     }
 
+    const [previewPath, setPreviewPath] = useState('');
+
+    useEffect(() => {
+        const fetchPreview = async () => {
+            const previewData = await getDocumentPreview(document);
+            setPreviewPath(previewData.image);
+        };
+
+        fetchPreview();
+    }, [document]);
+    
     return <>
         <div className="DocumentInfoView">
             <div className="view-title">
@@ -41,7 +52,9 @@ function DocumentInfoView({ document, updateCatalogue }) {
                 </ButtonBox>
             </div>
             <div>Добавлено: { document?.item_added }</div>
-            <div>!add picture here ...!</div>
+            <div>
+                {previewPath && <img class="doc-preview" src={previewPath} alt="" />}
+            </div>
         </div>
         <DeleteModal
             title="Подтверждение удаления документа"
