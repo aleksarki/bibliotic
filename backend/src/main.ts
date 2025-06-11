@@ -10,6 +10,7 @@ async function bootstrap() {
     credentials: true
   });
   app.use('/upload/previews', express.static(join(__dirname, '..', 'upload/previews')))
+  app.use('/upload', express.static(join(__dirname, '..', 'upload')));
   await app.listen(process.env.PORT ?? 3000);
 }
 bootstrap();

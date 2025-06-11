@@ -171,17 +171,18 @@ export class DocumentService {
     async getFile(doc_id: number) {
         try {
             const fileName = await this.getFilename(doc_id);
-            const docFilePath = `/upload/${fileName}`;
-            await fs.access(`.${docFilePath}`);
+            const docFilePath = `./upload/${fileName}`;
+            await fs.access(docFilePath);
 
             return {
-                document: `http://localhost:3000${docFilePath}`
+                document: `http://localhost:3000/upload/${fileName}`
             }
         }
         catch (error) {
             if (error.code === 'ENOENT') {
                 return "Документ не найден";
             }
+            console.error(error);
             return null;
         }
     }
