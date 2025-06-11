@@ -88,6 +88,7 @@ export class DocumentController {
     }
 
     // Save preview for a pdf file
+    @UseGuards(JwtAuthGuard)
     @Post("preview")
     async postPreview(@Query("doc_filename") doc_filename: string) {
         return this.documentService.postPreview(doc_filename);
@@ -101,5 +102,15 @@ export class DocumentController {
             return {"error": "Unaccessible document"};
         }
         return this.documentService.getPreview(doc_id);
+    }
+
+    // Return PDF document
+    @UseGuards(JwtAuthGuard)
+    @Get("file")
+    async getFile(@Request() request, @Query("doc_id") doc_id: number) {
+        if (request.user.usr_id != await this.documentService.getOwner(doc_id)) {
+            return {"error": "Unaccessible document"};
+        }
+        return this.documentService.getFile(doc_id);
     }
 }

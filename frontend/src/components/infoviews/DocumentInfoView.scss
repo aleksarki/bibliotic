@@ -2,4 +2,6 @@
 
 .DocumentInfoView {
     @extend .InfoView;
+    max-width: 400px;
+    height: auto;
 }
