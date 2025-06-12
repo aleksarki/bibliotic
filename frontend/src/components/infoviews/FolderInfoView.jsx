@@ -21,7 +21,7 @@ function FolderInfoView({ folder, updateCatalogue }) {
     const [CreateModal, openCreateModal, closeCreateModal, fulfilCreateModal] = useTextInputModal();
 
     function handleDeleteFolder() {
-         fulfilDeleteModal(false);
+        fulfilDeleteModal(false);
         deleteFolderDelete(folder.item_id, () => {
             fulfilDeleteModal(true);
             updateCatalogue?.();

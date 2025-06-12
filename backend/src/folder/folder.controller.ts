@@ -18,6 +18,9 @@ export class FolderController {
         if (request.user.usr_id != await this.folderService.getOwner(fldr_id)) {
             return {"error": "Unaccessible folder"};
         }
+        if (request.user.usr_root == fldr_id) {
+          return { "error": "Unable to rename root folder"}
+        }
         return this.folderService.delete(fldr_id);
     }
 
