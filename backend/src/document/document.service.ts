@@ -25,8 +25,13 @@ export class DocumentService {
         const pathParameter = encodeURIComponent(`${process.cwd()}\\upload\\${file.filename}`);
         const request = `${textExtractUrl}?path=${pathParameter}`;
 
-        lastValueFrom(this.httpService.post(request));
-        console.log(`[Sent text extraction request for file '${file.filename}']`)
+        try {
+            //lastValueFrom(this.httpService.post(request));
+            console.log(`[Sent text extraction request for file '${file.filename}']`)
+        }
+        catch {
+            console.log("[Unsuccessful text extraction]");
+        }
 
         const document = await this.dataSource.query(
             "CALL document_add($1, $2, $3, $4, $5, $6)",
