@@ -51,4 +51,24 @@ export class AuthService {
             access_token: this.jwtService.sign(payload)
         };
     }
+
+
+    async passwordChange(user: any, hashOld: string, hashNew: string) {
+        try {
+            console.log(user.usr_id, hashOld, hashNew)
+            const hash = await this.dataSource.query(
+                "SELECT usr_hash FROM users WHERE usr_id = $1", [user.usr_id]);
+                
+            if (hash[0].usr_hash == hashOld) {
+                await this.dataSource.query(
+                    "UPDATE users SET usr_hash = $1 WHERE usr_id = $2", [hashNew, user.usr_id]);
+            }
+            else {
+                throw new BadRequestException("Passwords hashes don't match")
+            }
+        }
+        catch (error) {
+            throw new BadRequestException("Error while changing password")
+        }
+    }
 }

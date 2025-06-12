@@ -1,4 +1,4 @@
-import { BadRequestException, Body, Controller, Get, Post, Request, UseGuards } from "@nestjs/common";
+import { BadRequestException, Body, Query, Controller, Get, Post, Request, UseGuards } from "@nestjs/common";
 import { AuthService } from "./auth.service";
 import { LocalAuthGuard } from "./local-auth.guard";
 import { JwtAuthGuard } from "./jwt-auth.guard";
@@ -35,5 +35,11 @@ export class AuthController {
     @Get('user')
     getUser(@Request() request) {
         return request.user;
+    }
+
+    @UseGuards(JwtAuthGuard)
+    @Get('password-change')
+    passwordChange(@Request() request, @Query("hashOld") hashOld: string, @Query("hashNew") hashNew: string) {
+        return this.authService.passwordChange(request.user, hashOld, hashNew);
     }
 }
