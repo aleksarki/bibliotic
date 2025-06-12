@@ -116,7 +116,7 @@ export function postFolderCreate(fldr_id, fldr_name, onFulfil) {
 
 export function deleteFolderDelete(fldr_id, onFulfil) {
     try {
-        axios.delete(`http://localhost:3000/folder/delete?doc_id=${fldr_id}`)
+        axios.delete(`http://localhost:3000/folder/delete?fldr_id=${fldr_id}`)
             .then(request => onFulfil?.());
     }
     catch (error) {

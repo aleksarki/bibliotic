@@ -40,11 +40,11 @@ export class FolderService {
         }
     }
 
-    // Delete document
+    // Delete folder
     async delete(fldr_id: number) {
         try {
             await this.dataSource.query(
-                "CALL folder_delete($1)", [fldr_id]
+                "CALL folder_tree_delete($1)", [fldr_id]
             );
             return {
                 "statusCode": 200,
