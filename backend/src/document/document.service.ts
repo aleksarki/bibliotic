@@ -3,7 +3,7 @@ import { BadRequestException, Inject, Injectable, NotFoundException } from '@nes
 import { readFile } from 'fs/promises';
 import { fromPath } from 'pdf2pic';
 import { PDFDocument } from 'pdf-lib';
-import { lastValueFrom } from 'rxjs';
+import { catchError, lastValueFrom, of } from 'rxjs';
 import { DataSource } from 'typeorm';
 import { existsSync, mkdirSync, promises as fs, readFileSync} from 'fs';
 
@@ -21,22 +21,39 @@ export class DocumentService {
             throw new BadRequestException("Attempt to save to not owned folder");
         }
 
-        const textExtractUrl = "http://127.0.0.1:3001/pdf/extract-text";
-        const pathParameter = encodeURIComponent(`${process.cwd()}\\upload\\${file.filename}`);
-        const request = `${textExtractUrl}?path=${pathParameter}`;
-
-        try {
-            //lastValueFrom(this.httpService.post(request));
-            console.log(`[Sent text extraction request for file '${file.filename}']`)
-        }
-        catch {
-            console.log("[Unsuccessful text extraction]");
-        }
-
         const document = await this.dataSource.query(
             "CALL document_add($1, $2, $3, $4, $5, $6)",
             [folder, file.filename, new Date(), name.substring(0, 32), null, null]
         );
+        const docId = document[0]?.doc_id;
+        console.log(docId)
+
+        const textExtractUrl = "http://127.0.0.1:3001/pdf/extract-text";
+        const pathParameter = encodeURIComponent(`${process.cwd()}\\upload\\${file.filename}`);
+        const request = `${textExtractUrl}?path=${pathParameter}`;
+
+        this.httpService.post(request).pipe(
+            catchError(error => {
+                console.log("[Unsuccessful text extraction]", error.message);
+                return of(null);
+            })
+        ).subscribe(
+            async response => {
+                if (response?.data) {
+                    try {
+                        const extractedText = response.data;
+                        await this.dataSource.query(
+                            "UPDATE Documents SET doc_text=$1 WHERE doc_id=$2",
+                            [extractedText, docId]
+                        );
+                        console.log(`[Text extraction completed for doc_id ${docId}]`);
+                    } catch (dbError) {
+                        console.error("[Error updating document with extracted text]");
+                    }
+                }
+            }
+        );
+        console.log(`[Sent text extraction request for file '${file.filename}']`)
 
         return {
             "statusCode": 200,
