@@ -52,4 +52,17 @@ export class FolderService {
             return null;
         }
     }
+
+    // Create a folder
+    async create(fldr_id: number, fldr_name: string) {
+        try {
+            await this.dataSource.query(
+                "CALL folder_add($1, $2, NULL)", [fldr_id, fldr_name]
+            );
+            return {"status": "successful creation"};
+        }
+        catch (error) {
+            return null;
+        }
+    }
 }
