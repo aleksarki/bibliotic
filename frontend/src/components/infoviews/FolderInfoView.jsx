@@ -9,19 +9,19 @@ import Button, { buttonColors } from "../ui/Button";
 import ButtonBox from "../ui/ButtonBox";
 import { useOkCancelModal } from "../modals/OkCancelModal";
 import { useFileUploadModal } from "../modals/FileUploadModal";
-import { postDocumentUpload, patchFolderRename, postFolderCreate } from "../../util/api";
+import { postDocumentUpload, patchFolderRename, postFolderCreate, deleteFolderDelete } from "../../util/api";
 
 import "./FolderInfoView.scss";
 import { useTextInputModal } from "../modals/TextInputModal";
 
 function FolderInfoView({ folder, updateCatalogue }) {
-    const [DeleteModal, openDeleteModal, closeDeleteModal] = useOkCancelModal();
+    const [DeleteModal, openDeleteModal, closeDeleteModal, fulfilDeleteModal] = useOkCancelModal();
     const [FileUploadModal, openFileUploadModal, closeFileUploadModal, fulfilFileUploadModal] = useFileUploadModal();
     const [RenameModal, openRenameModal, closeRenameModal, fulfilRenameModal] = useTextInputModal();
     const [CreateModal, openCreateModal, closeCreateModal, fulfilCreateModal] = useTextInputModal();
 
     function handleDeleteFolder() {
-         fulfilDeleteModal(false);
+        fulfilDeleteModal(false);
         deleteFolderDelete(folder.item_id, () => {
             fulfilDeleteModal(true);
             updateCatalogue?.();
