@@ -23,5 +23,15 @@ export class FolderController {
         }
         return this.folderService.rename(fldr_id, fldr_newName);
     }
+
+    // Create a folder
+    @UseGuards(JwtAuthGuard)
+    @Post("create")
+    async create(@Request() request, @Query("fldr_id") fldr_id: number, @Query("fldr_name") fldr_name: string) {
+        if (request.user.usr_id != await this.folderService.getOwner(fldr_id)) {
+            return {"error": "Unaccessible folder"};
+        }
+        return this.folderService.create(fldr_id, fldr_name);
+    }
 }
 

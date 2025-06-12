@@ -9,7 +9,7 @@ import Button, { buttonColors } from "../ui/Button";
 import ButtonBox from "../ui/ButtonBox";
 import { useOkCancelModal } from "../modals/OkCancelModal";
 import { useFileUploadModal } from "../modals/FileUploadModal";
-import { postDocumentUpload, patchFolderRename } from "../../util/api";
+import { postDocumentUpload, patchFolderRename, postFolderCreate } from "../../util/api";
 
 import "./FolderInfoView.scss";
 import { useTextInputModal } from "../modals/TextInputModal";
@@ -18,6 +18,7 @@ function FolderInfoView({ folder, updateCatalogue }) {
     const [DeleteModal, openDeleteModal, closeDeleteModal] = useOkCancelModal();
     const [FileUploadModal, openFileUploadModal, closeFileUploadModal, fulfilFileUploadModal] = useFileUploadModal();
     const [RenameModal, openRenameModal, closeRenameModal, fulfilRenameModal] = useTextInputModal();
+    const [CreateModal, openCreateModal, closeCreateModal, fulfilCreateModal] = useTextInputModal();
 
     function handleDeleteFolder() {
         // FIX: api call
@@ -41,6 +42,14 @@ function FolderInfoView({ folder, updateCatalogue }) {
         })
     }
 
+    function createFolder(name) {
+        fulfilCreateModal(false);
+        postFolderCreate(folder.item_id, name, () => {
+            fulfilCreateModal(true);
+            updateCatalogue?.();
+        })
+    }
+
     return <>
         <div className="FolderInfoView">
             <div className="view-title">
@@ -49,7 +58,7 @@ function FolderInfoView({ folder, updateCatalogue }) {
             </div>
             <div className="button-area">
                 <ButtonBox gap={ 10 }>
-                    <Button text="Создать папку" icon={ faFolderPlus } style={ buttonColors.GREEN } />
+                    <Button text="Создать папку" icon={ faFolderPlus } onClick={ openCreateModal } style={ buttonColors.GREEN } />
                     <Button text="Загрузить файл" icon={ faFileUpload } onClick={ openFileUploadModal } style={ buttonColors.GREEN } />
                 </ButtonBox>
                 <ButtonBox gap={ 10 } >
@@ -71,6 +80,12 @@ function FolderInfoView({ folder, updateCatalogue }) {
             text={ `Введите новое имя для папки «${folder.item_name}»` }
             initialValue={ folder.item_name }
             onOk={ renameFolder }
+        />
+        <CreateModal
+            title="Создание новой папки"
+            text="Введите имя для создаваемой папки:"
+            initialValue=""
+            onOk={ createFolder }
         />
     </>;
 }

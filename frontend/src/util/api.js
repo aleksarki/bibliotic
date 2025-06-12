@@ -102,3 +102,14 @@ export function patchFolderRename(fldr_id, fldr_newName, onFulfil) {
         throw error;
     }
 }
+
+export function postFolderCreate(fldr_id, fldr_name, onFulfil) {
+    try {
+        axios.post(`http://localhost:3000/folder/create?fldr_id=${fldr_id}&fldr_name=${fldr_name}`)
+            .then(request => onFulfil?.());
+    }
+    catch (error) {
+        console.error(error);
+        throw error;
+    }
+}

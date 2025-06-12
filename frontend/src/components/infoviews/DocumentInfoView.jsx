@@ -12,6 +12,7 @@ import { deleteDocumentDelete, getDocumentPreview, patchDocumentRename } from ".
 
 import "./DocumentInfoView.scss";
 import { useTextInputModal } from "../modals/TextInputModal";
+import { useEffect, useState } from "react";
 
 function DocumentInfoView({ document, updateCatalogue }) {
     const [DeleteModal, openDeleteModal, closeDeleteModal, fulfilDeleteModal] = useOkCancelModal();
