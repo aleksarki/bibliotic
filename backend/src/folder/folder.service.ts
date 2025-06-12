@@ -14,6 +14,18 @@ export class FolderService {
         @Inject("DATA_SOURCE") private dataSource: DataSource
     ) {}
 
+    async getFoldername(fldr_id: number) {
+        try {
+            const folder = await this.dataSource.query(
+                "SELECT fldr_name FROM Folders WHERE fldr_id=$1;", [fldr_id]
+            );
+            return folder?.[0]?.fldr_name;
+        }
+        catch (error) {
+            return null;
+        }
+    }
+
     // Get owner (user) of the folder
     // If no such folder exist, return null
     async getOwner(fldr_id: number) {
@@ -34,7 +46,7 @@ export class FolderService {
             await this.dataSource.query(
                 "UPDATE Folders SET fldr_name=$1 WHERE fldr_id=$2;", [fldr_newName, fldr_id]
             );
-            return {"status": "successful rename"};
+            return {status: true};
         }
         catch (error) {
             return null;
