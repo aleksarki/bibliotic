@@ -11,6 +11,16 @@ import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 export class FolderController {
     constructor(private readonly folderService: FolderService) {}
 
+    // Delete a folder
+    @UseGuards(JwtAuthGuard)
+    @Delete("delete")
+    async delete(@Request() request, @Query("fldr_id") fldr_id: number) {
+        if (request.user.usr_id != await this.folderService.getOwner(fldr_id)) {
+            return {"error": "Unaccessible folder"};
+        }
+        return this.folderService.delete(fldr_id);
+    }
+
     // Rename a folder
     @UseGuards(JwtAuthGuard)
     @Patch("rename")

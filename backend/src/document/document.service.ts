@@ -141,8 +141,8 @@ export class DocumentService {
             saveFilename: previewName.replace('.png', ''),
             savePath: previewPath,
             format: 'png',
-            width: 1240,
-            height: 1754
+            width: 300,
+            height: 425
         };
 
         let result;

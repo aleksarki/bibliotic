@@ -40,6 +40,22 @@ export class FolderService {
         }
     }
 
+    // Delete document
+    async delete(fldr_id: number) {
+        try {
+            await this.dataSource.query(
+                "CALL folder_delete($1)", [fldr_id]
+            );
+            return {
+                "statusCode": 200,
+                "message": `document deleted: ${fldr_id}`,
+            };
+        }
+        catch (error) {
+            return { "status": "error" }
+        }
+    }
+
     // Rename a folder
     async rename(fldr_id: number, fldr_newName: string) {
         try {
