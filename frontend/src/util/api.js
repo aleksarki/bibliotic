@@ -11,7 +11,7 @@ export async function postAuthRegister(email, password) {
     return (
         await axios.post("http://localhost:3000/auth/register", {
             "email": email,
-            "hash": password
+            "password": password
         })
     ).data;
 }

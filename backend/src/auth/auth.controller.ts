@@ -8,14 +8,14 @@ export class AuthController {
     constructor(private readonly authService: AuthService) {}
 
     @Post('register')
-    async register(@Body("email") email: string, @Body("hash") hash: string) {
+    async register(@Body("email") email: string, @Body("password") password: string) {
         if (!email) {
             throw new BadRequestException("'email' field not provided")
         }
-        if (!hash) {
-            throw new BadRequestException("'hash' field not provided")
+        if (!password) {
+            throw new BadRequestException("'password' field not provided")
         }
-        return this.authService.register(email, hash);
+        return this.authService.register(email, password);
     }
 
     @UseGuards(LocalAuthGuard)
