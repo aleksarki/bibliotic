@@ -1,9 +1,9 @@
-import { BadRequestException, Body, Controller, Delete, Get, Param, Patch, Post, Query, Request, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
+import { BadRequestException, Body, Controller, Delete, Get, Param, Patch, Post, Query, Request, Res, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import { v4 as uuid } from 'uuid'
 import { extname } from 'path';
-import { existsSync, mkdirSync } from 'fs';
+import { existsSync, mkdirSync, promises as fs } from 'fs';
 import { DocumentService } from './document.service';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 
@@ -104,13 +104,13 @@ export class DocumentController {
         return this.documentService.getPreview(doc_id);
     }
 
-    // Return PDF document
+    // Return PDF document for viewing
     @UseGuards(JwtAuthGuard)
     @Get("file")
-    async getFile(@Request() request, @Query("doc_id") doc_id: number) {
+    async file(@Request() request, @Query("doc_id") doc_id: number) {
         if (request.user.usr_id != await this.documentService.getOwner(doc_id)) {
             return {"error": "Unaccessible document"};
         }
-        return this.documentService.getFile(doc_id);
+        return this.documentService.file(doc_id);
     }
 }

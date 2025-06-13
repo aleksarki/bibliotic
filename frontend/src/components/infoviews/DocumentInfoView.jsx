@@ -2,21 +2,23 @@
  * View displaying information about the document selected.
  */
 
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrows, faBook, faDownload, faFilePdf, faPencil, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 
 import Button, { buttonColors } from "../ui/Button";
 import ButtonBox from "../ui/ButtonBox";
 import { useOkCancelModal } from "../modals/OkCancelModal";
-import { deleteDocumentDelete, getDocumentPreview, patchDocumentRename } from "../../util/api";
+import { deleteDocumentDelete, getDocumentFile, getDocumentPreview, patchDocumentRename } from "../../util/api";
+import { useTextInputModal } from "../modals/TextInputModal";
 
 import "./DocumentInfoView.scss";
-import { useTextInputModal } from "../modals/TextInputModal";
-import { useEffect, useState } from "react";
 
 function DocumentInfoView({ document, updateCatalogue }) {
     const [DeleteModal, openDeleteModal, closeDeleteModal, fulfilDeleteModal] = useOkCancelModal();
     const [RenameModal, openRenameModal, closeRenameModal, fulfilRenameModal] = useTextInputModal();
+    const navigate = useNavigate();
 
     function deleteDocument() {
         fulfilDeleteModal(false);
@@ -32,7 +34,13 @@ function DocumentInfoView({ document, updateCatalogue }) {
             fulfilRenameModal(true);
             updateCatalogue?.();
             document.item_name = newName;
-        })
+        });
+    }
+
+    function showDocument() {
+        getDocumentFile(document.item_id, request => {
+            window.open(request.data.document);
+        });
     }
 
     const [previewPath, setPreviewPath] = useState('');
@@ -54,8 +62,8 @@ function DocumentInfoView({ document, updateCatalogue }) {
             </div>
             <div className="button-area">
                 <ButtonBox gap={ 10 }>
-                    <Button text="Просмотр" icon={ faBook } style={ buttonColors.GREEN } />
-                    <Button icon={ faDownload } style={ buttonColors.GREEN } />
+                    <Button text="Просмотр" onClick={ showDocument } icon={ faBook } style={ buttonColors.GREEN } />
+                    <Button text="Загрузить" icon={ faDownload } style={ buttonColors.GREEN } />
                 </ButtonBox>
                 <ButtonBox gap={ 10 }>
                     <Button icon={ faPencil } onClick={ openRenameModal } style={ buttonColors.BLUE } />

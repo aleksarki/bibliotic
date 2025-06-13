@@ -203,7 +203,7 @@ export class DocumentService {
         }
     }
 
-    async getFile(doc_id: number) {
+    async file(doc_id: number) {
         try {
             const fileName = await this.getFilename(doc_id);
             const docFilePath = `./upload/${fileName}`;

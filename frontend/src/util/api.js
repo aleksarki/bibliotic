@@ -5,6 +5,8 @@
 
 import axios from "axios";
 
+// AUTH
+
 export async function postAuthRegister(email, password) {
     return (
         await axios.post("http://localhost:3000/auth/register", {
@@ -38,6 +40,8 @@ export function getDocumentCatalogue(dataSetter) {
         throw error;
     }
 }
+
+// DOCUMENT
 
 export function postDocumentUpload(file, folder, name, onFulfil) {
     const data = new FormData();
@@ -91,6 +95,19 @@ export function patchDocumentRename(doc_id, doc_newName, onFulfil) {
         throw error;
     }
 }
+
+export function getDocumentFile(doc_id, onFulfil) {
+    try {
+        axios.get(`http://localhost:3000/document/file?doc_id=${doc_id}`)
+            .then(request => onFulfil?.(request));
+    }
+    catch (error) {
+        console.error(error);
+        throw error;
+    }
+}
+
+// FOLDER
 
 export function patchFolderRename(fldr_id, fldr_newName, onFulfil) {
     try {
