@@ -2,6 +2,7 @@
 
 .DocumentInfoView {
     @extend .InfoView;
-    /*max-width: 400px;
-    height: auto;*/
+    .doc-preview {
+        max-width: 400px;
+    }
 }
