@@ -141,3 +141,15 @@ export function deleteFolderDelete(fldr_id, onFulfil) {
         throw error;
     }
 }
+
+
+export async function getFile(doc_id) {
+    try {
+        const response = await axios.get(`http://localhost:3000/document/file?doc_id=${doc_id}`);
+        return response.data;
+    }
+    catch (error) {
+        console.error(error);
+        throw error;
+    }
+}
