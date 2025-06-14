@@ -2,7 +2,7 @@
  * View displaying information about the document selected.
  */
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrows, faBook, faDownload, faFilePdf, faPencil, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
@@ -10,7 +10,7 @@ import { faArrows, faBook, faDownload, faFilePdf, faPencil, faTrashAlt } from "@
 import Button, { buttonColors } from "../ui/Button";
 import ButtonBox from "../ui/ButtonBox";
 import { useOkCancelModal } from "../modals/OkCancelModal";
-import { deleteDocumentDelete, getDocumentFile, getDocumentPreview, patchDocumentRename } from "../../util/api";
+import { deleteDocumentDelete, getDocumentFile, getDocumentPreview, patchDocumentRename, getFile } from "../../util/api";
 import { useTextInputModal } from "../modals/TextInputModal";
 
 import "./DocumentInfoView.scss";
@@ -39,7 +39,21 @@ function DocumentInfoView({ document, updateCatalogue }) {
 
     function showDocument() {
         getDocumentFile(document.item_id, request => {
-            window.open(request.data.document);
+            window.open(request.data.document, '_blank').focus();
+        });
+    }
+
+    const downloadLinkRef = useRef(null);
+    async function downloadFile() {
+        getDocumentFile(document.item_id, request => {
+        const link = downloadLinkRef.current;
+        console.log(link)
+        if (link) {
+            link.href = request.data.document;
+            link.download = document.item_name;
+            link.target = "_blank";
+            link.click();
+        }
         });
     }
 
@@ -62,8 +76,9 @@ function DocumentInfoView({ document, updateCatalogue }) {
             </div>
             <div className="button-area">
                 <ButtonBox gap={ 10 }>
-                    <Button text="Просмотр" onClick={ showDocument } icon={ faBook } style={ buttonColors.GREEN } />
-                    <Button text="Загрузить" icon={ faDownload } style={ buttonColors.GREEN } />
+                    <Button text="Просмотр" icon={ faBook } onClick={ showDocument } style={ buttonColors.GREEN } />
+                    <Button text="Загрузить" icon={ faDownload } onClick={ downloadFile } style={ buttonColors.GREEN } />
+                    <a ref={downloadLinkRef} style={{ display: 'none' }}> Hidden download link </a>
                 </ButtonBox>
                 <ButtonBox gap={ 10 }>
                     <Button icon={ faPencil } onClick={ openRenameModal } style={ buttonColors.BLUE } />
