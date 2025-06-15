@@ -58,6 +58,7 @@ export class DocumentService {
         return {
             "statusCode": 200,
             "message": `file saved: ${file.filename}`,
+            "doc_filename": file.filename,
             "doc_id": document[0]?.doc_id
         };
     }
@@ -158,8 +159,8 @@ export class DocumentService {
             saveFilename: previewName.replace('.png', ''),
             savePath: previewPath,
             format: 'png',
-            width: 300,
-            height: 425
+            width: 330,
+            height: 468
         };
 
         let result;
@@ -176,7 +177,20 @@ export class DocumentService {
             await fs.rename(oldPath, newPath);
         }
 
-        return previewName;
+        return { previewName };
+    }
+
+    // Save preview filename
+    async patchPreview(doc_id: number, doc_preview: string) {
+        try {
+            await this.dataSource.query(
+                "UPDATE Documents SET doc_preview=$1 WHERE doc_id=$2;", [doc_preview, doc_id]
+            );
+            return {"status": "successful set preview"};
+        }
+        catch (error) {
+            return null;
+        }
     }
 
     // Return preview picture for a document

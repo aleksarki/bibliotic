@@ -9,7 +9,7 @@ import Button, { buttonColors } from "../ui/Button";
 import ButtonBox from "../ui/ButtonBox";
 import { useOkCancelModal } from "../modals/OkCancelModal";
 import { useFileUploadModal } from "../modals/FileUploadModal";
-import { postDocumentUpload, patchFolderRename, postFolderCreate, deleteFolderDelete } from "../../util/api";
+import { postDocumentUpload, patchFolderRename, postFolderCreate, deleteFolderDelete, postDocumentPreview, patchDocumentPreview } from "../../util/api";
 
 import "./FolderInfoView.scss";
 import { useTextInputModal } from "../modals/TextInputModal";
@@ -31,8 +31,11 @@ function FolderInfoView({ folder, updateCatalogue }) {
 
     function handleUploadDocument(selectedFile) {
         fulfilFileUploadModal(false);
-        postDocumentUpload(selectedFile, folder.item_id, selectedFile.name, () => {
+        postDocumentUpload(selectedFile, folder.item_id, selectedFile.name, (responce) => {
             fulfilFileUploadModal(true);
+            postDocumentPreview(responce.data.doc_filename, (responce1) => {
+                patchDocumentPreview(responce.data.doc_id, responce1.data.previewName, () => {});
+            });
             updateCatalogue?.();
         });        
     }

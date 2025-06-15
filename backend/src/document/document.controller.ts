@@ -94,6 +94,13 @@ export class DocumentController {
         return this.documentService.postPreview(doc_filename);
     }
 
+    // Save preview filename in database
+    @UseGuards(JwtAuthGuard)
+    @Patch("preview")
+    async patchPreview(@Query("doc_id") doc_id: number, @Query("doc_preview") doc_preview: string) {
+        this.documentService.patchPreview(doc_id, doc_preview);
+    }
+
     // Return preview for a document
     @UseGuards(JwtAuthGuard)
     @Get("preview")
