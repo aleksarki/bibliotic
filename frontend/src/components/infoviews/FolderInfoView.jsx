@@ -9,7 +9,7 @@ import Button, { buttonColors } from "../ui/Button";
 import ButtonBox from "../ui/ButtonBox";
 import { useOkCancelModal } from "../modals/OkCancelModal";
 import { useFileUploadModal } from "../modals/FileUploadModal";
-import { postDocumentUpload, patchFolderRename, postFolderCreate, deleteFolderDelete, postDocumentPreview, patchDocumentPreview } from "../../util/api";
+import { postDocumentUpload, postFolderCreate, deleteFolderDelete, postDocumentPreview, patchFolderRename, patchDocumentPreview } from "../../util/api";
 
 import "./FolderInfoView.scss";
 import { useTextInputModal } from "../modals/TextInputModal";
@@ -42,10 +42,12 @@ function FolderInfoView({ folder, updateCatalogue }) {
 
     function renameFolder(newName) {
         fulfilRenameModal(false);
-        patchFolderRename(folder.item_id, newName, () => {
+        patchFolderRename(folder.item_id, newName, (responce) => {
             fulfilRenameModal(true);
             updateCatalogue?.();
-            folder.item_name = newName;
+            if (responce.data.status) {
+                folder.item_name = newName;
+            }
         })
     }
 
@@ -70,7 +72,7 @@ function FolderInfoView({ folder, updateCatalogue }) {
                 </ButtonBox>
                 <ButtonBox gap={ 10 } >
                     <Button text="Скачать" icon={ faArchive } style={ buttonColors.GREEN } />
-                    <Button icon={ faPencil } onClick={ openRenameModal } style={ buttonColors.BLUE } />
+                    { folder.item_parent != null && <Button icon={ faPencil } onClick={ openRenameModal } style={ buttonColors.BLUE } /> }
                     <Button icon={ faArrows } style={ buttonColors.YELLOW } />
                     <Button icon={ faTrashAlt } onClick={ openDeleteModal } style={ buttonColors.RED } />
                 </ButtonBox>

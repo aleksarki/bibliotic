@@ -19,6 +19,7 @@ DROP PROCEDURE IF EXISTS keyword_add;
 DROP FUNCTION IF EXISTS document_get_keywords;
 DROP PROCEDURE IF EXISTS document_preview_set;
 DROP FUNCTION IF EXISTS document_preview_get;
+DROP FUNCTION IF EXISTS folder_check_rename;
 
 DROP TABLE IF EXISTS Keywords;
 DROP TABLE IF EXISTS Notes;
@@ -559,5 +560,29 @@ BEGIN
     WHERE doc_id = p_doc_id;
 
     RETURN preview;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Returns true if there is already a folder with the same name in the same parent folder
+CREATE FUNCTION folder_check_rename(fldr_id INT, fldr_new_name TEXT)
+RETURNS BOOLEAN AS $$
+DECLARE
+    parent INT;
+    folder_count INT;
+BEGIN
+    IF NOT EXISTS (SELECT 1 FROM Folders WHERE Folders.fldr_id = folder_check_rename.fldr_id) THEN
+        RAISE EXCEPTION 'Folder with id "%" does not exist', folder_check_rename.fldr_id;
+    END IF;
+
+    SELECT Folders.fldr_parent INTO parent
+    FROM Folders
+    WHERE Folders.fldr_id = folder_check_rename.fldr_id;
+
+    SELECT COUNT(*) INTO folder_count
+    FROM Folders
+    WHERE Folders.fldr_parent = parent
+      AND Folders.fldr_name = folder_check_rename.fldr_new_name
+      AND Folders.fldr_id <> folder_check_rename.fldr_id;
+    RETURN (folder_count > 0);
 END;
 $$ LANGUAGE plpgsql;

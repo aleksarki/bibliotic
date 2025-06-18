@@ -29,10 +29,13 @@ export class FolderController {
     @Patch("rename")
     async rename(@Request() request, @Query("fldr_id") fldr_id: number, @Query("fldr_newName") fldr_newName: string) {
         if (request.user.usr_id != await this.folderService.getOwner(fldr_id)) {
-            return { "error": "Unaccessible folder"};
+            return { status: false, "error": "Unaccessible folder" };
         }
         if (request.user.usr_root == fldr_id) {
-          return { "error": "Unable to rename root folder"}
+            return { status: false, "error": "Unable to rename root folder" }
+        }
+        if (await this.folderService.nameCheck(fldr_id, fldr_newName)) {
+            return { status: false, "error": "Folder with this name already exists" }
         }
         return this.folderService.rename(fldr_id, fldr_newName);
     }

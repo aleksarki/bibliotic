@@ -40,6 +40,18 @@ export class FolderService {
         }
     }
 
+    async nameCheck(fldr_id: number, fldr_newName: string) {
+        try {
+            const check =  await this.dataSource.query(
+                "SELECT folder_check_rename($1, $2)", [fldr_id, fldr_newName]
+            );
+            return check?.[0]?.folder_check_rename;
+        }
+        catch (error) {
+            return true;
+        }
+    }
+
     // Delete folder
     async delete(fldr_id: number) {
         try {
@@ -62,10 +74,10 @@ export class FolderService {
             await this.dataSource.query(
                 "UPDATE Folders SET fldr_name=$1 WHERE fldr_id=$2;", [fldr_newName, fldr_id]
             );
-            return {status: true};
+            return { status: true};
         }
         catch (error) {
-            return null;
+            return { status: false };
         }
     }
 
