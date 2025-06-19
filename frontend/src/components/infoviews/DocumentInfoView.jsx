@@ -43,6 +43,19 @@ function DocumentInfoView({ document, updateCatalogue }) {
         });
     }
 
+    function formatDate(dateString) {
+        const date = new Date(dateString);
+
+        const day = String(date.getDate()).padStart(2, '0');
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const year = date.getFullYear();
+
+        const hours = String(date.getHours()).padStart(2, '0');
+        const minutes = String(date.getMinutes()).padStart(2, '0');
+
+        return `${day}.${month}.${year} ${hours}:${minutes}`;
+    }
+
     const downloadLinkRef = useRef(null);
     async function downloadFile() {
         getDocumentFile(document.item_id, request => {
@@ -86,7 +99,7 @@ function DocumentInfoView({ document, updateCatalogue }) {
                     <Button icon={ faTrashAlt } onClick={ openDeleteModal } style={ buttonColors.RED } />
                 </ButtonBox>
             </div>
-            <div>Добавлено: { document?.item_added }</div>
+            <div>Добавлено: { formatDate(document?.item_added) }</div>
             <div>
                 {previewPath && <img class="doc-preview" src={previewPath} alt="" />}
             </div>
