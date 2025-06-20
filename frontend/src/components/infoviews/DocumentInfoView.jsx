@@ -60,7 +60,6 @@ function DocumentInfoView({ document, updateCatalogue }) {
     async function downloadFile() {
         getDocumentFile(document.item_id, request => {
         const link = downloadLinkRef.current;
-        console.log(link)
         if (link) {
             link.href = request.data.document;
             link.download = document.item_name;
