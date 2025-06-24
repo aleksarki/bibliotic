@@ -5,6 +5,13 @@
 
 import axios from "axios";
 
+export const sortBy = {
+    NAME: "name",
+    NAME_REVERSE: "name reverse",
+    DATE: "date",
+    DATE_REVERSE: "date reverse"
+};
+
 // AUTH
 
 export async function postAuthRegister(email, password) {

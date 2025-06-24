@@ -6,7 +6,6 @@
 import { useEffect, useState } from "react";
 
 import Button, { buttonColors } from "../components/ui/Button";
-import ButtonBox from "../components/ui/ButtonBox";
 import DocumentInfoView from "../components/infoviews/DocumentInfoView";
 import FileHierarchy from "../components/hierarchy/FileHierarchy";
 import FolderInfoView from "../components/infoviews/FolderInfoView";
@@ -14,13 +13,12 @@ import Footer from "../components/Footer";
 import Header from "../components/Header";
 import StubInfoView from "../components/infoviews/StubInfoView";
 import TwoPanels from "../components/TwoPanels";
-import { useFileUploadModal } from "../components/modals/FileUploadModal";
-import { getDocumentCatalogue } from "../util/api";
+import { getDocumentCatalogue, sortBy } from "../util/api";
 
 
 import "./CatalogueView.scss";
 
-function buildItemTree(itemArray) {
+function buildItemTree(itemArray, sorting) {
     const folderMap = {};
     const documentMap = {};
     
@@ -51,6 +49,23 @@ function buildItemTree(itemArray) {
         }
     });
 
+    Object.values(folderMap).forEach(folder => {
+        if (folder.item_children) {
+            folder.item_children.sort((a, b) => {
+                switch (sorting) {
+                case sortBy.NAME:
+                    return a.item_name.localeCompare(b.item_name);
+                case sortBy.NAME_REVERSE:
+                    return b.item_name.localeCompare(a.item_name);
+                case sortBy.DATE:
+                    return new Date(a.item_added) - new Date(b.item_added);
+                case sortBy.DATE_REVERSE: 
+                    return new Date(b.item_added) - new Date(a.item_added);
+                }
+            });
+        }
+    });
+
     return rootNodes[0];
 }
 
@@ -59,7 +74,7 @@ function CatalogueView() {
     const [itemArray, setItemArray] = useState(null);
     const [itemTree, setItemTree] = useState(null);
     const [selectedItem, setSelectedItem] = useState(null);
-    //const [FileUploadModal, openFileUploModal, closeFileUploadModal] = useFileUploadModal();
+    const [sorting, setSorting] = useState(sortBy.NAME);
 
     useEffect(() => {
         getDocumentCatalogue(setItemArray);
@@ -67,12 +82,16 @@ function CatalogueView() {
 
     useEffect(() => {
         if (itemArray) {
-            setItemTree(buildItemTree(itemArray));
+            setItemTree(buildItemTree(itemArray, sorting));
         }
-    }, [itemArray]);
+    }, [itemArray, sorting]);
     
     const updateCatalogue = () => {
         getDocumentCatalogue(setItemArray);
+    };
+
+    const resort = event => {
+        setSorting(event.target.value);
     };
 
     let infoView;
@@ -94,13 +113,14 @@ function CatalogueView() {
                     <div className="left-panel-content">
                         <div className="hierarchy-head">
                             <Button text="Сортировка" style={ buttonColors.BLUE } />
-                            <div className="hierarchy-head-right-box">
-                                { /*<ButtonBox gap={ 10 }>
-                                    <Button text="Создать папку" style={ buttonColors.GREEN } />
-                                    <Button text="Загрузить файл" style={ buttonColors.GREEN } />
-                                </ButtonBox>*/ }
-                            </div>
-                        </div>
+                            <select onChange={ resort }>
+                                <option value={ sortBy.NAME }>Название (А-Я)</option>
+                                <option value={ sortBy.NAME_REVERSE }>Название (Я-А)</option>
+                                <option value={ sortBy.DATE }>Дата загрузки (сначала старые)</option>
+                                <option value={ sortBy.DATE_REVERSE }>Дата загрузки (сначала новые)</option>
+                            </select>
+                            { /*<div className="hierarchy-head-right-box" />*/ }
+                        </div> 
                         <div className="hierarchy-body">
                             <FileHierarchy
                                 hierarchy={ itemTree }
