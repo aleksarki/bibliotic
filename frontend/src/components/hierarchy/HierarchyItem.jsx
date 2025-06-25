@@ -33,7 +33,7 @@ function HierarchyItem({
                             <FontAwesomeIcon icon={ isExpanded ? faFolderOpen : faFolderClosed } />
                         </button>
                     ) }
-                    { isFile && <FontAwesomeIcon icon={ faFilePdf } /> }
+                    { isFile && <FontAwesomeIcon className="file-icon" icon={ faFilePdf } /> }
                     <span style={ {fontStyle: isFile ? 'normal' : 'italic'} }>{ text }</span>
                 </div>
                 <div>{ isSelected && <span className="item-selection-label">Выбрано</span> }</div>
