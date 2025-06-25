@@ -182,3 +182,5 @@ export function getDocumentSearchName(term, onFulfil) {
         throw error;
     }
 }
+
+// getDocumentSearchKeywords

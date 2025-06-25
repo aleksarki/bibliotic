@@ -127,4 +127,7 @@ export class DocumentController {
     async searchByName(@Request() request, @Query("term") term: string) {
         return this.documentService.searchByName(request.user.usr_id, term);
     }
+
+    // Search document by keywords
+    //item-search/keyword
 }

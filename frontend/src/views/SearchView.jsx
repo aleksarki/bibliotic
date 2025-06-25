@@ -47,6 +47,8 @@ function SearchView() {
         getDocumentSearchName(searchValue, req => {
             setItemArray(req.data);
         });
+
+        // ключевые слова? тогда getDocumentSearchKeywords
     };
 
     useEffect(() => {
@@ -68,10 +70,11 @@ function SearchView() {
                 left={
                     <div className="left-panel-content">
                         <div className="hierarchy-head">
-                            { /*<Button text="Сортировка" style={ buttonColors.BLUE } />*/ }
+                            { /*выподающий список*/ }
                             <div className="hierarchy-head-right-box">
                                 <TextInput placeholder="Запрос" onChange={searchChange}/>
                             </div>
+
                         </div>
                         <div className="hierarchy-body">
                             <FileHierarchy

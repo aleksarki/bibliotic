@@ -600,3 +600,4 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
+-- document_search_by_keywords
