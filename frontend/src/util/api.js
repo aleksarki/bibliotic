@@ -36,6 +36,8 @@ export async function getAuthUser(config = null) {
     return (await axios.get("http://localhost:3000/auth/user", config)).data;
 }
 
+// DOCUMENT
+
 export function getDocumentCatalogue(dataSetter) {
     try {
         axios.get("http://localhost:3000/document/catalogue").then(response => {
@@ -47,8 +49,6 @@ export function getDocumentCatalogue(dataSetter) {
         throw error;
     }
 }
-
-// DOCUMENT
 
 export function postDocumentUpload(file, folder, name, onFulfil) {
     const data = new FormData();
@@ -165,6 +165,17 @@ export function deleteFolderDelete(fldr_id, onFulfil) {
     try {
         axios.delete(`http://localhost:3000/folder/delete?fldr_id=${fldr_id}`)
             .then(request => onFulfil?.());
+    }
+    catch (error) {
+        console.error(error);
+        throw error;
+    }
+}
+
+export function getDocumentSearchName(term, onFulfil) {
+    try {
+        axios.get(`http://localhost:3000/document/item-search/name?term=${term}`)
+            .then(responce => onFulfil?.(responce));
     }
     catch (error) {
         console.error(error);

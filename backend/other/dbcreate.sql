@@ -20,6 +20,7 @@ DROP FUNCTION IF EXISTS document_get_keywords;
 DROP PROCEDURE IF EXISTS document_preview_set;
 DROP FUNCTION IF EXISTS document_preview_get;
 DROP FUNCTION IF EXISTS folder_check_rename;
+DROP FUNCTION IF EXISTS document_search_by_name;
 
 DROP TABLE IF EXISTS Keywords;
 DROP TABLE IF EXISTS Notes;
@@ -586,3 +587,16 @@ BEGIN
     RETURN (folder_count > 0);
 END;
 $$ LANGUAGE plpgsql;
+
+-- Search for documents by name
+CREATE FUNCTION document_search_by_name(usr_id INT, search_term TEXT)
+RETURNS SETOF Documents AS $$
+BEGIN
+    RETURN QUERY
+    SELECT * FROM Documents d
+    WHERE (d.doc_name ILIKE '%' || search_term || '%')
+	AND (document_get_owner(d.doc_id) = usr_id)
+    ORDER BY d.doc_name;
+END;
+$$ LANGUAGE plpgsql;
+

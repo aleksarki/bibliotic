@@ -233,4 +233,21 @@ export class DocumentService {
             return null;
         }
     }
+
+    // Search for documents by name
+    async searchByName(usr_id: number, name: string) {
+        try {
+            const documents = await this.dataSource.query(
+                `SELECT
+                    'document' AS item_type, doc_id AS item_id, doc_folder AS item_parent,
+                    doc_name AS item_name, doc_added AS item_added
+                FROM document_search_by_name($1, $2);`,
+                [usr_id, name]
+            );
+            return documents//?.[0];
+        }
+        catch (error) {
+            return null;
+        }
+    }
 }

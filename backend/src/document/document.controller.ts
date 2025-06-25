@@ -120,4 +120,11 @@ export class DocumentController {
         }
         return this.documentService.file(doc_id);
     }
+
+    // Search documents by name
+    @UseGuards(JwtAuthGuard)
+    @Get("item-search/name")
+    async searchByName(@Request() request, @Query("term") term: string) {
+        return this.documentService.searchByName(request.user.usr_id, term);
+    }
 }
