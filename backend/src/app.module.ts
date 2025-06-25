@@ -5,6 +5,7 @@ import { ConfigModule } from '@nestjs/config';
 import { DatabaseModule } from './database/database.module';
 import { DocumentModule } from './document/document.module';
 import { FolderModule } from './folder/folder.module';
+import { KeywordsModule } from './keyword/keywords.module';
 import { UserModule } from './users/user.module';
 import { AuthModule } from './auth/auth.module';
 
@@ -15,6 +16,7 @@ import { AuthModule } from './auth/auth.module';
     DatabaseModule,
     DocumentModule,
     FolderModule,
+    KeywordsModule,
     UserModule
   ],
   controllers: [AppController],
