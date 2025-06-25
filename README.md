@@ -28,7 +28,7 @@ npm i
 run:
 ```
 cd backend
-npm run start
+npm run start:dev
 ```
 
 
@@ -43,5 +43,5 @@ pip install -r requirements.txt
 run:
 ```
 cd pdf
-uvicorn app.main:app --reload
+uvicorn app.main:app --port 3001 --reload
 ```
