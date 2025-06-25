@@ -64,7 +64,6 @@ export class AuthService {
 
     async passwordChange(user: any, hashOld: string, hashNew: string) {
         try {
-            console.log(user.usr_id, hashOld, hashNew)
             const hash = await this.dataSource.query(
                 "SELECT usr_hash FROM users WHERE usr_id = $1", [user.usr_id]);
                 

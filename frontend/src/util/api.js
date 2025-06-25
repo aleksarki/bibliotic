@@ -77,7 +77,7 @@ export function postDocumentPreview(doc_filename, onFulfil)
 {
     try {
         axios.post(`http://localhost:3000/document/preview?doc_filename=${doc_filename}`)
-            .then(request => onFulfil?.(request));
+            .then(responce => onFulfil?.(responce));
     }
     catch (error) {
         console.error(error);
@@ -87,7 +87,6 @@ export function postDocumentPreview(doc_filename, onFulfil)
 
 export function patchDocumentPreview(doc_id, doc_preview, onFulfil) {
     try {
-        console.warn('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA');
         axios.patch(`http://localhost:3000/document/preview?doc_id=${doc_id}&doc_preview=${doc_preview}`)
             .then(request => onFulfil?.());
     }
@@ -123,7 +122,7 @@ export function patchDocumentRename(doc_id, doc_newName, onFulfil) {
 export function getDocumentFile(doc_id, onFulfil) {
     try {
         axios.get(`http://localhost:3000/document/file?doc_id=${doc_id}`)
-            .then(request => onFulfil?.(request));
+            .then(responce => onFulfil?.(responce));
     }
     catch (error) {
         console.error(error);
@@ -136,7 +135,7 @@ export function getDocumentFile(doc_id, onFulfil) {
 export function patchFolderRename(fldr_id, fldr_newName, onFulfil) {
     try {
         axios.patch(`http://localhost:3000/folder/rename?fldr_id=${fldr_id}&fldr_newName=${fldr_newName}`)
-            .then(request => onFulfil?.());
+            .then(responce => onFulfil?.(responce));
     }
     catch (error) {
         console.error(error);
