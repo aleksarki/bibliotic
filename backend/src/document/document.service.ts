@@ -6,12 +6,14 @@ import { PDFDocument } from 'pdf-lib';
 import { catchError, lastValueFrom, of } from 'rxjs';
 import { DataSource } from 'typeorm';
 import { existsSync, mkdirSync, promises as fs, readFileSync} from 'fs';
+import { KeywordsService } from '../keyword/keywords.service';
 
 @Injectable()
 export class DocumentService {
     constructor(
         private readonly httpService: HttpService,
-        @Inject("DATA_SOURCE") private dataSource: DataSource
+        @Inject("DATA_SOURCE") private dataSource: DataSource,
+        private readonly keywordsService: KeywordsService
     ) {}
     
     // Save document
@@ -41,14 +43,20 @@ export class DocumentService {
             async response => {
                 if (response?.data) {
                     try {
-                        const extractedText = response.data;
+                        const extractedText = response.data.text;
+                        const keywords = response.data.keywords;
+                        
                         await this.dataSource.query(
-                            "UPDATE Documents SET doc_text=$1 WHERE doc_id=$2",
-                            [extractedText, docId]
+                        "UPDATE Documents SET doc_text=$1 WHERE doc_id=$2",
+                        [extractedText, docId]
                         );
-                        console.log(`[Text extraction completed for doc_id ${docId}]`);
+                        
+                        // Сохраняем ключевые слова
+                        await this.keywordsService.createKeywords(keywords, docId);
+                        
+                        console.log(`[Text and keywords extraction completed for doc_id ${docId}]`);
                     } catch (dbError) {
-                        console.error("[Error updating document with extracted text]");
+                        console.error("[Error updating document]", dbError);
                     }
                 }
             }
