@@ -258,4 +258,28 @@ export class DocumentService {
             return null;
         }
     }
+
+    // Search for documents by keywords
+    async searchByKeywords(usr_id: number, keywordArray: string[]) {
+        try {
+            const documents = await this.dataSource.query(
+            `
+            SELECT
+                'document' AS item_type,
+                doc_id   AS item_id,
+                doc_folder AS item_parent,
+                doc_name AS item_name,
+                doc_added AS item_added
+            FROM document_search_by_keywords($1, $2)
+            `,
+            [usr_id, keywordArray]
+            );
+            return documents;
+        } 
+        catch (error) {
+            console.error('Error searching documents by keywords:', error);
+            return [];
+        }
+    }
+
 }

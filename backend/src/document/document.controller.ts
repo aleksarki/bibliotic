@@ -130,4 +130,19 @@ export class DocumentController {
 
     // Search document by keywords
     //item-search/keyword
+    @UseGuards(JwtAuthGuard)
+    @Get("item-search/keyword")
+    async searchByKeywords(
+        @Request() request,
+        @Query("keywords") terms: string
+        ) {
+        const usr_id = request.user.usr_id;
+        const termArray = terms
+            .split(/\s+/)
+            .filter(t => t)
+            .map(t => `%${t}%`);
+        
+        return this.documentService.searchByKeywords(usr_id, termArray);
+    }
+
 }
