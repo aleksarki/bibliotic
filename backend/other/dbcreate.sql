@@ -59,7 +59,9 @@ CREATE TABLE Notes
     note_id        INTEGER  PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
     note_document  INTEGER  NOT NULL REFERENCES Documents(doc_id) ON DELETE CASCADE,
     note_page      INTEGER  NOT NULL CHECK (note_page >= 0),
-    note_text      TEXT
+    note_text      TEXT,
+    note_x         REAL,
+    note_y         REAL
 );
 
 CREATE TABLE Keywords
@@ -430,8 +432,10 @@ CREATE PROCEDURE note_add(
     note_document INT,
     note_page INT,
     note_text TEXT,
-    OUT note_id INT) 
-AS $$
+    note_x REAL,
+    note_y REAL,
+    OUT note_id INT
+) AS $$
 BEGIN
     IF note_document IS NULL THEN
         RAISE EXCEPTION 'Document cannot be NULL';
@@ -441,7 +445,8 @@ BEGIN
         RAISE EXCEPTION 'Document with id "%" does not exist', note_document;
     END IF;
 
-    INSERT INTO Notes (note_document, note_page, note_text) VALUES (note_document, note_page, note_text)
+    INSERT INTO Notes(note_document, note_page, note_text, note_x, note_y)
+    VALUES (note_document, note_page, note_text, note_x, note_y)
     RETURNING Notes.note_id INTO note_id;
 
     RAISE NOTICE 'Successfully created note with id "%"', note_id;

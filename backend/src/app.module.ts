@@ -8,6 +8,7 @@ import { FolderModule } from './folder/folder.module';
 import { KeywordsModule } from './keyword/keywords.module';
 import { UserModule } from './users/user.module';
 import { AuthModule } from './auth/auth.module';
+import { NoteModule } from './note/note.module';
 
 @Module({
   imports: [
@@ -17,7 +18,8 @@ import { AuthModule } from './auth/auth.module';
     DocumentModule,
     FolderModule,
     KeywordsModule,
-    UserModule
+    UserModule,
+    NoteModule
   ],
   controllers: [AppController],
   providers: [AppService],
