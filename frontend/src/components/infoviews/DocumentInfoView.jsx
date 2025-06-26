@@ -39,7 +39,9 @@ function DocumentInfoView({ document, updateCatalogue }) {
 
     function showDocument() {
         getDocumentFile(document.item_id, request => {
-            window.open(request.data.document, '_blank').focus();
+            const url = request.data.document;
+            const fileName = url.substring(url.lastIndexOf('/') + 1);
+            window.open(`/reader/${fileName}`, "_blank").focus();
         });
     }
 
@@ -79,7 +81,7 @@ function DocumentInfoView({ document, updateCatalogue }) {
 
         fetchPreview();
     }, [document]);
-    
+
     return <>
         <div className="DocumentInfoView">
             <div className="view-title">

@@ -8,6 +8,7 @@ import ErrorView from "./views/ErrorView";
 import LoginView from "./views/LoginView";
 import OptionsView from "./views/OptionsView";
 import SearchView from "./views/SearchView";
+import ReaderView, { pdfUrlLoader } from "./views/ReaderView";
 import { AuthProvider, useAuth } from "./contexts/AuthContext";
 import { ThemeProvider } from "./contexts/ThemeContext";
 
@@ -39,6 +40,11 @@ const router = createBrowserRouter([
   {
     path: '/options',
     element: <PrivateRoute><OptionsView /></PrivateRoute>
+  },
+  {
+    path: '/reader/:pdfUrl',
+    element: <PrivateRoute><ReaderView /></PrivateRoute>,
+    loader: pdfUrlLoader
   }
 ]);
 
