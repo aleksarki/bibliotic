@@ -606,3 +606,19 @@ END;
 $$ LANGUAGE plpgsql;
 
 -- document_search_by_keywords
+
+-- Search for documents by keywords
+CREATE OR REPLACE FUNCTION document_search_by_keywords(usr_id INT, search_terms TEXT[])
+RETURNS SETOF Documents AS $$
+BEGIN
+  RETURN QUERY
+  SELECT DISTINCT d.*
+  FROM Documents d
+  JOIN Keywords k
+    ON k.kwrd_document = d.doc_id
+   AND k.kwrd_keyword ILIKE ANY(search_terms)
+  WHERE document_get_owner(d.doc_id) = usr_id
+  ORDER BY d.doc_name;
+END;
+$$ LANGUAGE plpgsql;
+

@@ -21,6 +21,25 @@
             // Box for search bar
             .hierarchy-head-right-box {
                 display: flex;
+                gap: 10px;
+                width: 100%;
+
+                .search-type-select {
+                    padding: 8px 12px;
+                    border: 1px solid #ddd;
+                    border-radius: 4px;
+                    background-color: white;
+                    font-size: 14px;
+                    cursor: pointer;
+                    min-width: 150px;
+                }
+
+                /* Стили для TextInput остаются без изменений */
+            }
+
+
+            .hierarchy-head-right-box {
+                display: flex;
                 flex-direction: row;
                 flex-wrap: wrap;
                 justify-content: flex-end;
@@ -35,4 +54,20 @@
             box-shadow: var(--cat-hierarchy--box-shadow);
         }
     }
+}
+
+.loading-message, .error-message {
+    padding: 20px;
+    text-align: center;
+    color: var(--text-color-secondary);
+}
+
+.error-message {
+    color: var(--error-color);
+}
+
+.search-type-select:disabled,
+.TextInput:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
 }

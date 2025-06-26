@@ -184,3 +184,21 @@ export function getDocumentSearchName(term, onFulfil) {
 }
 
 // getDocumentSearchKeywords
+export function getDocumentSearchKeywords(keywords, onFulfil) {
+    try {
+        return axios.get("http://localhost:3000/document/item-search/keyword", {
+            params: { keywords }
+        })
+            .then(response => {
+                if (onFulfil) onFulfil(response);
+                return response;
+            })
+            .catch(error => {
+                console.error('Error searching docs by keywords:', error);
+                throw error;
+            });
+    } catch (error) {
+        console.error('Error in getDocumentSearchKeywords:', error);
+        return Promise.reject(error);
+    }
+}
