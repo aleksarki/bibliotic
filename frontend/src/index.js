@@ -42,7 +42,7 @@ const router = createBrowserRouter([
     element: <PrivateRoute><OptionsView /></PrivateRoute>
   },
   {
-    path: '/reader/:pdfUrl',
+    path: '/reader/:pdfId',
     element: <PrivateRoute><ReaderView /></PrivateRoute>,
     loader: pdfUrlLoader
   }

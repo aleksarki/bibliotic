@@ -38,11 +38,7 @@ function DocumentInfoView({ document, updateCatalogue }) {
     }
 
     function showDocument() {
-        getDocumentFile(document.item_id, request => {
-            const url = request.data.document;
-            const fileName = url.substring(url.lastIndexOf('/') + 1);
-            window.open(`/reader/${fileName}`, "_blank").focus();
-        });
+        window.open(`/reader/${document.item_id}`, "_blank").focus();
     }
 
     function formatDate(dateString) {
