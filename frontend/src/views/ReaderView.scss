@@ -1,3 +1,13 @@
+@import './View.scss';
+
 .ReaderView {
-    
+    @extend .View;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+
+    .panel {
+        flex: 1;
+        overflow: hidden;
+    }
 }

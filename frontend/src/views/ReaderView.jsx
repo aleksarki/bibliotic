@@ -1,5 +1,4 @@
 import { useLoaderData } from "react-router-dom";
-import Footer from "../components/Footer";
 import Header from "../components/Header";
 import PdfViewer from "../components/PdfViewer";
 
@@ -16,8 +15,9 @@ function ReaderView() {
     return (
         <div className="ReaderView">
             <Header pageTitle="Просмотр" />
-            <PdfViewer pdfUrl={ `http://localhost:3000/upload/${pdfUrl}` } />
-            <Footer />
+                <div className="panel">
+                    <PdfViewer pdfUrl={ `http://localhost:3000/upload/${pdfUrl}` } />
+                </div>
         </div>
     );
 }
