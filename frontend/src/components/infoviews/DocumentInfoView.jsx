@@ -97,7 +97,7 @@ function DocumentInfoView({ document, updateCatalogue }) {
                 </ButtonBox>
             </div>
             <div>Добавлено: { formatDate(document?.item_added) }</div>
-            <div>
+            <div className="preview-div">
                 {previewPath && <img class="doc-preview" src={previewPath} alt="" />}
             </div>
         </div>

@@ -9,6 +9,9 @@
 
     // Name of the infoview.
     .view-title {
+        grid-column: 1;
+        grid-row: 1;
+
         display: flex;
         flex-direction: row;
         align-items: center;
@@ -19,9 +22,17 @@
     }
 
     .button-area {
+        grid-column: 2;
+        grid-row: 1;
+
         display: flex;
         flex-flow: column;
         gap: 10px;
         align-items: flex-end;
+    }
+
+    > div:not(.view-title):not(.button-area):not(.preview-div) {
+        grid-column: 1;
+        grid-row: 2;
     }
 }
