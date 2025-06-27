@@ -10,8 +10,9 @@ import Header from "../components/Header";
 import StubInfoView from "../components/infoviews/StubInfoView";
 import TwoPanels from "../components/TwoPanels";
 import { getDocumentSearchName, getDocumentSearchKeywords } from "../util/api";
-import "./SearchView.scss";
 import DocumentInfoView from "../components/infoviews/DocumentInfoView";
+
+import "./SearchView.scss";
 
 function SearchView() {
     const [items, setItems] = useState([]);
