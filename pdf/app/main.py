@@ -1,7 +1,7 @@
 import os
 import pytesseract
 import yake
-from pdf2image import convert_from_path
+from pdf2image import convert_from_path, pdfinfo_from_path
 from fastapi import FastAPI, Query, HTTPException
 from fastapi.responses import JSONResponse
 
@@ -25,16 +25,26 @@ async def extractText(path: str = Query(...)):
     
     print(f"[Received file '{path}']")
 
-    images = convert_from_path(path)
-    print(f"[Converted file to images]")
-
+    batch_size = 10
+    total_pages = pdfinfo_from_path(path)["Pages"]
     full_text = ""
-    for i, image in enumerate(images):
-        # Используем оба языка (русский и английский) в Tesseract
-        text = pytesseract.image_to_string(image, lang='rus+eng')
-        full_text += f'{text}\n'
-        print(f"[Recognized image №{i}]")
 
+    for i in range(0, total_pages, batch_size):
+        images = convert_from_path(
+            path,
+            first_page=i + 1,
+            last_page=min(i + batch_size, total_pages)
+        )
+        print(f"[Converted file to images {i} / {total_pages}]")
+        
+        for j, image in enumerate(images):
+            # Используем оба языка (русский и английский) в Tesseract
+            text = pytesseract.image_to_string(image, lang='rus+eng')
+            full_text += f'{text}\n'
+            print(f"[Recognized image №{j + i}]")
+        
+        del images
+    
     print(f"[Recognition done, text of {len(full_text)} characters]")
 
     # --- Extract keywords using YAKE ---
