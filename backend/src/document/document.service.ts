@@ -26,7 +26,30 @@ export class DocumentService {
             [folder, file.filename, new Date(), name.substring(0, 32), null, null]
         );
         const docId = document[0]?.doc_id;
-        console.log(docId)
+        
+        const previewUrl  = "http://localhost:3000/document/preview";
+
+        this.httpService.post(previewUrl + `?doc_filename=${file.filename}`)
+            .pipe(
+                catchError(error => {
+                    console.log("[Unsuccessful preview creation]", error.message);
+                    return of(null);
+                })
+            )
+            .subscribe(
+                async response => {
+                    this.httpService.patch(previewUrl + `?doc_id=${docId}&doc_preview=${response?.data.previewName}`)
+                        .pipe(
+                            catchError(error => {
+                                console.log("[Unsuccessful preview saving]", error.message);
+                                return of(null);
+                            })
+                        )
+                        .subscribe(async response1 => {
+                            console.log(`[Saved preview ${response?.data.previewName}]`)
+                        });
+                }
+            )
 
         const textExtractUrl = "http://127.0.0.1:3001/pdf/extract-text";
         const pathParameter = encodeURIComponent(`${process.cwd()}\\upload\\${file.filename}`);
@@ -59,7 +82,7 @@ export class DocumentService {
                 }
             }
         );
-        console.log(`[Sent text extraction request for file '${file.filename}']`)
+        console.log(`[Sent text extraction request for file '${file.filename}']`);
 
         return {
             "statusCode": 200,
