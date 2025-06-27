@@ -80,29 +80,6 @@ export function deleteDocumentDelete(doc_id, onFulfil) {
     }
 }
 
-export function postDocumentPreview(doc_filename, onFulfil)
-{
-    try {
-        axios.post(`http://localhost:3000/document/preview?doc_filename=${doc_filename}`)
-            .then(responce => onFulfil?.(responce));
-    }
-    catch (error) {
-        console.error(error);
-        throw error;
-    }
-}
-
-export function patchDocumentPreview(doc_id, doc_preview, onFulfil) {
-    try {
-        axios.patch(`http://localhost:3000/document/preview?doc_id=${doc_id}&doc_preview=${doc_preview}`)
-            .then(request => onFulfil?.());
-    }
-    catch (error) {
-        console.error(error);
-        throw error;
-    }
-}
-
 export async function getDocumentPreview(document) {
     try {
         const response = await axios.get(`http://localhost:3000/document/preview?doc_id=${document.item_id}`);

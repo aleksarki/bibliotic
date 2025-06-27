@@ -9,7 +9,7 @@ import Button, { buttonColors } from "../ui/Button";
 import ButtonBox from "../ui/ButtonBox";
 import { useOkCancelModal } from "../modals/OkCancelModal";
 import { useFileUploadModal } from "../modals/FileUploadModal";
-import { postDocumentUpload, postFolderCreate, deleteFolderDelete, postDocumentPreview, patchFolderRename, patchDocumentPreview } from "../../util/api";
+import { postDocumentUpload, postFolderCreate, deleteFolderDelete, patchFolderRename } from "../../util/api";
 
 import "./FolderInfoView.scss";
 import { useTextInputModal } from "../modals/TextInputModal";
@@ -33,11 +33,8 @@ function FolderInfoView({ folder, updateCatalogue }) {
         fulfilFileUploadModal(false);
         postDocumentUpload(selectedFile, folder.item_id, selectedFile.name, (responce) => {
             fulfilFileUploadModal(true);
-            postDocumentPreview(responce.data.doc_filename, (responce1) => {
-                patchDocumentPreview(responce.data.doc_id, responce1.data.previewName, () => {});
-            });
             updateCatalogue?.();
-        });        
+        });
     }
 
     function renameFolder(newName) {
