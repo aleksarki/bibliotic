@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Document, Page, pdfjs } from "react-pdf";
 import axios from "axios";
 import Modal from "react-modal";
@@ -23,6 +23,9 @@ function PdfViewer({ pdfUrl, pdfId }) {
     const [isNoteModalOpen, setIsNoteModalOpen] = useState(false);
     const [newNoteContent, setNewNoteContent] = useState("");
     const [currentNotePosition, setCurrentNotePosition] = useState({ page: 1, x: 0, y: 0 });
+
+    const [visiblePages, setVisiblePages] = useState(5);  // starting visible pages
+    const [isLoading, setIsLoading] = useState(false);
 
     // fetching notes
     useEffect(() => {
@@ -98,6 +101,27 @@ function PdfViewer({ pdfUrl, pdfId }) {
         }
     }
 
+    // lazy load
+    const handleScroll = useCallback(() => {
+        if (isLoading || !containerRef.current || !numPages) return;
+
+        const { scrollTop, scrollHeight, clientHeight } = containerRef.current;
+        if (scrollTop + clientHeight >= scrollHeight * 0.8 && visiblePages < numPages) {
+            setIsLoading(true);
+            setVisiblePages(prev => Math.min(prev + 5, numPages));
+            setIsLoading(false);
+        }
+    }, [isLoading, numPages, visiblePages]);
+
+    // on scroll
+    useEffect(() => {
+        const container = containerRef.current;
+        if (!container) return;
+
+        container.addEventListener('scroll', handleScroll);
+        return () => container.removeEventListener('scroll', handleScroll);
+    }, [handleScroll]);
+
     function onDocumentLoadSuccess({ numPages }) {
         setNumPages(numPages);
     }
@@ -105,16 +129,16 @@ function PdfViewer({ pdfUrl, pdfId }) {
     return (
         <div className="PdfViewer" ref={ containerRef }>
             <Document file={ pdfUrl } onLoadSuccess={ onDocumentLoadSuccess }>{
-                Array.from(new Array(numPages), (el, index) => {
+                Array.from(new Array(Math.min(visiblePages, numPages || 0)), (el, index) => {
                     const pageNumber = index + 1;
                     const pageNotes = notes.filter(note => note.note_page === pageNumber);
                     
                     return (
                         <div
-                        key={ `page_${pageNumber}` }
-                        ref={ el => pagesRef.current[index] = el }
-                        className="pdf-page-container"
-                        onClick={ e => handlePageClick(e, pageNumber) }
+                            key={ `page_${pageNumber}` }
+                            ref={ el => pagesRef.current[index] = el }
+                            className="pdf-page-container"
+                            onClick={ e => handlePageClick(e, pageNumber) }
                         >
                             <Page
                                 pageNumber={ pageNumber }
@@ -142,6 +166,13 @@ function PdfViewer({ pdfUrl, pdfId }) {
                     );
                 })
             }</Document>
+
+            {
+                isLoading &&
+                <div className="loading-more">
+                    Загрузка следующих страниц...
+                </div>
+            }
 
             <Modal
                 isOpen={ isNoteModalOpen }

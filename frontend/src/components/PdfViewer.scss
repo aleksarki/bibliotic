@@ -6,19 +6,16 @@
     box-sizing: border-box;
     position: relative;
 
-    .page-div {        
-        margin-bottom: 20px;
-        box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-    }
-
     .pdf-page-container {
         margin-bottom: 40px;
         box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
         position: relative;
 
         .page-loading {
-            padding: 20px;
-            text-align: center;
+            min-height: 500px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             color: #666;
         }
 
@@ -48,6 +45,13 @@
                 }
             }
         }
+    }
+
+    .loading-more {
+        text-align: center;
+        padding: 20px;
+        color: #666;
+        font-style: italic;
     }
 }
 
