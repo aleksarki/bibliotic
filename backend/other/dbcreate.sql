@@ -3,6 +3,7 @@ DROP PROCEDURE IF EXISTS folder_tree_delete;
 DROP FUNCTION IF EXISTS folder_chain_select;
 DROP FUNCTION IF EXISTS folder_get_owner;
 DROP FUNCTION IF EXISTS folder_is_child;
+DROP FUNCTION IF EXISTS folder_check_rename;
 DROP PROCEDURE IF EXISTS folder_add;
 DROP PROCEDURE IF EXISTS folder_move;
 DROP PROCEDURE IF EXISTS account_create;
@@ -11,16 +12,16 @@ DROP FUNCTION IF EXISTS document_get_owner;
 DROP PROCEDURE IF EXISTS document_add;
 DROP PROCEDURE IF EXISTS document_delete;
 DROP PROCEDURE IF EXISTS document_move;
-DROP FUNCTION IF EXISTS item_tree_select;
-DROP PROCEDURE IF EXISTS note_add;
-DROP PROCEDURE IF EXISTS note_delete;
 DROP FUNCTION IF EXISTS document_get_notes;
-DROP PROCEDURE IF EXISTS keyword_add;
 DROP FUNCTION IF EXISTS document_get_keywords;
 DROP PROCEDURE IF EXISTS document_preview_set;
 DROP FUNCTION IF EXISTS document_preview_get;
-DROP FUNCTION IF EXISTS folder_check_rename;
 DROP FUNCTION IF EXISTS document_search_by_name;
+DROP FUNCTION IF EXISTS document_search_by_keywords;
+DROP FUNCTION IF EXISTS item_tree_select;
+DROP PROCEDURE IF EXISTS note_add;
+DROP PROCEDURE IF EXISTS note_delete;
+DROP PROCEDURE IF EXISTS keyword_add;
 
 DROP TABLE IF EXISTS Keywords;
 DROP TABLE IF EXISTS Notes;
@@ -605,20 +606,17 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
--- document_search_by_keywords
-
 -- Search for documents by keywords
-CREATE OR REPLACE FUNCTION document_search_by_keywords(usr_id INT, search_terms TEXT[])
+CREATE FUNCTION document_search_by_keywords(usr_id INT, search_terms TEXT[])
 RETURNS SETOF Documents AS $$
 BEGIN
-  RETURN QUERY
-  SELECT DISTINCT d.*
-  FROM Documents d
-  JOIN Keywords k
-    ON k.kwrd_document = d.doc_id
-   AND k.kwrd_keyword ILIKE ANY(search_terms)
-  WHERE document_get_owner(d.doc_id) = usr_id
-  ORDER BY d.doc_name;
+    RETURN QUERY
+    SELECT DISTINCT d.* FROM Documents d
+    JOIN Keywords k
+        ON k.kwrd_document = d.doc_id
+        AND k.kwrd_keyword ILIKE ANY(search_terms)
+    WHERE document_get_owner(d.doc_id) = usr_id
+    ORDER BY d.doc_name;
 END;
 $$ LANGUAGE plpgsql;
 
