@@ -32,7 +32,7 @@ function FileUploadModal({ isOpen, isFulfilled = true, onClose, onOk, onCancel }
             { selectedFile && (
                 <div>
                     <p>Выбран файл: { selectedFile.name }</p>
-                    <p>Размер файла: { Math.round(Math.round(selectedFile.size)) / 1024 } КБ</p>
+                    <p>Размер файла: { Math.round(Math.round(selectedFile.size) / 1024) } КБ</p>
                 </div>
             ) }
             <ButtonBox gap={ 10 }>
